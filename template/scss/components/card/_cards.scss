@@ -1,0 +1,1523 @@
+@use "../../global" as *;
+@use "../../partials" as *;
+
+// HOME-CARDS
+.card-welcome {
+  background: $white;
+  box-shadow: $cardshadow;
+  padding: size(16);
+  @include radius(10);
+  @include flex-center-column;
+  gap: size(20);
+
+  @include breakpoint(mobile768) {
+    flex-direction: row;
+    gap: size(40);
+    padding: size(32);
+  }
+
+  .card-detail {
+    @include flex-column;
+    gap: size(8);
+    order: 1;
+    
+    @include breakpoint(mobile768) {
+      order: 0;
+      width: calc(100% - size(170));
+    }
+
+    .cardtitle {
+      color: $dropdownbg;
+      @include font($primaryFont, 16, normal, normal, 22.4);
+
+      @include breakpoint(mobile576) {
+        font-size: size(20);
+      }
+      
+      @include breakpoint(tab992) {
+        font-size: size(24);
+      }
+      
+      @include breakpoint(desktop1200) {
+        font-size: size(28);
+      }
+
+      span {
+        color: $hamburgerbg;
+        font: inherit;
+      }
+    }
+
+    .cardtext {
+      color: $dropdownbg;
+
+      @include breakpoint(tab992) {
+        font-size: size(16);
+      }
+      
+      @include breakpoint(desktop1200) {
+        font-size: size(18);
+      }
+    }
+
+    .author {
+      color: $authortext;
+
+      @include breakpoint(tab992) {
+        font-size: size(16);
+      }
+    }
+  }
+
+  .card-thumbnail {
+    @include square(130);
+    @include flex-center;
+    overflow: hidden;
+    order: 0;
+
+    @include breakpoint(mobile768) {
+      order: 1;
+    }
+
+    img {
+      @include w100;
+    }
+  }
+}
+
+.card-impression {
+  background: $white;
+  box-shadow: $cardshadow;
+  padding: size(16);
+  @include radius(10);
+  @include flex-column;
+  gap: size(20);
+
+  @include breakpoint(mobile768) {
+    padding: size(32);
+  }
+
+  &-header {
+    @include flex-column;
+    gap: size(8);
+
+    .impression-title {
+      color: $dropdownbg;
+    }
+
+    .impression-text {
+      color: $textimpression;
+      font-size: size(12);
+
+      @include breakpoint(tab992) {
+        font-size: size(13);
+      }
+    }
+  }
+}
+
+.card-progress {
+  background: $white;
+  box-shadow: $cardshadow;
+  padding: size(16);
+  @include radius(10);
+  @include flex-column;
+  gap: size(5);
+  
+  @include breakpoint(mobile768) {
+    padding: size(20);
+  }
+
+  .progress-title {
+    color: $dropdownbg;
+    font-weight: 700;
+  }
+
+  .progress-completed,
+  .progress-text {
+    color: $dropdownbg;
+    font-size: size(13);
+    font-weight: 300;
+  }
+  
+  &-body {
+    @include flex-column;
+    gap: size(10);
+
+    .progress {
+      background: $progressbg;
+      @include radius(10);
+      height: size(10);
+
+      &-bar {
+        background: $hamburgerbg;
+        @include radius(10);
+      }
+    }
+  }
+}
+
+.card-schedule {
+  @include radius(10);
+  @include flex-column;
+  gap: size(5);
+  padding: size(12);
+  position: relative;
+
+  &::before {
+    background: $white;
+    @include border(solid, 1, rgba($dropdownbg, 0.5));
+    @include radius(10);
+    content: '';
+    @include wh100;
+    position: absolute;
+    inset: 0;
+    opacity: 0.2;
+    z-index: 1;
+  }
+
+  .schedule-time,
+  .location {
+    color: $dropdownbg;
+    font-size: size(13);
+    font-weight: 300;
+    position: relative;
+    z-index: 10;
+    @include transitionsall;
+  }
+
+  .hospitalname {
+    color: $dropdownbg;
+    font-weight: 700;
+    position: relative;
+    z-index: 10;
+    @include transitionsall;
+  }
+
+  &.active {
+    background: $hamburgerbg;
+    border-color: $hamburgerbg;
+
+    &::before {
+      display: none;
+      opacity: 1;
+    }
+
+    .schedule-time,
+    .hospitalname,
+    .location {
+      color: $white;
+    }
+  }
+
+  // &:hover:not(.active) {
+  //   background: $hamburgerbg;
+  //   border-color: $hamburgerbg;
+
+  //   .schedule-time,
+  //   .hospitalname,
+  //   .location {
+  //     color: $white;
+  //   }
+  // }
+}
+
+.card-view {
+  @include flex-center-between;
+  background: $white;
+  box-shadow: $cardshadow;
+  padding: size(16);
+  @include radius(10);
+  
+  @include breakpoint(mobile768) {
+    padding: size(20);
+  }
+
+  &-icon {
+    background: rgba($hamburgerbg, 0.2);
+    @include square(64);
+    @include circle;
+    @include flex-center;
+    overflow: hidden;
+    padding: size(12);
+
+    svg {
+      @include wh100;
+    }
+  }
+
+  &-thumb {
+    @include square(64);
+    @include circle;
+    @include flex-center;
+    overflow: hidden;
+
+    img {
+      @include wh100;
+      object-fit: cover;
+    }
+  }
+
+  &-detail {
+    @include flex-column;
+    gap: size(8);
+    text-align: right;
+    width: calc(100% - size(64));
+
+    .view-title {
+      color: $black;
+      font-weight: 700;
+    }
+  
+    .view-count {
+      color: $black;
+      font-size: size(20);
+      font-weight: 300;
+      line-height: 1.4;
+    }
+  }
+}
+
+.card-notification {
+  background: $white;
+  box-shadow: $cardshadow;
+  @include radius(10);
+  cursor: pointer;
+  @include flex-center-vert;
+  align-items: flex-start;
+  gap: size(16);
+  padding: size(16);
+  
+  @include breakpoint(mobile768) {
+    padding: size(20);
+    gap: size(24);
+  }
+
+  .listicon {
+    @include flex-center;
+    @include square(18);
+    @include circle;
+    overflow: hidden;
+
+    svg {
+      @include w100;
+    }
+  }
+
+  .info {
+    @include flex-center-between;
+    gap: size(8);
+    flex-wrap: wrap;
+    width: calc(100% - size(16));
+  
+    @include breakpoint(mobile768) {
+      width: calc(100% - size(24));
+    }
+
+    .notification-detail {
+      @include flex-center-vert;
+      align-items: flex-start;
+      gap: size(10);
+
+      .icon {
+        @include square(20);
+        @include flex-center;
+        overflow: hidden;
+
+        svg {
+          @include w100;
+        }
+      }
+
+      .detail {
+        width: calc(100% - size(30));
+
+        .detail-text {
+          @include font($primaryFont, 14, normal, normal, 19.6);
+          color: $dropdownbg;
+
+          strong {
+            color: inherit;
+            font-size: inherit;
+          }
+
+          span {
+            color:$hamburgerbg;
+            font: inherit;
+          }
+        }
+      }
+    }
+
+    .postedtime {
+      @include flex-end;
+      @include w100;
+
+      @include breakpoint(mobile768) {
+        width: auto;
+      }
+
+      .time {
+        color: $textgray;
+        @include font($primaryFont, 13, normal, normal, 18.2);
+      }
+    }
+  }
+
+  .accordion {
+    @include w100;
+
+    &-item {
+      border: 0;
+      border-radius: 0;
+    
+      &:last-of-type {
+        .accordion-collapse,
+        .accordion-button.collapsed {
+          @include radius(0);
+        }
+      }
+    }
+
+    &-button {
+      @include flex-center-vert;
+      align-items: flex-start;
+      gap: size(16);
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+
+      @include breakpoint(tab992) {
+        align-items: center;
+      }
+
+      &::after {
+        display: none;
+        box-shadow: none;
+      }
+  
+      @include breakpoint(mobile768) {
+        gap: size(24);
+      }
+
+      .icon {
+        @include flex-center;
+        @include square(18);
+        @include circle;
+        overflow: hidden;
+    
+        svg {
+          @include w100;
+        }
+      }
+    
+      .info {
+        @include flex-center-between;
+        gap: size(8);
+        flex-wrap: wrap;
+        width: calc(100% - size(16));
+      
+        @include breakpoint(mobile768) {
+          width: calc(100% - size(24));
+        }
+    
+        .notification-detail {
+          @include flex-center-vert;
+          align-items: flex-start;
+          gap: size(10);
+
+          @include breakpoint(tab992) {
+            align-items: center;
+          }
+    
+          .icon {
+            @include square(20);
+            @include flex-center;
+            overflow: hidden;
+          }
+    
+          .detail {
+            width: calc(100% - size(30));
+    
+            .detail-text {
+              @include font($primaryFont, 14, normal, normal, 19.6);
+              color: $dropdownbg;
+    
+              strong {
+                color: inherit;
+                font-size: inherit;
+              }
+    
+              span {
+                color:$hamburgerbg;
+                font: inherit;
+              }
+            }
+          }
+
+          .arricon {
+            @include rotate(0);
+          }
+        }
+    
+        .postedtime {
+          @include flex-end;
+          @include w100;
+    
+          @include breakpoint(mobile768) {
+            width: auto;
+          }
+    
+          .time {
+            color: $textgray;
+            @include font($primaryFont, 13, normal, normal, 18.2);
+          }
+        }
+      }
+
+      &:not(.collapsed) {
+        box-shadow: none;
+      
+        &::after {
+          box-shadow: none;
+          display: none;
+        }
+
+        .info {
+          .notification-detail {
+            .arricon {
+              @include rotate(180);
+            }
+          }
+        }
+      }
+    }
+
+    &-body {
+      background: rgba($white, 0.5);
+
+      .message {
+        color: $dropdownbg;
+        font-size: size(14);
+      }
+    }
+  }
+}
+
+.card-blog {
+  background: $white;
+  @include border(solid, 1, $lightbg);
+  @include radius(8);
+  box-shadow: $cardshadow;
+  padding: size(10);
+  @include flex-column;
+  gap: size(10);
+
+  @include breakpoint(mobile768) {
+    flex-direction: row;
+  }
+
+  .blog-thumbnail {
+    @include w100;
+    height: size(200);
+    @include radius(5);
+    @include flex-center;
+    overflow: hidden;
+
+    @include breakpoint(mobile768) {
+      width: size(195);
+      height: size(100);
+    }
+
+    @include breakpoint(tab992) {
+      height: size(120);
+    }
+
+    img {
+      @include wh100;
+    }
+  }
+
+  .blog-details {
+    @include w100;
+    @include flex-column;
+    gap: size(10);
+
+    @include breakpoint(mobile768) {
+      width: calc(100% - size(205));
+    }
+
+    @include breakpoint(tab992) {
+      flex-direction: row;
+    }
+
+    .blog-article {
+      @include flex-column;
+      gap: size(10);
+      width: 60%;
+
+      @include breakpoint(desktop1200) {
+        width: 80%;
+      }
+
+      .blog-title {
+        color: $hamburgerbg;
+        @include font($primaryFont, 20, normal, normal, 28);
+        @include text-overflow;
+
+        @include breakpoint(mobile768) {
+          font-size: size(24);
+        }
+      }
+
+      .blog-text {
+        color: $textimpression;
+        @include font($primaryFont, 12, normal, normal, 16.8);
+
+        @include breakpoint(mobile768) {
+          font-size: size(14);
+        }
+      }
+    }
+
+    .divider {
+      @include w100;
+      height: size(1);
+      background: $lightbg;
+
+      @include breakpoint(tab992) {
+        @include h100;
+        width: size(1);
+      }
+    }
+
+    .blogviews {
+      color: $selectcolor;
+      @include font($primaryFont, 20, semibold, normal, 28);
+    }
+
+    .shareblog {
+      @include flex-center-vert;
+      gap: size(10);
+
+      .sharetext {
+        color: $textimpression;
+        @include font($primaryFont, 12, medium, normal, 16.8);
+      }
+    }
+
+    .publish-badge {
+      @include flex-center-vert;
+      gap: size(10);
+
+      .icon {
+        @include square(24);
+        @include circle;
+        @include flex-center;
+        overflow: hidden;
+        padding: size(5);
+
+        svg {
+          @include wh100;
+        }
+      }
+
+      .sharetext {
+        @include font($primaryFont, 12, medium, normal, 16.8);
+      }
+
+      &.published {
+        .icon {
+          background: rgba($successbg, 0.2);
+
+          svg {
+            path {
+              fill: $successbg;
+            }
+          }
+        }
+
+        .sharetext {
+          color: $successbg;
+        }
+      }
+
+      &.unpublished {
+        .icon {
+          background: rgba($graybg, 0.2);
+
+          svg {
+            path {
+              fill: $graybg;
+            }
+          }
+        }
+
+        .sharetext {
+          color: $graybg;
+        }
+      }
+    }
+  }
+}
+
+//FRONT-END CARDS
+
+.card-doctor {
+  background: $white;
+  cursor: pointer;
+  @include radius(15);
+  padding: size(16) size(8);
+  overflow: hidden;
+  @include flex-center-column;
+  gap: size(14);
+  text-align: center;
+  @include h100;
+
+  @include breakpoint(desktop1200) {
+    padding: size(28) size(26) size(30);
+  }
+
+  &-header {
+    @include square(200);
+    @include radius(8);
+    @include flex-center;
+    overflow: hidden;
+
+    img {
+      @include wh100;
+      object-fit: contain;
+      object-position: center center;
+      @include transitionsall;
+    }
+  }
+
+  &-body {
+    @include flex-center-column;
+    gap: size(8);
+
+    .name-status {
+      @include flex-center;
+      gap: size(8);
+    }
+
+    .name {
+      color: $textprimary;
+      @include font($secondaryFont, 12, normal, normal, 16.8);
+      @include line-clamp;
+
+      @include breakpoint(tab992) {
+        font-size: size(14);
+      }
+
+      @include breakpoint(desktop1400) {
+        font-size: size(16);
+      }
+
+      @include hover {
+        color: $primary;
+      }
+    }
+    
+    .status {
+      @include square(8);
+      @include flex-center;
+      @include circle;
+      background: $authortext;
+
+      &.active {
+        background: $successbg;
+      }
+    }
+
+    .position {
+      color: $textprimary;
+      @include font($secondaryFont, 12, normal, normal, 16.8);
+      height: size(32);
+      @include line-clamp;
+
+      @include breakpoint(tab992) {
+        font-size: size(14);
+        height: size(38);
+      }
+
+      @include breakpoint(desktop1400) {
+        font-size: size(16);
+      }
+    }
+  }
+
+  @include hover {
+    .card-doctor-header {
+      img {
+        @include scale(0.95);
+      }
+    }
+  }
+}
+
+.card-gallery {
+  background: $gray-200;
+  cursor: pointer;
+  overflow: hidden;
+  @include flex-center-column;
+  gap: size(24);
+  text-align: center;
+  @include h100;
+
+  &-header {
+    @include w100;
+    @include flex-center;
+
+    .card-thumbnail {
+      @include w100;
+      height: size(200);
+      overflow: hidden;
+
+      @include breakpoint(mobile768) {
+        height: size(260);
+      }
+
+      @include breakpoint(tab992) {
+        height: size(650);
+      }
+
+      img {
+        @include wh100;
+        object-fit: contain;
+        @include transitiontransform;
+  
+        @include hover {
+          @include transform(scale(1.05));
+        }
+      }
+    }
+  }
+
+  &-body {
+    @include flex-center-column;
+    gap: size(8);
+    padding: size(0) size(24) size(24);
+
+    .doctorname {
+      .name {
+        color: $gray-700;
+        @include font($secondaryFont, 14, normal, normal, 19.6);
+        @include transitionscolor;
+        
+        @include breakpoint(mobile768) {
+          font-size: size(16);
+        }
+  
+        @include hover {
+          color: $black;
+        }
+      }
+    }
+  }
+}
+
+.cardblog {
+  background: $white;
+  @include radius(10);
+  @include flex-center-column;
+  gap: size(14);
+  padding: size(10);
+
+  &-header {
+    position: relative;
+    @include w100;
+    height: size(176);
+    overflow: hidden;
+    @include radius(10);
+    
+    .blogthumbnail {
+      @include wh100;
+      @include flex-center;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+
+      img {
+        @include wh100;
+        object-fit: cover;
+        object-position: center center;
+        @include transitionsall;
+      }
+
+      &::before {
+        position: absolute;
+        inset: 0;
+        @include wh100;
+        background: rgba($black, 0.5);
+        z-index: 10;
+      }
+    }
+
+    .tags {
+      position: absolute;
+      top: size(8);
+      left: size(8);
+      @include flex-center-vert;
+      gap: size(5);
+      flex-wrap: wrap;
+      z-index: 100;
+
+      .tag {
+        @include setBgColor($white, $headerbg);
+        @include radius(12.5);
+        display: inline-block;
+        @include font($secondaryFont, 10, normal, normal, 14);
+        padding: size(4) size(10);
+        text-align: center;
+      }
+    }
+  }
+
+  &-body {
+    @include flex-column;
+    gap: size(8);
+    padding-bottom: size(16);
+
+    .blogtitle {
+      color: $headingtext;
+      @include font($secondaryFont, 15, medium, normal, 21);
+      @include line-clamp;
+      @include transitionscolor;
+
+      @include hover {
+        color: $red;
+      }
+    }
+
+    .bloginfos {
+      .blogtext {
+        color: $gray-800;
+        @include font($secondaryFont, 13, normal, normal, 18.2);
+        @include line-clamp-3;
+      }
+    }
+
+    .bloglist {
+      @include list-vertical;
+      gap: size(4);
+      margin-bottom: size(8);
+
+      &-item {
+        @include flex-center-vert;
+        gap: size(4);
+
+        .icon {
+          @include square(16);
+          @include flex-center;
+          overflow: hidden;
+
+          svg {
+            @include wh100;
+
+            path {
+              fill: $authortext;
+            }
+          }
+        }
+
+        .author {
+          color: $authortext;
+          @include font($secondaryFont, 12, medium, normal, 16.8);
+        }
+      }
+    }
+
+    .viewdetail {
+      color: $headingtext;
+      @include font($secondaryFont, 12, semibold, normal, 16.8);
+      @include transitionscolor;
+    
+      @include hover {
+        color: $red;
+      }
+    }
+  }
+
+  @include hover {
+    .cardblog-header {
+      .blogthumbnail {
+        img {
+          @include scale(1.05);
+        }
+      }
+    }
+  }
+}
+
+.card-article {
+	background: $white;
+	@include radius(8);
+	@include flex-column;
+	gap: size(8);
+	padding: size(6);
+  @include wh100;
+
+	&-header {
+		@include radius(8);
+		@include w100;
+		height: size(170);
+		overflow: hidden;
+
+		img {
+			@include wh100;
+			object-fit: cover;
+			@include transitiontransform;
+
+			@include hover {
+				@include transform(scale(1.05));
+			}
+		}
+	}
+
+	&-body {
+		@include flex-column;
+		gap: size(12);
+		padding: size(6);
+
+		.title-date {
+			@include flex-column;
+      gap: size(5);
+
+			.title {
+        color: $headingtext;
+        @include font($secondaryFont, 15, semibold, normal, 21);
+				@include transitionscolor;
+
+				@include hover {
+					color: $primary;
+				}
+			}
+
+			.date {
+				color: $gray-600;
+        @include font($secondaryFont, 12, normal, normal, 16.8);
+			}
+		}
+
+		.articledescript {
+			.articletext {
+				color: $gray-600;
+        @include font($secondaryFont, 13, normal, normal, 21);
+        @include line-clamp-3;
+			}
+		}
+
+		.articlelink {
+			color: $gray-800;
+      @include font($secondaryFont, 12, semibold, normal, 16.8);
+			@include transitionscolor;
+
+			@include hover {
+				color: $primary;
+			}
+		}
+	}
+}
+
+.card-bigblog {
+	background: $white;
+	@include radius(16);
+	overflow: hidden;
+
+	&-thumbnail {
+		overflow: hidden;
+		@include wh100;
+
+		@include breakpoint(tablet991) {
+			@include radius(16);
+		}
+
+		img {
+			@include wh100;
+			object-fit: cover;
+		}
+	}
+
+	&-details {
+		padding: size(44) size(44) size(44) size(0);
+		@include flex-column;
+		gap: size(44);
+
+		@include breakpoint(desktop1400) {
+			padding: size(40) size(42) size(40) size(0);
+		}
+
+		@include breakpoint(desktop1200) {
+			gap: size(32);
+			padding: size(30) size(30) size(30) size(0);
+		}
+
+		@include breakpoint(tablet991) {
+			padding: size(32);
+		}
+
+		@include breakpoint(phone768) {
+			padding: size(24);
+		}
+
+		@include breakpoint(phone575) {
+			padding: size(16) size(16) size(32);
+		}
+
+		.info {
+			@include flex-column;
+			gap: size(16);
+
+			@include breakpoint(desktop1200) {
+				gap: size(28);
+			}
+
+			&-head {
+				@include flex-column;
+				gap: size(8);
+
+				.blogtitle {
+					color: $black;
+          @include font($secondaryFont, 20, semibold, normal, 28);
+          @include line-clamp;
+
+					@include breakpoint(mobile768) {
+						font-size: size(24);
+					}
+
+					@include breakpoint(tab992) {
+						font-size: size(28);
+					}
+
+					@include breakpoint(desktop1400) {
+						font-size: size(36);
+					}
+				}
+
+				.date {
+          @include font($secondaryFont, 20, normal, normal, 28);
+					// color: $dateColor;
+					
+					@include breakpoint(mobile768) {
+						font-size: size(16);
+					}
+				}
+			}
+
+			&-body {
+				.blogtext {
+					color: $gray-600;
+          @include font($secondaryFont, 14, normal, normal, 19.6);
+          @include line-clamp-3;
+					
+					@include breakpoint(mobile768) {
+						font-size: size(18);
+					}
+				}
+			}
+		}
+
+		.readinfo {
+			width: size(200);
+		}
+	}
+}
+
+.card-thumb {
+  @include flex-center-column;
+  gap: size(10);
+  text-align: center;
+  @include w100;
+  background: $white;
+  box-shadow: $cardshadow;
+
+  &-header {
+    @include w100;
+    height: size(80);
+
+    @include breakpoint(tab992) {
+      @include w100;
+      height: size(100);
+    }
+
+    .card-thumbnail {
+      @include wh100;
+  
+      img {
+        @include wh100;
+        object-fit: contain;
+      }
+    }
+  }
+
+  &-body {
+    padding: size(10) size(8);
+    display: none;
+    
+    @include breakpoint(mobile576) {
+      display: block;
+    }
+    
+    .doctorname {
+
+      .name {
+        color: $gray-700;
+        @include font($secondaryFont, 12, normal, normal, 16.8);
+        @include line-clamp;
+      }
+    }
+  }
+}
+
+.carddoctor {
+  background: $white;
+  @include radius(10);
+  @include flex-column;
+
+  &-header {
+    @include flex-center-between;
+    gap: size(6);
+    padding: size(12);
+
+    .specilities {
+      @include flex-column;
+      gap: size(5);
+      width: calc(100% - size(96));
+    }
+
+    .thumbnail {
+      @include square(90);
+      @include circle;
+      @include flex-center;
+      filter: $profileshadow;
+      overflow: hidden;
+      
+      img {
+        @include wh100;
+        object-fit: cover;
+      }
+    }
+  }
+  
+  &-body {
+    @include flex-column;
+    text-align: right;
+    padding: size(0) size(12) size(8);
+    @include flex-column;
+    gap: size(4);
+
+    .name {
+      color: $black;
+      font-family: $secondaryFont;
+      font-size: size(16);
+      @include text-overflow;
+    }
+    
+    .text {
+      color: $textcolor;
+      font-family: $secondaryFont;
+      font-size: size(12);
+      @include line-clamp;
+    }
+  }
+  
+  &-footer {
+    @include flex-center-vert;
+    gap: size(8);
+    background: rgba($lightbg, 0.5);
+    padding: size(12);
+
+    .btn-card {
+      width: 50%;
+      @include flex-center-vert;
+      gap: size(4);
+
+      .icon {
+        @include square(14);
+        @include flex-center;
+        overflow: hidden;
+
+        svg {
+          @include wh100;
+        }
+      }
+
+      .text {
+        color: $textgray;
+        font-family: $secondaryFont;
+        font-size: size(13);
+      }
+
+      @include hover {
+        .icon {
+          svg {  
+            path:not(.whitepath) {
+              fill: $hamburgerbg;
+            }
+          }
+        }
+  
+        .text {
+          color: $hamburgerbg;
+        }
+      }
+    }
+  }
+}
+
+.mydoctor {
+  background: $white;
+  @include radius(10);
+  padding: size(10);
+  @include flex-column;
+  gap: size(16);
+
+  @include breakpoint(mobile768) {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &-detail {
+    @include flex-center-vert;
+    align-items: flex-start;
+    gap: size(12);
+
+    @include breakpoint(mobile768) {
+      align-items: center;
+    }
+
+    .thumb {
+      @include square(80);
+      @include flex-center;
+      overflow: hidden;
+
+      @include breakpoint(mobile480) {
+        @include square(150);
+      }
+
+      img {
+        @include wh100;
+      }
+    }
+
+    .detail {
+      width: calc(100% - size(80));
+      @include flex-column;
+      gap: size(8);
+
+      @include breakpoint(mobile480) {
+        width: calc(100% - size(150))
+      }
+
+      .name {
+        color: $hamburgerbg;
+        font-family: $secondaryFont;
+        font-size: size(16);
+        @include line-clamp;
+
+        @include breakpoint(mobile768) {
+          font-size: size(24);
+        }
+      }
+
+      .text {
+        color: $dropdownbg;
+        font-family: $secondaryFont;
+        font-size: size(12);
+        @include line-clamp;
+
+        @include breakpoint(mobile768) {
+          font-size: size(14);
+        }
+      }
+
+      .specilities {
+        margin-top: size(12);
+        @include flex-center-vert;
+        gap: size(8);
+        flex-wrap: wrap;
+      }
+    }
+  }
+
+  .divider {
+    @include w100;
+    height: size(1);
+    background: $lightbg;
+
+    @include breakpoint(mobile768) {
+      width: size(1);
+      height: size(140);
+      margin-left: auto;
+    }
+  }
+  
+  &-info {
+    @include flex-end;
+    gap: size(16);
+
+    @include breakpoint(mobile768) {
+      padding-inline: size(32)
+    }
+
+    .btn-calendar,
+    .btn-delete {
+      @include square(48);
+      @include circle;
+      @include flex-center;
+      overflow: hidden;
+    }
+
+    .btn-calendar {
+      background: rgba($calendarbg, 0.1);
+
+      .icon {
+        @include square(24);
+        overflow: hidden;
+
+        svg {
+          @include wh100;
+        }
+      }
+    }
+
+    .btn-delete {
+      background: rgba($hamburgerbg, 0.1);
+
+      .delicon {
+        @include square(30);
+        overflow: hidden;
+
+        svg {
+          @include wh100;
+        }
+      }
+    }
+  }
+}
+
+.doctoday {
+  background: $white;
+  box-shadow: $cardshadow;
+  @include radius(10);
+  @include flex-center-column;
+  text-align: center;
+  padding: size(10) size(0) size(0);
+  overflow: hidden;
+
+  .thumb {
+    @include square(96);
+    @include circle;
+    @include flex-center;
+    overflow: hidden;
+    margin-bottom: size(8);
+
+    img {
+      @include wh100;
+      object-fit: cover;
+    }
+  }
+
+  &-detail {
+    @include flex-column;
+    gap: size(8);
+    padding-inline: size(10);
+    
+    .name {
+      color: $dropdownbg;
+      font-family: $secondaryFont;
+      font-size: size(14);
+      @include line-clamp;
+
+      @include breakpoint(mobile768) {
+        font-size: size(16);
+      }
+    }
+
+    .speciality {
+      font-size: size(10);
+    }
+
+    .text {
+      color: $dropdownbg;
+      font-family: $secondaryFont;
+      font-size: size(11);
+      @include line-clamp;
+    }
+  }
+
+  &-footer {
+    background: $lightbg;
+    padding: size(8);
+    @include w100;
+    @include flex-center;
+    text-align: center;
+
+    .text {
+      color: $black;
+      font-family: $secondaryFont;
+      font-size: size(12);
+      font-weight: 600;
+    }
+  }
+}
+
+.card-counter {
+  @include flex-center-column;
+  gap: size(10);
+  background: $white;
+  box-shadow: $cardshadow;
+  padding: size(20);
+  @include radius(10);
+  @include h100;
+  @include border-single(bottom, solid, 5, transparent);
+  
+  @include breakpoint(mobile768) {
+    padding: size(40) size(20);
+  }
+
+  .title {
+    color: $dropdownbg;
+    @include font($primaryFont, 14, medium, normal, 19.6);
+    text-transform: uppercase;
+    @include text-overflow;
+  }
+
+  .count {
+    color: $black;
+    @include font($primaryFont, 20, bold, normal, 28);
+  }
+
+  &.counter-1 {
+    border-color: $cardborder-1;
+  }
+
+  &.counter-2 {
+    border-color: $cardborder-2;
+  }
+
+  &.counter-3 {
+    border-color: $cardborder-3;
+  }
+
+  &.counter-4 {
+    border-color: $cardborder-4;
+  }
+
+  &.counter-5 {
+    border-color: $cardborder-5;
+  }
+
+  &.counter-6 {
+    border-color: $cardborder-6;
+  }
+
+  &.counter-7 {
+    border-color: $cardborder-7;
+  }
+
+  &.counter-8 {
+    border-color: $cardborder-8;
+  }
+}

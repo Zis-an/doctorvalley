@@ -1,0 +1,634 @@
+@use "../global" as *;
+@use "../partials" as *;
+
+.myprofile {
+  .nav-tabs {
+    @include w100;
+    background: $white;
+
+    .nav-item {
+      width: calc(100% / 4);
+      @include border-single(right, solid, 2, $lightbg);
+
+      &:last-of-type {
+        border-right: size(0);
+      }
+    }
+
+    .nav-link {
+      color: $dropdownbg;
+      @include w100;
+      height: size(48);
+      @include flex-center;
+      @include font($primaryFont, 12, normal, normal, 16.8);
+      text-align: center;
+      border: 0;
+      @include radius(0);
+      @include border-single(bottom, solid, 2, transparent);
+      @include transitionsall;
+
+      @include breakpoint(tab992) {
+        font-size: size(14);
+      }
+
+      @include breakpoint(desktop1200) {
+        font-size: size(16);
+      }
+
+      &:hover:not(.active) {
+        color: $hamburgerbg;
+        border-color: $hamburgerbg;
+      }
+
+      &.active {
+        color: $hamburgerbg;
+        border-color: $hamburgerbg;
+      }
+    }
+  }
+
+  &-detail {
+    @include flex-center-vert;
+    gap: size(16);
+    padding: size(20);
+    background: $linearbg;
+
+    .icon {
+      @include square(60);
+      @include circle;
+      @include flex-center;
+      overflow: hidden;
+
+      svg {
+        @include wh100;
+      }
+    }
+
+    .detail {
+      @include flex-column;
+      gap: size(4);
+      width: calc(100% - size(76));
+
+      .profile-title {
+        color: $hamburgerbg;
+        @include font($primaryFont, 16, bold, normal, 22.4);
+
+        @include breakpoint(tab992) {
+          font-size: size(18);
+        }
+
+        @include breakpoint(desktop1200) {
+          font-size: size(20);
+        }
+      }
+
+      .profiletext {
+        color: $textimpression;
+        @include font($primaryFont, 12, normal, normal, 16.8);
+
+        @include breakpoint(tab992) {
+          font-size: size(14);
+        }
+      }
+    }
+  }
+
+  .personalinfo,
+  .professionalinfo,
+  .educationinfo,
+  .profileimage {
+    min-height: 100vh;
+    @include flex-column;
+    gap: size(20);
+  }
+
+  .personalinfo {
+    &-info {
+      padding: size(32) size(20);
+    
+      @include breakpoint(tab992) {
+        padding: size(40);
+      }
+
+      .details {
+        background: $white;
+        box-shadow: $cardshadow;
+        @include radius(10);
+        padding: size(20);
+        @include flex-center-column;
+        gap: size(20);
+
+        @include breakpoint(mobile768) {
+          padding: size(32);
+        }
+    
+        @include breakpoint(tab992) {
+          padding: size(48);
+        }
+      }
+    }
+  }
+
+  .professionalinfo {
+    &-info {
+      padding: size(32) size(20);
+    
+      @include breakpoint(tab992) {
+        padding: size(40);
+      }
+
+      .details {
+        background: $white;
+        box-shadow: $cardshadow;
+        @include radius(10);
+        padding: size(20);
+        @include flex-column;
+        gap: size(20);
+
+        @include breakpoint(mobile768) {
+          padding: size(32);
+        }
+    
+        @include breakpoint(tab992) {
+          padding: size(48);
+        }
+
+        .treatment-summary {
+          padding: size(12);
+          @include border(solid, 1, $textgray);
+          position: relative;
+
+          .summarytitle {
+            position: absolute;
+            top: size(-8);
+            left: size(12);
+            @include setBgColor($white, $textgray);
+            @include font($primaryFont, 12, normal, normal, 16.8);
+            padding-inline: size(4);
+          }
+
+          .summarytext {
+            color: $darktext;
+            @include font($primaryFont, 12, normal, normal, 16.8);
+            letter-spacing: size(0.4);
+    
+            @include breakpoint(tab992) {
+              font-size: size(14);
+            }
+          }
+        }
+
+        &-header {
+          @include flex-start;
+  
+          .title {
+            color: $dropdownbg;
+            @include font($primaryFont, 16, semibold, normal, 22.4);
+            text-transform: uppercase;
+    
+            @include breakpoint(tab992) {
+              font-size: size(20);
+            }
+          }
+        }
+  
+        &-body {
+          .emptyeducation {
+            @include flex-center-column;
+            gap: size(32);
+  
+            .icon {
+              width: size(130);
+              height: size(104);
+              @include flex-center;
+              overflow: hidden;
+  
+              svg {
+                @include wh100;
+              }
+            }
+  
+            .info {
+              max-width: size(520);
+              text-align: center;
+  
+              p {
+                color: $darktext;
+                @include font($primaryFont, 12, semibold, normal, 16.8);
+                text-transform: uppercase;
+        
+                @include breakpoint(tab992) {
+                  font-size: size(14);
+                }
+              }
+            }
+          }
+  
+          .btn-qualifications {
+            @include flex-center;
+            gap: size(8);
+            width: size(274);
+            height: size(44);
+            background: $white;
+            @include border(solid, 1, $hamburgerbg);
+            @include radius(5);
+            @include transitionsall;
+  
+            .text {
+              @include font($primaryFont, 12, semibold, normal, 16.8);
+              letter-spacing: size(1.6);
+              text-transform: uppercase;
+  
+              @include breakpoint(tab992) {
+                font-size: size(14);
+              }
+            }
+  
+            .icon {
+              @include square(20);
+              @include circle;
+              overflow: hidden;
+            }
+  
+            @include hover {
+              background: $hamburgerbg;
+  
+              .text {
+                color: $white;
+              }
+  
+              .icon {
+                svg {
+                  g {
+                    path {
+                      fill: $white;
+                    }
+                  }
+  
+                  defs {
+                    clipPath {
+                      rect {
+                        fill: $hamburgerbg;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+  
+          .qualificationsinfo {
+            @include flex-column;
+            gap: size(40);
+            
+            .qualificationlist {
+              @include flex-column;
+              gap: size(8);
+  
+              &-item {
+                background: $white;
+                box-shadow: $cardshadow;
+                @include radius(10);
+                @include flex-center-between;
+                padding: size(8) size(16);
+                flex-wrap: wrap;
+                gap: size(4);
+  
+                .institute {
+                  &-name {
+                    @include font($primaryFont, 12, semibold, normal, 16.8);
+      
+                    @include breakpoint(tab992) {
+                      font-size: size(14);
+                    }
+                  }
+                }
+  
+                .duration {
+                  .coursedeadline {
+                    color: $darktext;
+                    @include font($primaryFont, 12, normal, normal, 16.8);
+      
+                    @include breakpoint(tab992) {
+                      font-size: size(14);
+                    }
+                  }
+                }
+  
+                .actions {
+                  @include flex-center-vert;
+                  gap: size(12);
+  
+                  .btn-edit,
+                  .btn-delete {
+                    @include square(24);
+                    @include circle;
+                    @include flex-center;
+                    overflow: hidden;
+    
+                    @include breakpoint(tab992) {
+                      @include square(37);
+                    }
+  
+                    svg {
+                      @include wh100;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .educationinfo {
+    &-info {
+      padding: size(32) size(20);
+    
+      @include breakpoint(tab992) {
+        padding: size(40);
+      }
+    }
+    
+    .details {
+      background: $white;
+      box-shadow: $cardshadow;
+      @include radius(10);
+      padding: size(20);
+      @include flex-column;
+      gap: size(20);
+
+      @include breakpoint(mobile768) {
+        padding: size(32);
+      }
+  
+      @include breakpoint(tab992) {
+        padding: size(48);
+      }
+
+      &-header {
+        @include flex-start;
+
+        .title {
+          color: $dropdownbg;
+          @include font($primaryFont, 16, semibold, normal, 22.4);
+          text-transform: uppercase;
+  
+          @include breakpoint(tab992) {
+            font-size: size(20);
+          }
+        }
+      }
+
+      &-body {
+        .emptyeducation {
+          @include flex-center-column;
+          gap: size(32);
+
+          .icon {
+            width: size(130);
+            height: size(104);
+            @include flex-center;
+            overflow: hidden;
+
+            svg {
+              @include wh100;
+            }
+          }
+
+          .info {
+            max-width: size(520);
+            text-align: center;
+
+            p {
+              color: $darktext;
+              @include font($primaryFont, 12, semibold, normal, 16.8);
+              text-transform: uppercase;
+      
+              @include breakpoint(tab992) {
+                font-size: size(14);
+              }
+            }
+          }
+        }
+
+        .btn-qualifications {
+          @include flex-center;
+          gap: size(8);
+          width: size(274);
+          height: size(44);
+          background: $white;
+          @include border(solid, 1, $hamburgerbg);
+          @include radius(5);
+          @include transitionsall;
+
+          .text {
+            @include font($primaryFont, 12, semibold, normal, 16.8);
+            letter-spacing: size(1.6);
+            text-transform: uppercase;
+
+            @include breakpoint(tab992) {
+              font-size: size(14);
+            }
+          }
+
+          .icon {
+            @include square(20);
+            @include circle;
+            overflow: hidden;
+          }
+
+          @include hover {
+            background: $hamburgerbg;
+
+            .text {
+              color: $white;
+            }
+
+            .icon {
+              svg {
+                g {
+                  path {
+                    fill: $white;
+                  }
+                }
+
+                defs {
+                  clipPath {
+                    rect {
+                      fill: $hamburgerbg;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .qualificationsinfo {
+          @include flex-column;
+          gap: size(40);
+          
+          .qualificationlist {
+            @include flex-column;
+            gap: size(8);
+
+            &-item {
+              background: $white;
+              box-shadow: $cardshadow;
+              @include radius(10);
+              @include flex-center-between;
+              padding: size(8) size(16);
+              flex-wrap: wrap;
+              gap: size(4);
+
+              .institute {
+                &-name {
+                  @include font($primaryFont, 12, semibold, normal, 16.8);
+    
+                  @include breakpoint(tab992) {
+                    font-size: size(14);
+                  }
+                }
+              }
+
+              .duration {
+                .coursedeadline {
+                  color: $darktext;
+                  @include font($primaryFont, 12, normal, normal, 16.8);
+    
+                  @include breakpoint(tab992) {
+                    font-size: size(14);
+                  }
+                }
+              }
+
+              .actions {
+                @include flex-center-vert;
+                gap: size(12);
+
+                .btn-edit,
+                .btn-delete {
+                  @include square(24);
+                  @include circle;
+                  @include flex-center;
+                  overflow: hidden;
+  
+                  @include breakpoint(tab992) {
+                    @include square(37);
+                  }
+
+                  svg {
+                    @include wh100;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .profileimage {
+    &-info {
+      padding: size(32) size(20);
+    
+      @include breakpoint(tab992) {
+        padding: size(40);
+      }
+
+      .details {
+        background: $white;
+        box-shadow: $cardshadow;
+        @include radius(10);
+        padding: size(20);
+        @include flex-center-column;
+        gap: size(20);
+
+        @include breakpoint(mobile768) {
+          padding: size(32);
+        }
+    
+        @include breakpoint(tab992) {
+          padding: size(48);
+        }
+
+        .default-thumb {
+          width: size((284));
+          height: size(348);
+          @include flex-center;
+          position: relative;
+          margin-bottom: size(20);
+
+          img {
+            @include wh100;
+            @include radius(10);
+          }
+
+          label {
+            position: absolute;
+            bottom: size(-12);
+            right: size(-28);
+            cursor: pointer;
+            @include square(56);
+            @include circle;
+            @include flex-center;
+            overflow: hidden;
+
+            svg {
+              @include wh100;
+            }
+          }
+        }
+
+        .updateinfo {
+
+          .btn-update {
+            width: size(274);
+            height: size(44);
+            @include setBgColor($white, $hamburgerbg);
+            @include border(solid, 1, $hamburgerbg);
+            @include radius(5);
+            @include font($primaryFont, 12, semibold, normal, 16.8);
+            letter-spacing: size(1.6);
+            text-transform: uppercase;
+            @include transitionsall;
+  
+            @include breakpoint(tab992) {
+              font-size: size(14);
+            }
+
+            @include hover {
+              @include setBgColor($hamburgerbg, $white);
+            }
+          }
+        }
+
+        .empty-info {
+          display: none;
+        }
+
+        &.emptyprofile {
+          .empty-info {
+            @include flex-center-column;
+            gap: size(4);
+            text-align: center;
+
+            p {
+              color: $lightdark;
+              @include font($primaryFont, 12, normal, normal, 16.8);
+              text-transform: uppercase;
+    
+              @include breakpoint(tab992) {
+                font-size: size(14);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

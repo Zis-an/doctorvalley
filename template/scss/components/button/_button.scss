@@ -1,0 +1,244 @@
+@use "../../global" as *;
+@use "../../partials" as *;
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  opacity: 1;
+  margin: 0;
+  padding: 0;
+  @include wh100;
+  overflow:hidden;
+
+  &:focus,
+  &:visited,
+  &:active {
+    box-shadow: none;
+    outline: none;
+  }
+
+  @include hover {
+    cursor: pointer;
+  }
+}
+
+.up-btn {
+  opacity: 1;
+  padding: size(12);
+  border: 0;
+}
+
+.btn-hamburger {
+  width: size(40);
+  height: size(40);
+  @include flex-center;
+  overflow: hidden;
+
+  span {
+    display:inline-block;
+    width: 80%;
+    height: size(2);
+    background: $white; //$hamburgerbg
+    position: relative;
+    transition: all .2s;
+
+    &::before,
+    &::after {
+      content:'';
+      position:absolute;
+      width: 100%;
+      background: $white;
+      height: size(2);
+      left: size(0);
+      transition:all .3s;
+    }
+
+    &::before {
+      top: size(8);
+    }
+
+    &::after {
+      bottom: size(8);
+    }
+
+    &.active {
+      background: transparent;
+
+      &::before,
+      &::after {
+        top: size(0);
+        left: size(0);
+        background: $hamburgerbg;
+      }
+
+      &::before {
+        @include rotate(45);
+      }
+
+      &::after {
+        @include rotate(-45);
+      }
+    }
+  }
+
+  @include hover {
+    span {
+      background: lighten($dropdownbg, 50%);
+  
+      &::before,
+      &::after {
+        background: lighten($dropdownbg, 50%);
+      }
+  
+      &::before {
+        left: size(4);
+      }
+  
+      &::after {
+        left: size(-4);
+      }
+
+      &.active {
+        background: transparent;
+  
+        &::before {
+          left: size(0);
+          background: $hamburgerbg;
+        }
+    
+        &::after {
+          left: size(0);
+          background: $hamburgerbg;
+        }
+      }
+    }
+  }
+}
+
+.btn-submit {
+  @include setBgColor($hamburgerbg, $white);
+  @include radius(8);
+  @include font($primaryFont, 12, bold, normal, 16.8);
+  text-align: center;
+  text-transform: uppercase;
+  height: size(36);
+  padding: size(8);
+  @include transitionsall;
+
+  @include breakpoint(tab992) {
+    font-size: size(14);
+  }
+
+  @include hover {
+    @include setBgColor($red, $white);
+  }
+}
+
+.btn-resend {
+  display: inline-block;
+  width: auto;
+  @include font($primaryFont, 13, semibold, normal, 18.2);
+  @include transitionsall;
+
+  @include hover {
+    color: $hamburgerbg;
+  }
+}
+
+.btn-read {
+	@include setBgColor($primary, $white);
+  @include font($secondaryFont, 12, semibold, normal, 16.8);
+	padding: size(16);
+	text-align: center;
+	@include flex-center;
+	@include w100;
+	@include radius(8);
+	text-align: center;
+	@include transitionsall;
+
+	@include breakpoint(mobile576) {
+		font-size: size(14);
+	}
+
+	@include hover {
+			@include setBgColor(darken($primary, 15%), $white);
+	}
+}
+
+.btn-send {
+	@include w100;
+	padding: size(12);
+	position: relative;
+	background: $white;
+	@include border(solid, 2, $primary);
+	@include radius(5);
+	@include flex-center;
+	text-align: center;
+	@include transitionsall;
+  width: size(200);
+
+	&::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		right: 0;
+		@include wh100;
+		background: $primary;
+		@include transitionsall;
+	}
+
+	.btn-text {
+		color: $white;
+		position: relative;
+    @include font($secondaryFont, 12, semibold, normal, 16.8);
+    text-transform: uppercase;
+
+		@include breakpoint(tab992) {
+			font-size: size(14);
+		}
+	}
+
+	@include hover {
+		.btn-text {
+			color: $primary;
+		}
+
+		&::before {
+			width: 0;
+		}
+	}
+}
+
+.btn-info {
+  cursor: pointer;
+  @include transparent-button;
+  @include square(40);
+  @include circle;
+  @include flex-center;
+  overflow: hidden;
+
+  svg {
+    @include wh100;
+  }
+}
+
+.btn-link {
+  color: $headerbg;
+  font-family: $secondaryFont;
+  font-size: size(13);
+  font-weight: 700;
+  letter-spacing: size(1.4);
+  text-transform: uppercase;
+  text-decoration: none;
+  @include transparent-button;
+  @include transitionsall;
+
+  @include hover {
+    color: $hamburgerbg;
+  }
+}

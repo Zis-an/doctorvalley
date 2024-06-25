@@ -1,0 +1,107 @@
+@use "../../global"as *;
+@use "../../partials"as *;
+
+.offcanvas {
+  height: 100vh;
+  @include w100;
+  background: $headerbg;
+
+  &.offcanvas-top {
+    border-bottom: 0;
+    height: 100vh;
+  }
+
+  &.offcanvas-bottom {
+    border-top: 0;
+  }
+
+  &.offcanvas-start {
+    border-right: 0;
+  }
+
+  &.offcanvas-end {
+    border-left: 0;
+  }
+
+  &-header {
+    .logo {
+      @include flex-center;
+      overflow: hidden;
+
+      img {
+        @include wh100;
+        object-fit: cover;
+      }
+    }
+
+    .btn-close {
+      @include square(20);
+      @include flex-center;
+      overflow: hidden;
+
+      &:focus {
+        box-shadow: none;
+        outline: none;
+      }
+
+      svg {
+        @include wh100;
+        @include transitiontransform;
+
+        path {
+          fill: $white;
+        }
+      }
+
+      @include hover {
+        opacity: 1;
+
+        svg {
+          @include rotate(180);
+
+          path {
+            fill: $hamburgerbg;
+          }
+        }
+      }
+    }
+  }
+
+  &-body {
+    .mobilelist {
+      @include list-vertical;
+      gap: size(8);
+
+      &-link {
+        @include border-single(bottom, solid, 1, $white);
+        color: $white;
+        display: inline-block;
+        @include font($secondaryFont, 14, bold, normal, 19.6);
+        letter-spacing: size(0.48);
+        padding: size(8) size(0);
+        @include w100;
+        text-transform: uppercase;
+        @include transitionsall;
+
+        &:hover:not(.active) {
+          color: $primary;
+          border-color: $primary;
+        }
+
+        &.active {
+          color: $primary;
+          border-color: $primary;
+        }
+      }
+    }
+
+    &::-webkit-scrollbar {
+      background: transparent;
+      width: size(8);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      @include radius(8);
+    }
+  }
+}

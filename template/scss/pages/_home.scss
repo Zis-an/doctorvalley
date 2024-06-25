@@ -1,0 +1,11 @@
+@use "../global" as *;
+@use "../partials" as *;
+
+.viewscounter {
+  @include flex-column;
+  gap: size(24);
+}
+
+.schedulefield {
+  height: size(44);
+}

@@ -1,0 +1,470 @@
+@use "../global" as *;
+@use "../partials" as *;
+
+.chambersection {
+  &-details {
+    @include flex-column;
+    gap: size(20);
+  }
+
+  &-header {
+    padding-bottom: size(14);
+    @include border-single(bottom, solid, 1, $hamburgerbg);
+    @include flex-center-between;
+    flex-wrap: wrap;
+    gap: size(8);
+
+    .title {
+      color: $dropdownbg;
+      @include font($secondaryFont, 16, bold, normal, 22.4);
+      text-transform: uppercase;
+
+      @include breakpoint(tab992) {
+        font-size: size(18);
+      }
+
+      @include breakpoint(desktop1200) {
+        font-size: size(20);
+      }
+    }
+
+    .searchbox {
+      @include flex-center-vert;
+      @include radius(10);
+      overflow: hidden;
+      
+      .searchfield {
+        width: calc(100% - size(36));
+        height: size(36);
+        padding: size(8) size(16);
+        @include setBgColor($white, $black);
+        letter-spacing: size(0.15);
+
+        &::placeholder {
+          color: $textgray;
+        }
+      }
+      
+      .btn-search {
+        @include square(36);
+        background: $hamburgerbg;
+      }
+    }
+  }
+
+  &-body {
+    @include flex-column;
+    gap: size(32);
+
+    .nav-tabs {
+      border: none;
+      @include w100;
+      background: $white;
+      @include border(solid, 1, $lightbg);
+      gap: size(4);
+      padding: size(8) size(16);
+      @include radius(8);
+
+      @include breakpoint(tab992) {
+        gap: size(8);
+      }
+
+      &-item {
+        &:first-child,
+        &:last-child {
+          .nav-link {
+            @include radius(0);
+          }
+        }
+      }
+
+      .nav-link {
+        @include setBgColor($white, $selectcolor);
+        border: none;
+        @include radius(50);
+        @include font($secondaryFont, 14, normal, normal, 19.6);
+        @include flex-center;
+        letter-spacing: size(0.15);
+        margin: size(0);
+        padding: size(6) size(12);
+        @include transitionsall;
+
+        @include breakpoint(tab992) {
+          padding: size(8) size(20);
+        }
+
+        &:hover:not(.active) {
+          border: none;
+          @include setBgColor($hamburgerbg, $white);
+        }
+
+        &.active {
+          border: none;
+          @include setBgColor($hamburgerbg, $white);
+        }
+      }
+    }
+
+    .emptydoctors {
+      @include flex-column;
+      min-height: 60vh;
+      @include flex-center-column;
+      text-align: center;
+      gap: size(32);
+
+      &-header {
+        @include flex-center-column;
+        gap: size(24);
+
+        .icon {
+          @include square(100);
+          @include flex-center;
+          overflow: hidden;
+
+          svg {
+            @include wh100;
+          }
+        }
+
+        .title {
+          color: $black;
+          font-size: size(24);
+          font-family: $secondaryFont;
+
+          @include breakpoint(tab992) {
+            font-size: size(30);
+          }
+        }
+      }
+
+      &-body {
+        @include flex-center-column;
+
+        .text {
+          color: $textgray;
+          font-family: $secondaryFont;
+          font-size: size(14);
+
+          a {
+            text-decoration: underline;
+            color: $hamburgerbg;
+            font: inherit;
+            font-style: italic;
+            display: inline-block;
+            width: size(60);
+            @include transitionsall;
+
+            @include hover {
+              text-decoration: none;
+            }
+          }
+        }
+      }
+    }
+
+    .mydoctors {
+      @include flex-column;
+      gap: size(20);
+    }
+  }
+}
+
+.createschedule {
+  background: $white;
+  padding: size(16);
+
+  @include breakpoint(tab992) {
+    padding: size(32);
+  }
+
+  .detail {
+    @include flex-column;
+    gap: size(16);
+
+    .name {
+      color: $dropdownbg;
+      @include font($secondaryFont, 24, semibold, normal, 33.6);
+
+      @include breakpoint(mobile768) {
+       font-size: size(28);
+      }
+
+      span {
+        color: $hamburgerbg;
+        font: inherit;
+      }
+    }
+
+    .text {
+      color: $dropdownbg;
+      @include font($secondaryFont, 14, normal, normal, 19.6);
+
+      @include breakpoint(tab992) {
+       font-size: size(16);
+      }
+    }
+  }
+
+  .thumbnail {
+    @include square(150);
+    @include flex-center;
+    overflow: hidden;
+    margin-inline: auto;
+    
+    @include breakpoint(mobile768) {
+      margin-left: auto;
+    }
+
+    img {
+      @include wh100;
+      object-fit: cover;
+    }
+  }
+}
+
+.singleschedulebox {
+  width: calc(100% - size(40));
+}
+
+.schedulesbutton {
+  @include flex-center-column;
+  gap: size(16);
+  margin-top: auto;
+  justify-content: flex-end;
+  @include h100;
+
+  @include breakpoint(mobile768) {
+    margin-top: size(-24);
+  }
+
+  button {
+    width: size(180);
+    height: size(36);
+    @include flex-center;
+    text-align: center;
+    @include radius(5);
+    padding: size(8);
+    text-transform: uppercase;
+    font-family: $secondaryFont;
+    font-size: size(13);
+    font-weight: 600;
+    letter-spacing: size(1.6)
+  }
+
+  .btn-special {
+    @include setBgColor($closebg, $white);
+  }
+
+  .btn-save {
+    @include setBgColor($hamburgerbg, $white);
+  }
+}
+
+.mc-calendar {
+  z-index: 1300;
+}
+
+.noteform {
+  @include flex-column;
+  gap: size(16);
+}
+
+.scheduletable {
+  background: $white;
+  @include radius(10);
+  padding: size(16);
+  @include flex-column;
+  gap: size(24);
+
+  @include breakpoint(tab992) {
+    padding: size(24);
+  }
+
+  &-header {
+    .title {
+      color: $black;
+      font-size: size(16);
+      font-family: $secondaryFont;
+      font-weight: 600;
+
+      @include breakpoint(tab992) {
+        font-size: size(18);
+      }
+    }
+  }
+
+  table {
+    background: $white;
+
+    td {
+      color: $black;
+      font-family: $secondaryFont;
+      font-size: size(14);
+      font-weight: 700;
+
+      &:first-child {
+        text-align: center;
+      }
+    }
+
+    .docschedules {
+      @include flex-column;
+
+      .detail {
+        @include flex-column;
+        gap: size(4);
+        @include border-single(bottom, solid, 1, $border-1);
+        padding: size(12);
+
+        &:last-child {
+          padding-bottom: size(0);
+          border-bottom: size(0);
+        }
+
+        .name {
+          color: $dropdownbg;
+          font-family: $secondaryFont;
+          font-size: size(16);
+          font-weight: 600;
+        }
+
+        .time {
+          font-weight: 400;
+          font-size: size(13);
+          font-family: $secondaryFont;
+        }
+      }
+    }
+  }
+}
+
+.dashtodaydoctors {
+  background: $white;
+  @include radius(10);
+  padding: size(16);
+  @include flex-column;
+  gap: size(24);
+
+  @include breakpoint(tab992) {
+    padding: size(24);
+  }
+
+  &-header {
+    .title {
+      color: $black;
+      font-size: size(16);
+      font-family: $secondaryFont;
+      font-weight: 600;
+
+      @include breakpoint(tab992) {
+        font-size: size(18);
+      }
+    }
+  }
+}
+
+.viewschedule {
+  @include flex-center;
+
+  .link {
+    color: $headerbg;
+    font-family: $secondaryFont;
+    font-size: size(13);
+    font-weight: 700;
+    letter-spacing: size(1.4);
+    text-transform: uppercase;
+    @include transitionsall;
+
+    @include hover {
+      color: $hamburgerbg;
+    }
+  }
+}
+
+.requestlist {
+  @include flex-column;
+  gap: size(16);
+
+  @include breakpoint(tab992) {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .request {
+    background: $white;
+    @include radius(10);
+    @include flex-column;
+    gap: size(16);
+    padding: size(16);
+
+    @include breakpoint(tab992) {
+      width: calc(100% / 2 - size(16));
+    }
+
+    &-info {
+      @include flex-center-vert;
+      gap: size(12);
+
+      .request-thumbnail {
+        @include square(80);
+        @include radius(8);
+        @include flex-center;
+        overflow: hidden;
+
+        img {
+          @include wh100;
+          object-fit: cover;
+        }
+      }
+
+      .request-detail {
+        @include flex-column;
+        gap: size(4);
+
+        .namerequest {
+          color: $black;
+          font-size: size(14);
+          font-weight: 600;
+        }
+
+        .textrequest {
+          color: $textprimary;
+          font-size: size(12);
+          font-weight: 500;
+          @include line-clamp;
+        }
+      }
+    }
+
+    &-actions {
+      @include flex-center-vert;
+      gap: size(12);
+
+      button {
+        @include radius(8);
+        @include flex-center;
+        font-size: size(13);
+        font-weight: 700;
+        padding: size(8) size(16);
+        text-align: center;
+        max-width: size(130);
+      }
+
+      .btn-accept {
+        @include setBgColor($successbg, $white);
+
+        @include hover {
+          @include setBgColor(darken($successbg, 10%), $white);
+        }
+      }
+      
+      .btn-decline {
+        @include setBgColor($hamburgerbg, $white);
+
+        @include hover {
+          @include setBgColor(darken($hamburgerbg, 10%), $white);
+        }
+      }
+    }
+  }
+}

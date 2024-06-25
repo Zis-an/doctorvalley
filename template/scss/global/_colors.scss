@@ -1,0 +1,101 @@
+// DEFAULT COLORS
+$bodybg: hsl(0, 3%, 94%); //#EFEEEE
+$white: hsl(0, 0%, 100%); //#ffffff
+$black: hsl(0, 0%, 0%); //#000000
+
+// THEME-COLORS
+$primary: hsl(0deg, 100%, 64%); //#ff4747
+
+// BACKGROUND-COLORS
+$dropdownbg: hsl(226, 20%, 20%); //#292E3E
+$hamburgerbg: hsl(5, 86%, 56%); //#F04130
+$headerbg: hsl(0, 3%, 6%); //#0F0E0E
+$lightdark: hsl(214, 28%, 15%); //#1B2430
+$lightbg: hsl(0, 0%, 94%); //#F0F0F0
+$contactbg: hsl(0, 23%, 16%); //#332020
+$activeweek: hsl(30, 2%, 18%); //#302F2E
+$progressbg: hsl(0, 0%, 85%); //#D9D9D9
+$footerbg: hsl(225, 6%, 13%); //#1f2023
+$calendarbg: hsl(241, 86%, 56%); //#3430F0
+
+$successbg: hsl(137, 55%, 55%); //#4ECB71
+$graybg: hsl(0, 0%, 77%); //#C4C4C4
+$lightdanger: hsl(0, 64%, 90%); //#F6D6D6
+$activebg: hsl(0, 67%, 90%); //#F7D6D6
+$closebg: hsl(5, 5%, 49%); //#837776
+
+// ICON-BACKGROUNDS
+
+
+// TEXT-COLORS
+$textprimary: hsl(231, 15%, 24%); //#343747
+$darktext: hsl(0, 0%, 10%); //#191919
+$linkcolor: hsl(220, 2%, 68%); //#ADAEB0
+$textgray: hsl(0, 0%, 63%); //#A1A1A1
+$contactcolor: hsl(0, 16%, 82%); //#D9CACA
+$authortext: hsl(233, 3%, 50%); //#7C7D84
+$textimpression: hsl(0, 7%, 52%); //#8C7B7B
+$selectcolor: hsl(0, 3%, 17%); //#2D2A2A
+$alertcolor: hsl(0, 0%, 44%); //#707070
+$textplaceholder: hsl(214, 20%, 69%); //#a0aec0
+$headingtext: hsl(0, 0%, 9%); //#171717
+$graytext: hsl(218, 17%, 35%); //#4a5568
+$placeholderText: hsl(240, 6%, 73%); //#B5B5BD
+$textLabel: hsl(210, 21%, 33%); //#425466
+$textcolor: hsl(0, 2%, 51%); //#847E7E
+
+// SUCCESS COLOR
+
+
+// DANGER COLOR
+$dangercolor: hsl(343, 79%, 50%); //#E31B54
+$red: hsl(1, 71%, 54%); //#dd3936
+$dangertext: hsl(0, 84%, 50%); //#EB1515
+
+// LINEAR-BACKGROUNDS
+$linearbg: linear-gradient(180deg, rgba(240, 65, 48, 0) 0%, rgba(240, 65, 48, 0.0979167) 48.96%, rgba(240, 65, 48, 0.2) 100%);
+
+// BORDER-COLORS
+$orborder: hsl(0, 0%, 85%); //#DADADA
+$border-1: hsl(210, 14%, 89%); //#dee2e6
+
+$gray-100:hsl(204, 45%, 98%); //#F7FAFC
+$gray-200:hsl(210, 38%, 95%); //#EDF2F7
+$gray-300:hsl(214, 32%, 91%); //#E2E8F0
+$gray-500:hsl(214, 20%, 69%); //#A0AEC0
+$gray-600:hsl(216, 15%, 52%); //#718096
+$gray-700:hsl(218, 17%, 35%); //#4A5568
+$gray-800:hsl(218, 23%, 23%); //#2D3748
+$allblogsbg: hsl(0, 0%, 96%); //#F5F5F5
+
+$labeltext: hsl(210, 11%, 15%); //#212529
+
+// SOCIAL-COLORS
+$facebookbg: hsl(221, 44%, 41%); //#3b5998
+$twitterbg: hsl(197, 100%, 47%); //#00acee
+$instagrambg: hsl(207, 42%, 43%); //#3f729b
+$linkedinbg: hsl(201, 100%, 35%); //#0072b1
+
+$cardborder-1: hsl(256, 85%, 58%); //#6938EF
+$cardborder-2: hsl(343, 79%, 50%); //#E31B54
+$cardborder-3: hsl(17, 92%, 48%); //#EC4A0A
+$cardborder-4: hsl(215, 87%, 51%); //#1570EF
+$cardborder-5: hsl(232, 36%, 38%); //#3E4784
+$cardborder-6: hsl(215, 87%, 51%); //#1570EF
+$cardborder-7: hsl(325, 73%, 51%); //#DD2590
+$cardborder-8: hsl(237, 77%, 59%); //#444CE7
+
+// SHADOWS
+$shade-1: rgba(72, 75, 137, 0.2);
+
+// BOX-SHADOWS
+$cardshadow: .25rem .25rem 1rem .1875rem $shade-1;
+$authshadow: 0 .375rem 1rem 0 rgba($black, 0.2);
+$profileshadow: drop-shadow(0 .25rem .25rem rgba($black, .25));
+
+// LETTER-SPECING
+$specing-1: size(0.24);
+$specing-2: size(0.48);
+
+// ANIMATION VARIABLES
+$sidebarcollapse: cubic-bezier(1.000, 0.335, 0.890, 0.825);

@@ -1,0 +1,432 @@
+@use '../../global' as *;
+@use '../../partials' as *;
+
+.form-control,
+.form-select {
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+}
+
+.form-control.is-invalid, .was-validated .form-control:invalid {
+  box-shadow: none;
+  
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+}
+
+.form-item {
+  position: relative;
+  margin-bottom: size(15);
+
+  input {
+    display: block;
+    min-width: size(300);
+    max-width: size(400);
+    height: size(40);
+    background: transparent;
+    border: solid 1px #ccc;
+    @include border(solid, 1, #ccc);
+    transition: all .3s ease;
+    padding: 0 size(15);
+
+    &:focus{
+      border-color: blue
+    }
+  }
+
+  input, label {
+    position: absolute;
+    cursor: text;
+    z-index: 2;
+    top: 13px;
+    left: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    background: #fff;
+    padding: 0 10px;
+    color: #999;
+    transition: all .3s ease
+  }
+
+  input:focus + label,
+  input:valid + label {
+    font-size: 11px;
+    top: -5px
+  }
+
+  input:focus + label{
+    color: blue
+  }
+}
+
+.form-check {
+  margin: size(0);
+
+  &-input {
+    background-color: $textgray;
+    border-color: $textgray;
+    
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+
+    &:not(:checked)[type=checkbox] {
+      --bs-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
+      background-image: var(--bs-form-switch-bg);
+      background-color: $textgray;
+      border-color: $textgray;
+    }
+  }
+}
+
+.form-switch {
+  padding: size(0);
+
+  .form-check-input {
+    cursor: pointer;
+    margin: size(0);
+    width: size(55);
+    height: size(28);
+    --bs-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
+    background-image: var(--bs-form-switch-bg);
+  
+    &:checked {
+      background-color: $hamburgerbg;
+      border-color: $hamburgerbg;
+    }
+  }
+}
+
+label {
+  color: $dropdownbg;
+  @include font($primaryFont, 14, normal, normal, 19.6);
+  
+  span {
+    color: $dangertext;
+  }
+}
+
+.form-control {
+  color: $dropdownbg;
+  border-color: rgba($dropdownbg, 0.2);
+  @include font($primaryFont, 14, normal, normal, 19.6);
+  padding: size(11) size(16);
+  @include transitionsall;
+
+  &::placeholder {
+    color: $textgray;
+  }
+
+  &:focus {
+    border-color: $dropdownbg;
+  }
+
+  &:disabled {
+    background: $progressbg;
+    border: none;
+    @include radius(0);
+  }
+}
+
+.schedulefield {
+  @include radius(0);
+}
+
+.inputbox {
+  @include flex-column;
+  gap: size(8);
+
+  .select-dropdown__button {
+    background: $white;
+    color: $darktext;
+    @include border(solid, 1, rgba($dropdownbg, 0.2));
+    @include radius(6);
+    padding: size(11) size(16);
+    height: size(43.5);
+    @include transitionsall;
+
+    .select-dropdown--0 {
+      color: $dropdownbg;
+      @include font($primaryFont, 12, normal, normal, 16.8);
+    }
+
+    .arrowicon {
+      svg {
+        path {
+          fill: $textgray;
+        }
+      }
+    }
+
+    &:focus {
+      border-color: $dropdownbg;
+    }
+  }
+
+  .error-message {
+    color: $dangertext;
+    @include font($primaryFont, 12, normal, normal, 16.8);
+  }
+}
+
+.edubtns {
+  @include flex-center-vert;
+  gap: size(24);
+  margin-top: size(20);
+
+  .btn-profile-add,
+  .btn-profile-close {
+    width: size(124);
+    height: size(36);
+    @include flex-center;
+    text-align: center;
+    @include font($primaryFont, 12, semibold, normal, 16.8);
+    @include radius(5);
+    padding: size(6);
+    letter-spacing: size(1.6);
+    @include transitionsall;
+
+    @include breakpoint(tab992) {
+      font-size: size(14);
+    }
+  }
+
+  .btn-profile-add {
+    @include setBgColor($hamburgerbg, $white);
+
+    @include hover {
+      @include setBgColor($dangercolor, $white);
+    }
+  }
+  
+  .btn-profile-close {
+    @include setBgColor($closebg, $white);
+
+    @include hover {
+      @include setBgColor($alertcolor, $white);
+    }
+  }
+}
+
+.checkfield {
+  @include flex-center-vert;
+
+  .checkinput {
+    &:checked ~ .checklabel {
+      &::before {
+        background: $hamburgerbg;
+        border-color: $hamburgerbg;
+      }
+      
+      &::after {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+
+  .checklabel {
+    position: relative;
+    padding-left: size(26);
+    cursor: pointer;
+    color: $dropdownbg;
+    @include font($primaryFont, 12, normal, normal, 16.8);
+    letter-spacing: size(0.4);
+
+    @include breakpoint(tab992) {
+      font-size: size(14);
+    }
+
+    &::selection {
+      @include setBgColor(transparent, $dropdownbg);
+    }
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+    }
+
+    &::before {
+      left: 0;
+      @include translateY(-50%);
+      @include square(18);
+      background: $progressbg;
+      @include border(solid, 2, $progressbg);
+    }
+
+    &::after {
+      width: size(5);
+      height: size(10);
+      @include border(solid, 2, $white);
+      @include transform(translateY(-60%) rotate(45deg));
+      border-top: 0;
+      border-left: 0;
+      left: size(7);
+      opacity: 0;
+      visibility: hidden;
+      @include transitionsall;
+    }
+  }
+}
+
+.tagswrapper {
+  @include flex-center-vert;
+  gap: size(4) size(12);
+  @include border(solid, 1, rgba($dropdownbg, 0.2));
+  @include radius(6);
+  min-height: size(44);
+  padding: size(8);
+  @include transitionsall;
+  flex-wrap: wrap;
+
+  &:focus {
+    border-color: $dropdownbg;
+  }
+
+  .tag {
+    position: relative;
+    @include setBgColor($hamburgerbg, $white);
+    @include text-overflow;
+    @include w100;
+    height: size(36);
+    @include radius(10);
+    @include font($primaryFont, 12, normal, normal, 16.8);
+    @include flex-center-vert;
+    text-align: left;
+    padding-left: size(8);
+
+    @include breakpoint(mobile576) {
+      width: size(145);
+    }
+    
+    @include breakpoint(tab992) {
+      font-size: size(14);
+    }
+
+    button {
+      @include square(38);
+      @include flex-center;
+      overflow: hidden;
+      position: absolute;
+      top: size(-1);
+      right: size(-1);
+
+      svg {
+        @include wh100;
+      }
+    }
+
+    input {
+      @include font($primaryFont, 12, normal, normal, 16.8);
+    
+      @include breakpoint(tab992) {
+        font-size: size(14);
+      }
+    }
+  }
+}
+
+.socialbox {
+  @include border(solid, 1, rgba($dropdownbg, 0.2));
+  @include radius(6);
+  height: size(44);
+  @include flex-center-vert;
+  gap: size(12);
+
+  .icon {
+    @include square(44);
+    @include flex-center;
+    overflow: hidden;
+    @include border-single(right, solid, 1, rgba($dropdownbg, 0.2));
+
+    i {
+      font-size: size(20);
+    }
+  }
+
+  .detail {
+    width: calc(100% - size(56));
+
+    input {
+      @include font($primaryFont, 14, normal, normal, 19.6);
+      @include w100;
+    }
+  }
+}
+
+.gender {
+  @include flex-center-vert;
+  gap: size(8) size(48);
+  flex-wrap: wrap;
+
+  &-box {
+    @include flex-center-vert;
+    gap: size(8) size(16);
+    flex-wrap: wrap;
+
+    .gender-single {
+
+      input[type="radio"] {
+        &:checked ~ label {
+          background: $hamburgerbg;
+
+          .icon {
+            svg {
+              path {
+                fill: $white;
+              }
+            }
+          }
+
+          .gentext {
+            color: $white;
+          }
+        }
+      }
+
+      label {
+        background: $progressbg;
+        width: size(300);
+        height: size(44);
+        @include radius(10);
+        @include flex-center;
+        gap: size(20);
+        cursor: pointer;
+
+        @include breakpoint(mobile576) {
+          width: size(150);
+        }
+
+        .icon {
+          @include square(24);
+          @include flex-center;
+          overflow: hidden;
+
+          svg {
+            @include wh100;
+          
+            path {
+              fill: $darktext;
+            }
+          }
+        }
+
+        .gentext {
+          color: $darktext;
+          @include font($primaryFont, 12, normal, normal, 16.8);
+    
+          @include breakpoint(tab992) {
+            font-size: size(14);
+          }
+        }
+      }
+    }
+  }
+}
