@@ -62,28 +62,12 @@
     <!-- TOOLTIP -->
     <script src="{{ asset('assets/js/tooltip/tooltip.js') }}"></script>
 
-    <!-- LOTTIE-JS -->
-    <script src="{{ asset('assets/js/lottie-js/lottie-player.js') }}"></script>
-
-    <!-- PRELOADER -->
-    <script src="{{ asset('assets/js/loader/loader.js') }}"></script>
-
-    <!-- CHARTS -->
-    <script src="{{ asset('assets/js/charts/homechart.js') }}"></script>
-
-    <!-- MC-DATEPICKER -->
-    <script src="{{ asset('assets/js/mc-datepicker/mc-calendar.min.js') }}"></script>
-
-    <script src="{{ asset('assets/js/filter/deadline.js') }}"></script>
-
     <!-- AUTO-INCREMENT -->
     <script src="{{ asset('assets/js/autoincrement/increment.js') }}"></script>
 
     @stack('before-scripts')
-
     <!-- App js -->
     @vite(['resources/js/backend.js', 'resources/js/app.js'])
-
     @stack('after-scripts')
 
 </body>

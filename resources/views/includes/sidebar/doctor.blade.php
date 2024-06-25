@@ -65,7 +65,7 @@
         <!-- USERINFO-LIST -->
         <ul class="userlist">
             <li class="userlist-item">
-                <a href="feedback.html" class="userlist-link" data-bs-toggle="tooltip" data-bs-placement="right"
+                <a href="{{ route('doctor.feedback') }}" class="userlist-link" data-bs-toggle="tooltip" data-bs-placement="right"
                     data-bs-title="Your Feedback">
                     <span class="icon">
                         <svg width="20" height="18" viewBox="0 0 20 18" fill="none"

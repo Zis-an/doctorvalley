@@ -232,39 +232,43 @@
 
 
     <!-- SPECIAL-NOTE MODAL -->
-  <div class="modal fade" id="specialNoteModal" tabindex="-1" aria-labelledby="specialNoteModal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Special Note</h5>
-        </div>
-        <div class="modal-body">
-          <form class="noteform">
-            <div class="inputbox">
-              <label for="date" class="inputlabel">
-                Select Date <span>*</span>
-              </label>
-              <input type="date" id="date" class="form-control" placeholder="28/11/2023">
-            </div>
+    <div class="modal fade" id="specialNoteModal" tabindex="-1" aria-labelledby="specialNoteModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Special Note</h5>
+                </div>
+                <div class="modal-body">
+                    <form class="noteform">
+                        <div class="inputbox">
+                            <label for="date" class="inputlabel">
+                                Select Date <span>*</span>
+                            </label>
+                            <input type="date" id="date" class="form-control" placeholder="28/11/2023">
+                        </div>
 
-            <div class="inputbox">
-              <label for="specialnote" class="inputlabel">
-                Special Note
-              </label>
+                        <div class="inputbox">
+                            <label for="specialnote" class="inputlabel">
+                                Special Note
+                            </label>
 
-              <textarea id="specialnote" class="form-control" rows="5"></textarea>
+                            <textarea id="specialnote" class="form-control" rows="5"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer justify-content-end gap-3">
+                    <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-remove">Save</button>
+                </div>
             </div>
-          </form>
         </div>
-        <div class="modal-footer justify-content-end gap-3">
-          <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-remove">Save</button>
-        </div>
-      </div>
     </div>
-  </div>
-
-
-
-
 @endsection
+
+@push('after-scripts')
+    <!-- MC-DATEPICKER -->
+    <script src="../../assets/js/mc-datepicker/mc-calendar.min.js"></script>
+    <script src="../../assets/js/mc-datepicker/selectdate.js"></script>
+    <!-- CHECK-ALL -->
+    <script src="../../assets/js/allcheck/checkall.js"></script>
+@endpush

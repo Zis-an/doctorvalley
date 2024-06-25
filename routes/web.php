@@ -38,6 +38,8 @@ Route::get('/doctor/profile', [TemplateRenderController::class, 'doctor_profile'
 Route::get('/doctor/notifications', [TemplateRenderController::class, 'doctor_notifications'])->name('doctor.notifications');
 Route::get('/doctor/schedule', [TemplateRenderController::class, 'doctor_schedule'])->name('doctor.schedule');
 Route::get('/doctor/blogs', [TemplateRenderController::class, 'doctor_blogs'])->name('doctor.blogs');
+Route::get('/doctor/add-post', [TemplateRenderController::class, 'doctor_add_post'])->name('doctor.add.post');
+Route::get('/doctor/feedback', [TemplateRenderController::class, 'doctor_feedback'])->name('doctor.feedback');
 
 // Backoffice
 Route::get('/backoffice/dashboard', [TemplateRenderController::class, 'backoffice_dashboard'])->name('backoffice.dashboard');

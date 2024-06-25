@@ -30,7 +30,7 @@
                     </div>
 
                     <div class="addpost">
-                        <a href="add-post.html" class="btn-add">
+                        <a href="{{ route('doctor.add.post') }}" class="btn-add">
                             <span class="text">ADD POST</span>
                             <span class="icon">
                                 <svg width="20" height="21" viewBox="0 0 20 21" fill="none"
@@ -294,6 +294,4 @@
 
 @push('after-scripts')
     <script src="../../assets/js/selets/select.js"></script>
-    <!-- PRELOADER -->
-    <script src="../../assets/js/loader/loader.js"></script>
 @endpush
