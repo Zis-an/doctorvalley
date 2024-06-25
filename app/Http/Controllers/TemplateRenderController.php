@@ -182,4 +182,38 @@ class TemplateRenderController extends Controller
     }
 
     // Doctor Ends
+
+    // Frontend Starts
+
+    public function frontend_index()
+    {
+        return view('frontend.index');
+    }
+
+    public function frontend_doctors()
+    {
+        return view('frontend.doctors');
+    }
+
+    public function frontend_doctor_details()
+    {
+        return view('frontend.doctorDetails');
+    }
+
+    public function frontend_blogs()
+    {
+        return view('frontend.blogs');
+    }
+
+    public function frontend_blog_details()
+    {
+        return view('frontend.blogDetails');
+    }
+
+    public function frontend_contact()
+    {
+        return view('frontend.contact');
+    }
+
+    // Frontend Ends
 }
