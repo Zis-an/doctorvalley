@@ -79,7 +79,7 @@
                                         <td class="text-center">ইউরোলোজি বিশেষজ্ঞ</td>
                                         <td>
                                             <div class="actions">
-                                                <a href="create-category.html" class="btn-action">
+                                                <a href="{{ route('backoffice.speciality.create') }}" class="btn-action">
                                                     <svg data-bs-toggle="tooltip" data-bs-placement="top"
                                                         data-bs-title="Edit Speciality" xmlns="http://www.w3.org/2000/svg"
                                                         width="16" height="16" fill="currentColor"
@@ -119,7 +119,7 @@
                                         <td class="text-center">ক্যান্সার ও টিউমার বিশেষজ্ঞ</td>
                                         <td>
                                             <div class="actions">
-                                                <a href="create-category.html" class="btn-action">
+                                                <a href="{{ route('backoffice.speciality.create') }}" class="btn-action">
                                                     <svg data-bs-toggle="tooltip" data-bs-placement="top"
                                                         data-bs-title="Edit Area" xmlns="http://www.w3.org/2000/svg"
                                                         width="16" height="16" fill="currentColor"
@@ -159,7 +159,7 @@
                                         <td class="text-center">গাইনী ও প্রসূতি বিশেষজ্ঞ</td>
                                         <td>
                                             <div class="actions">
-                                                <a href="create-category.html" class="btn-action">
+                                                <a href="{{ route('backoffice.speciality.create') }}" class="btn-action">
                                                     <svg data-bs-toggle="tooltip" data-bs-placement="top"
                                                         data-bs-title="Edit Area" xmlns="http://www.w3.org/2000/svg"
                                                         width="16" height="16" fill="currentColor"
@@ -199,7 +199,7 @@
                                         <td class="text-center">গ্যাস্ট্রোলিভার বিষেশজ্ঞ</td>
                                         <td>
                                             <div class="actions">
-                                                <a href="create-category.html" class="btn-action">
+                                                <a href="{{ route('backoffice.speciality.create') }}" class="btn-action">
                                                     <svg data-bs-toggle="tooltip" data-bs-placement="top"
                                                         data-bs-title="Edit Area" xmlns="http://www.w3.org/2000/svg"
                                                         width="16" height="16" fill="currentColor"
@@ -239,7 +239,7 @@
                                         <td class="text-center">চর্ম ও যৌন রোগ বিশেষজ্ঞ</td>
                                         <td>
                                             <div class="actions">
-                                                <a href="create-category.html" class="btn-action">
+                                                <a href="{{ route('backoffice.speciality.create') }}" class="btn-action">
                                                     <svg data-bs-toggle="tooltip" data-bs-placement="top"
                                                         data-bs-title="Edit Area" xmlns="http://www.w3.org/2000/svg"
                                                         width="16" height="16" fill="currentColor"
@@ -332,4 +332,19 @@
         </div>
     </main>
     <!-- MAIN-SECTION END -->
+
+    <!-- DELETE-CONFIRM MODAL -->
+    <div class="modal fade pe-0" id="confirmModal" tabindex="-1" aria-labelledby="confirmModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h5 class="delete-title">Are you sure you want to disabled?</h5>
+                </div>
+                <div class="modal-footer justify-content-end gap-3">
+                    <button type="button" class="btn-remove">Yes</button>
+                    <button type="button" class="btn-cancel" data-bs-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

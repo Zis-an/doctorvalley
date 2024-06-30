@@ -91,7 +91,7 @@ class TemplateRenderController extends Controller
     {
         return view('backoffice.notifications');
     }
-
+    
     // Backoffice Ends
 
 

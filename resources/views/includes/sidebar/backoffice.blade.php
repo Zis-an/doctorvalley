@@ -4,8 +4,8 @@
           <!-- MAIN-LIST -->
           <ul class="sidelist">
               <li class="sidelist-item">
-                  <a href="{{ route('backoffice.dashboard') }}" class="sidelist-link active" data-bs-toggle="tooltip" data-bs-placement="right"
-                      data-bs-title="DashBoard">
+                  <a href="{{ route('backoffice.dashboard') }}" class="sidelist-link active" data-bs-toggle="tooltip"
+                      data-bs-placement="right" data-bs-title="DashBoard">
                       <span class="icon">
                           <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
                               xmlns="http://www.w3.org/2000/svg">
@@ -19,8 +19,8 @@
               </li>
 
               <li class="sidelist-item">
-                  <a href="{{ route('backoffice.doctor.create') }}" class="sidelist-link" data-bs-toggle="tooltip" data-bs-placement="right"
-                      data-bs-title="Create Doctor">
+                  <a href="{{ route('backoffice.doctor.create') }}" class="sidelist-link" data-bs-toggle="tooltip"
+                      data-bs-placement="right" data-bs-title="Create Doctor">
                       <span class="icon">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#F04130"
                               class="bi bi-person-fill" viewBox="0 0 16 16">
@@ -32,8 +32,8 @@
               </li>
 
               <li class="sidelist-item">
-                  <a href="{{ route('backoffice.doctor.list') }}" class="sidelist-link" data-bs-toggle="tooltip" data-bs-placement="right"
-                      data-bs-title="Doctor List">
+                  <a href="{{ route('backoffice.doctor.list') }}" class="sidelist-link" data-bs-toggle="tooltip"
+                      data-bs-placement="right" data-bs-title="Doctor List">
                       <span class="icon">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#F04130"
                               class="bi bi-people-fill" viewBox="0 0 16 16">
@@ -46,8 +46,8 @@
               </li>
 
               <li class="sidelist-item">
-                  <a href="{{ route('backoffice.chamber.create') }}" class="sidelist-link" data-bs-toggle="tooltip" data-bs-placement="right"
-                      data-bs-title="Create Chamber">
+                  <a href="{{ route('backoffice.chamber.create') }}" class="sidelist-link" data-bs-toggle="tooltip"
+                      data-bs-placement="right" data-bs-title="Create Chamber">
                       <span class="icon">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#F04130"
                               class="bi bi-hospital-fill" viewBox="0 0 16 16">
@@ -60,8 +60,8 @@
               </li>
 
               <li class="sidelist-item">
-                  <a href="{{ route('backoffice.chamber.list') }}" class="sidelist-link" data-bs-toggle="tooltip" data-bs-placement="right"
-                      data-bs-title="Chamber List">
+                  <a href="{{ route('backoffice.chamber.list') }}" class="sidelist-link" data-bs-toggle="tooltip"
+                      data-bs-placement="right" data-bs-title="Chamber List">
                       <span class="icon">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#F04130"
                               class="bi bi-diagram-3-fill" viewBox="0 0 16 16">
@@ -74,8 +74,8 @@
               </li>
 
               <li class="sidelist-item">
-                  <a href="{{ route('backoffice.blog.create') }}" class="sidelist-link" data-bs-toggle="tooltip" data-bs-placement="right"
-                      data-bs-title="Create Blog">
+                  <a href="{{ route('backoffice.blog.create') }}" class="sidelist-link" data-bs-toggle="tooltip"
+                      data-bs-placement="right" data-bs-title="Create Blog">
                       <span class="icon">
                           <svg width="19" height="18" viewBox="0 0 19 18" fill="none"
                               xmlns="http://www.w3.org/2000/svg">
@@ -89,8 +89,8 @@
               </li>
 
               <li class="sidelist-item">
-                  <a href="{{ route('backoffice.blog.list') }}" class="sidelist-link" data-bs-toggle="tooltip" data-bs-placement="right"
-                      data-bs-title="Blog List">
+                  <a href="{{ route('backoffice.blog.list') }}" class="sidelist-link" data-bs-toggle="tooltip"
+                      data-bs-placement="right" data-bs-title="Blog List">
                       <span class="icon">
                           <svg width="19" height="18" viewBox="0 0 19 18" fill="none"
                               xmlns="http://www.w3.org/2000/svg">
@@ -104,8 +104,8 @@
               </li>
 
               <li class="sidelist-item">
-                  <a href="{{ route('backoffice.speciality.create') }}" class="sidelist-link" data-bs-toggle="tooltip"
-                      data-bs-placement="right" data-bs-title="Create Category">
+                  <a href="{{ route('backoffice.speciality.create') }}" class="sidelist-link"
+                      data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Create Category">
                       <span class="icon">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#F04130"
                               class="bi bi-list-task" viewBox="0 0 16 16">
@@ -182,8 +182,8 @@
               </li>
 
               <li class="sidelist-item">
-                  <a href="{{ route('backoffice.course.list') }}" class="sidelist-link" data-bs-toggle="tooltip" data-bs-placement="right"
-                      data-bs-title="Course List">
+                  <a href="{{ route('backoffice.course.list') }}" class="sidelist-link" data-bs-toggle="tooltip"
+                      data-bs-placement="right" data-bs-title="Course List">
                       <span class="icon">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#F04130"
                               class="bi bi-book-half" viewBox="0 0 16 16">
@@ -196,8 +196,65 @@
               </li>
 
               <li class="sidelist-item">
-                  <a href="{{ route('backoffice.feedback') }}" class="sidelist-link" data-bs-toggle="tooltip" data-bs-placement="right"
-                      data-bs-title="Feedback">
+                  <a href="{{ route('backoffice.country.index') }}" class="sidelist-link" data-bs-toggle="tooltip"
+                      data-bs-placement="right" data-bs-title="Feedback">
+                      <span class="icon">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#F04130"
+                              class="bi bi-chat-right-dots-fill" viewBox="0 0 16 16">
+                              <path
+                                  d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9.586a1 1 0 0 1 .707.293l2.853 2.853a.5.5 0 0 0 .854-.353V2zM5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+                          </svg>
+                      </span>
+                      <span class="text">Country</span>
+                  </a>
+              </li>
+
+              <li class="sidelist-item">
+                  <a href="{{ route('backoffice.province.index') }}" class="sidelist-link" data-bs-toggle="tooltip"
+                      data-bs-placement="right" data-bs-title="Feedback">
+                      <span class="icon">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#F04130"
+                              class="bi bi-chat-right-dots-fill" viewBox="0 0 16 16">
+                              <path
+                                  d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9.586a1 1 0 0 1 .707.293l2.853 2.853a.5.5 0 0 0 .854-.353V2zM5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+                          </svg>
+                      </span>
+                      <span class="text">Division</span>
+                  </a>
+              </li>
+
+              <li class="sidelist-item">
+                  <a href="{{ route('backoffice.city.index') }}" class="sidelist-link" data-bs-toggle="tooltip"
+                      data-bs-placement="right" data-bs-title="Feedback">
+                      <span class="icon">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#F04130"
+                              class="bi bi-chat-right-dots-fill" viewBox="0 0 16 16">
+                              <path
+                                  d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9.586a1 1 0 0 1 .707.293l2.853 2.853a.5.5 0 0 0 .854-.353V2zM5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+                          </svg>
+                      </span>
+                      <span class="text">District</span>
+                  </a>
+              </li>
+
+              <li class="sidelist-item">
+                  <a href="{{ route('backoffice.area.index') }}" class="sidelist-link" data-bs-toggle="tooltip"
+                      data-bs-placement="right" data-bs-title="Feedback">
+                      <span class="icon">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#F04130"
+                              class="bi bi-chat-right-dots-fill" viewBox="0 0 16 16">
+                              <path
+                                  d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9.586a1 1 0 0 1 .707.293l2.853 2.853a.5.5 0 0 0 .854-.353V2zM5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+                          </svg>
+                      </span>
+                      <span class="text">Thana</span>
+                  </a>
+              </li>
+
+
+              <li class="sidelist-item">
+                  <a href="{{ route('backoffice.feedback') }}" class="sidelist-link" data-bs-toggle="tooltip"
+                      data-bs-placement="right" data-bs-title="Feedback">
                       <span class="icon">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#F04130"
                               class="bi bi-chat-right-dots-fill" viewBox="0 0 16 16">

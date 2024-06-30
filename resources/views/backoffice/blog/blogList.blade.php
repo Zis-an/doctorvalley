@@ -83,7 +83,7 @@
                                         <td>Blog title 1</td>
                                         <td>
                                             <figure class="blogimg">
-                                                <img src="assets/images/blogs/blog-1.jpg" alt="blog-thumb">
+                                                <img src="{{ asset('assets/images/blogs/blog-1.jpg') }}" alt="blog-thumb">
                                             </figure>
                                         </td>
                                         <td>
@@ -123,7 +123,7 @@
                                         <td>Blog title 2</td>
                                         <td>
                                             <figure class="blogimg">
-                                                <img src="assets/images/blogs/blog-2.jpg" alt="blog-thumb">
+                                                <img src="{{ asset('assets/images/blogs/blog-2.jpg') }}" alt="blog-thumb">
                                             </figure>
                                         </td>
                                         <td>
@@ -163,7 +163,7 @@
                                         <td>Blog title 3</td>
                                         <td>
                                             <figure class="blogimg">
-                                                <img src="assets/images/blogs/blog-3.jpg" alt="blog-thumb">
+                                                <img src="{{ asset('assets/images/blogs/blog-3.jpg') }}" alt="blog-thumb">
                                             </figure>
                                         </td>
                                         <td>
@@ -203,7 +203,7 @@
                                         <td>Blog title 4</td>
                                         <td>
                                             <figure class="blogimg">
-                                                <img src="assets/images/blogs/blog-4.jpg" alt="blog-thumb">
+                                                <img src="{{ asset('assets/images/blogs/blog-4.jpg') }}" alt="blog-thumb">
                                             </figure>
                                         </td>
                                         <td>
@@ -243,7 +243,7 @@
                                         <td>Blog title 5</td>
                                         <td>
                                             <figure class="blogimg">
-                                                <img src="assets/images/blogs/blog-5.jpg" alt="blog-thumb">
+                                                <img src="{{ asset('assets/images/blogs/blog-5.jpg') }}" alt="blog-thumb">
                                             </figure>
                                         </td>
                                         <td>

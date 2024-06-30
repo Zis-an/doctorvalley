@@ -56,18 +56,15 @@
     <!-- HAMBURER-ICON -->
     <script src="{{ asset('assets/js/hamburger/hamburger.js') }}"></script>
 
-    <!-- COPYRIGHT -->
-    <script src="{{ asset('assets/js/copyright/copyright.js') }}"></script>
-
     <!-- TOOLTIP -->
     <script src="{{ asset('assets/js/tooltip/tooltip.js') }}"></script>
 
-    <!-- AUTO-INCREMENT -->
-    <script src="{{ asset('assets/js/autoincrement/increment.js') }}"></script>
 
     @stack('before-scripts')
+
     <!-- App js -->
     @vite(['resources/js/backend.js', 'resources/js/app.js'])
+
     @stack('after-scripts')
 
 </body>
