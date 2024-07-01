@@ -63,21 +63,26 @@
                 </div>
             </div>
 
-            <!-- CREATE COUNTRY FORM  START-->
+            <!-- CREATE DIVISION FORM  START-->
             <div class="personalinfo-info">
                 <div class="details align-items-start">
                     <div class="details-body w-100">
                         <!-- ADD-PERSONAL-INFORMATION -->
-                        <form class="educationinfoform" id="personalinfoform">
+                        <form action="{{ route('backoffice.province.store') }}" method="POST" class="educationinfoform" id="personalinfoform">
+                            @csrf
                             <div class="row g-3">
+                                <input type="hidden" name="country_id" value="200">
                                 <div class="col-md-6">
                                     <div class="inputbox">
                                         <label for="coursename" class="inputlabel">
                                             Division Name <span>*</span>
                                         </label>
-                                        <input type="text" id="coursename" class="form-control"
+                                        <input type="text" name="province_name" class="form-control"
                                             placeholder="Enter division name" autocomplete="off">
-                                        <p class="error-message d-none">This field is required</p>
+                                        {{-- <p class="error-message d-none">This field is required</p> --}}
+                                        @if ($errors->has('province_name'))
+                                            <p class="error-message">{{ $errors->first('province_name') }}</p>
+                                        @endif
                                     </div>
                                 </div>
 
@@ -86,18 +91,21 @@
                                         <label for="status" class="inputlabel">
                                             Status <span>*</span>
                                         </label>
-                                        <select id="selectstatus" class="form-control" autocomplete="off">
+                                        <select name="status" id="selectstatus" class="form-control" autocomplete="off">
                                             <option value="" selected disabled>Select Status</option>
-                                            <option value="">Active</option>
-                                            <option value="">Inactive</option>
+                                            <option value="1">Active</option>
+                                            <option value="2">Inactive</option>
                                         </select>
-                                        <p class="error-message d-none">This field is required</p>
+                                        {{-- <p class="error-message d-none">This field is required</p> --}}
+                                        @if ($errors->has('status'))
+                                            <p class="error-message">{{ $errors->first('status') }}</p>
+                                        @endif
                                     </div>
                                 </div>
 
                                 <div class="col-12">
                                     <div class="edubtns">
-                                        <button class="btn-profile-add">Create</button>
+                                        <button type="submit" class="btn-profile-add">Create</button>
                                     </div>
                                 </div>
                             </div>
@@ -105,9 +113,9 @@
                     </div>
                 </div>
             </div>
-            <!-- CREATE COUNTRY FORM END  -->
+            <!-- CREATE DIVISION FORM END  -->
 
-            <!-- COUNTRY TABLE VIEW STARTS -->
+            <!-- DIVISION TABLE VIEW STARTS -->
             <div class="personalinfo-info">
                 <div class="details align-items-start">
                     <div class="details-body w-100">
@@ -121,14 +129,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($provinces as $key => $province)
                                     <tr>
-                                        <th scope="row">1</th>
-                                        <td class="text-center">Griddanarayanpur</td>
+                                        <th scope="row">{{ $key + 1 }}</th>
+                                        <td class="text-center">{{ $province->province_name }}</td>
                                         <td>
                                             <div class="actions">
-                                                <a href="#" class="btn-action">
+                                                <a href="#" class="btn-action" data-bs-toggle="modal" data-bs-target="#editModal{{ $province->id }}">
                                                     <svg data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        data-bs-title="Edit Course" xmlns="http://www.w3.org/2000/svg"
+                                                        data-bs-title="Edit Division" xmlns="http://www.w3.org/2000/svg"
                                                         width="16" height="16" fill="currentColor"
                                                         class="bi bi-pencil-square" viewBox="0 0 16 16">
                                                         <path
@@ -139,9 +148,9 @@
                                                 </a>
 
                                                 <button type="button" class="btn-action" data-bs-toggle="modal"
-                                                    data-bs-target="#confirmModal">
+                                                    data-bs-target="#confirmModal{{ $province->id }}">
                                                     <svg data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        data-bs-title="Delete Course" xmlns="http://www.w3.org/2000/svg"
+                                                        data-bs-title="Delete Division" xmlns="http://www.w3.org/2000/svg"
                                                         width="16" height="16" fill="currentColor"
                                                         class="bi bi-trash" viewBox="0 0 16 16">
                                                         <path
@@ -154,172 +163,91 @@
                                                 <div class="form-check form-switch">
                                                     <input class="form-check-input" type="checkbox" role="switch"
                                                         id="publish-toggle-1" data-bs-toggle="modal"
-                                                        data-bs-target="#confirmModal">
+                                                        data-bs-target="#confirmModal" {{ $province->status == 1 ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="publish-toggle-1"></label>
                                                 </div>
                                             </div>
                                         </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td class="text-center">Madhabpur</td>
-                                        <td>
-                                            <div class="actions">
-                                                <a href="#" class="btn-action">
-                                                    <svg data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        data-bs-title="Edit Course" xmlns="http://www.w3.org/2000/svg"
-                                                        width="16" height="16" fill="currentColor"
-                                                        class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                                        <path
-                                                            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                                        <path fill-rule="evenodd"
-                                                            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-                                                    </svg>
-                                                </a>
-
-                                                <button type="button" class="btn-action" data-bs-toggle="modal"
-                                                    data-bs-target="#confirmModal">
-                                                    <svg data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        data-bs-title="Delete Course" xmlns="http://www.w3.org/2000/svg"
-                                                        width="16" height="16" fill="currentColor"
-                                                        class="bi bi-trash" viewBox="0 0 16 16">
-                                                        <path
-                                                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
-                                                        <path
-                                                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
-                                                    </svg>
-                                                </button>
-
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" role="switch"
-                                                        id="publish-toggle-2" data-bs-toggle="modal"
-                                                        data-bs-target="#confirmModal">
-                                                    <label class="form-check-label" for="publish-toggle-2"></label>
+                                        <!-- DELETE-CONFIRM MODAL STARTS -->
+                                        <div class="modal fade pe-0" id="confirmModal{{ $province->id }}" tabindex="-1"
+                                            aria-labelledby="confirmModal" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-body">
+                                                        <h5 class="delete-title">Are you sure you want to delete
+                                                            {{ $province->province_name }}?</h5>
+                                                    </div>
+                                                    <div class="modal-footer justify-content-end gap-3">
+                                                        <form
+                                                            action="{{ route('backoffice.province.delete', $province->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn-remove">Yes</button>
+                                                        </form>
+                                                        <button type="button" class="btn-cancel"
+                                                            data-bs-dismiss="modal">No</button>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </td>
-                                    </tr>
+                                        </div>
+                                        <!-- DELETE-CONFIRM MODAL ENDS -->
 
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td class="text-center">Nikunja 2</td>
-                                        <td>
-                                            <div class="actions">
-                                                <a href="#" class="btn-action">
-                                                    <svg data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        data-bs-title="Edit Course" xmlns="http://www.w3.org/2000/svg"
-                                                        width="16" height="16" fill="currentColor"
-                                                        class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                                        <path
-                                                            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                                        <path fill-rule="evenodd"
-                                                            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-                                                    </svg>
-                                                </a>
+                                        <!-- EDIT MODAL STARTS -->
+                                        <div class="modal fade pe-0" id="editModal{{ $province->id }}" tabindex="-1"
+                                            aria-labelledby="editModal" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <form action="{{ route('backoffice.province.update', $province->id) }}" method="POST">
+                                                @csrf
+                                                @method('PUT')
+                                                <input type="hidden" name="country_id" value="200">
+                                                <div class="modal-content">
+                                                    <div class="modal-body">
+                                                        <div class="row g-3">
+                                                            <div class="col-12">
+                                                                <div class="inputbox">
+                                                                    <label for="coursename" class="inputlabel">
+                                                                        Province Name <span>*</span>
+                                                                    </label>
+                                                                    <input type="text" name="province_name"
+                                                                        value="{{ $province->province_name }}"
+                                                                        class="form-control"
+                                                                        placeholder="Enter province name"
+                                                                        autocomplete="off">
+                                                                    {{-- <p class="error-message d-none">This field is required</p> --}}
+                                                                </div>
+                                                            </div>
 
-                                                <button type="button" class="btn-action" data-bs-toggle="modal"
-                                                    data-bs-target="#confirmModal">
-                                                    <svg data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        data-bs-title="Delete Course" xmlns="http://www.w3.org/2000/svg"
-                                                        width="16" height="16" fill="currentColor"
-                                                        class="bi bi-trash" viewBox="0 0 16 16">
-                                                        <path
-                                                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
-                                                        <path
-                                                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
-                                                    </svg>
-                                                </button>
-
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" role="switch"
-                                                        id="publish-toggle-3" data-bs-toggle="modal"
-                                                        data-bs-target="#confirmModal">
-                                                    <label class="form-check-label" for="publish-toggle-3"></label>
+                                                            <div class="col-12">
+                                                                <div class="inputbox">
+                                                                    <label for="status" class="inputlabel">
+                                                                        Status <span>*</span>
+                                                                    </label>
+                                                                    <select id="selectstatus" name="status"
+                                                                        class="form-control" autocomplete="off">
+                                                                        <option value="1"
+                                                                            {{ $province->status == 1 ? 'selected' : '' }}>
+                                                                            Active</option>
+                                                                        <option value="2"
+                                                                            {{ $province->status == 2 ? 'selected' : '' }}>
+                                                                            Inactive</option>
+                                                                    </select>
+                                                                    {{-- <p class="error-message d-none">This field is required</p> --}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer justify-content-end gap-3">
+                                                            <button type="submit" class="btn-remove">Yes</button>
+                                                            <button type="button" class="btn-cancel"
+                                                                data-bs-dismiss="modal">No</button>
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                                </form>
                                             </div>
-                                        </td>
+                                            <!-- EDIT MODAL ENDS -->
                                     </tr>
-
-                                    <tr>
-                                        <th scope="row">4</th>
-                                        <td class="text-center">Uttara</td>
-                                        <td>
-                                            <div class="actions">
-                                                <a href="#" class="btn-action">
-                                                    <svg data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        data-bs-title="Edit Course" xmlns="http://www.w3.org/2000/svg"
-                                                        width="16" height="16" fill="currentColor"
-                                                        class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                                        <path
-                                                            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                                        <path fill-rule="evenodd"
-                                                            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-                                                    </svg>
-                                                </a>
-
-                                                <button type="button" class="btn-action" data-bs-toggle="modal"
-                                                    data-bs-target="#confirmModal">
-                                                    <svg data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        data-bs-title="Delete Course" xmlns="http://www.w3.org/2000/svg"
-                                                        width="16" height="16" fill="currentColor"
-                                                        class="bi bi-trash" viewBox="0 0 16 16">
-                                                        <path
-                                                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
-                                                        <path
-                                                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
-                                                    </svg>
-                                                </button>
-
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" role="switch"
-                                                        id="publish-toggle-4" data-bs-toggle="modal"
-                                                        data-bs-target="#confirmModal">
-                                                    <label class="form-check-label" for="publish-toggle-4"></label>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">5</th>
-                                        <td class="text-center">Banasree</td>
-                                        <td>
-                                            <div class="actions">
-                                                <a href="#" class="btn-action">
-                                                    <svg data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        data-bs-title="Edit Course" xmlns="http://www.w3.org/2000/svg"
-                                                        width="16" height="16" fill="currentColor"
-                                                        class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                                        <path
-                                                            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                                        <path fill-rule="evenodd"
-                                                            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-                                                    </svg>
-                                                </a>
-
-                                                <button type="button" class="btn-action" data-bs-toggle="modal"
-                                                    data-bs-target="#confirmModal">
-                                                    <svg data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        data-bs-title="Delete Course" xmlns="http://www.w3.org/2000/svg"
-                                                        width="16" height="16" fill="currentColor"
-                                                        class="bi bi-trash" viewBox="0 0 16 16">
-                                                        <path
-                                                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
-                                                        <path
-                                                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
-                                                    </svg>
-                                                </button>
-
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" role="switch"
-                                                        id="publish-toggle-5" data-bs-toggle="modal"
-                                                        data-bs-target="#confirmModal">
-                                                    <label class="form-check-label" for="publish-toggle-5"></label>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -376,25 +304,10 @@
                     </nav>
                 </div>
             </div>
-            <!-- COUNTRY TABLE VIEW ENDS-->
+            <!-- DIVISION TABLE VIEW ENDS-->
         </div>
         <!-- MAIN-SECTION END -->
     </main>
-
-    <!-- DELETE-CONFIRM MODAL -->
-    <div class="modal fade pe-0" id="confirmModal" tabindex="-1" aria-labelledby="confirmModal" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <h5 class="delete-title">Are you sure you want to disabled?</h5>
-                </div>
-                <div class="modal-footer justify-content-end gap-3">
-                    <button type="button" class="btn-remove">Yes</button>
-                    <button type="button" class="btn-cancel" data-bs-dismiss="modal">No</button>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
 
 @push('after-scripts')

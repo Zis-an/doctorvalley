@@ -29,9 +29,9 @@ class CountryController extends Controller
     public function index(): View|Factory|Application
     {
         try{
-            // $countries = $this->service->getCountryList();
+            $countries = $this->service->getCountryList();
             // return view('bcscommon::location.country.index', compact('countries'));
-            return view('backoffice.location.country.index');
+            return view('backoffice.location.country.index', compact('countries'));
         }catch (\Throwable $exception){
             dd($exception->getMessage());
             abort(500);
@@ -70,11 +70,14 @@ class CountryController extends Controller
      */
     public function edit(int $id): Factory|View|Application
     {
-        try {
+        try{
+            $countries = $this->service->getCountryList();
             $country = $this->service->getCountryById($id);
-            return \view('bcscommon::location.country.createUpdate', compact('country'));
-        }catch (\Throwable $throwable){
-            return abort(500);
+            // return view('bcscommon::location.country.index', compact('countries'));
+            return view('backoffice.location.country.index', compact('countries', 'country'));
+        }catch (\Throwable $exception){
+            dd($exception->getMessage());
+            abort(500);
         }
     }
 

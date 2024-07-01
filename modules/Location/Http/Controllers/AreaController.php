@@ -34,9 +34,10 @@ class AreaController extends Controller
     {
         try{
             $areas = $this->service->getAreaList();
-            $countries = $this->countryService->getCountriesForSelect();
+            $cities = $this->cityService->getCitiesForSelect();
+            // $countries = $this->countryService->getCountriesForSelect();
             // return view('bcscommon::location.area.index', compact('areas', 'countries'));
-            return view('backoffice.location.area.index');
+            return view('backoffice.location.area.index', compact('areas', 'cities'));
         }catch (\Throwable $exception){
             dd($exception->getMessage());
             abort(500);

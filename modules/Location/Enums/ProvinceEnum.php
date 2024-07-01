@@ -7,6 +7,8 @@
 
 namespace Modules\Location\Enums;
 
+use Modules\Location\Enums\CountryEnum;
+
 class ProvinceEnum
 {
     public const DB_TABLE='provinces';

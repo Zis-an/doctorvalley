@@ -56,7 +56,7 @@ class ProvinceDbRepository
     public function fetchProvincesForSelect(): \Illuminate\Support\Collection
     {
         return DB::table(ProvinceEnum::DB_TABLE)
-            ->where(ProvinceEnum::PROVINCE_STATUS, 'active')
+            ->where(ProvinceEnum::PROVINCE_STATUS, '1')
             ->whereNull('deleted_at')
             ->select('id','province_name')
 //            ->selectRaw('CONCAT('.$this->model::COUNTRY_NAME.'," (", '.$this->model::COUNTRY_SHORT_NAME.',")" ) as country_info')
@@ -76,7 +76,7 @@ class ProvinceDbRepository
     {
         return DB::table(ProvinceEnum::DB_TABLE)
             ->where(ProvinceEnum::COUNTRY_ID, $countryId)
-            ->where(ProvinceEnum::PROVINCE_STATUS, 'active')
+            ->where(ProvinceEnum::PROVINCE_STATUS, '1')
             ->whereNull('deleted_at')
             ->select(ProvinceEnum::ID, ProvinceEnum::PROVINCE_NAME)
             ->get()

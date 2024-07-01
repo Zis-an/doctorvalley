@@ -57,7 +57,7 @@ class CityDbRepository
     public function fetchCitiesForSelect()
     {
         return DB::table(CityEnum::DB_TABLE)
-            ->where(CityEnum::CITY_STATUS, 'active')
+            ->where(CityEnum::CITY_STATUS, '1')
             ->whereNull('deleted_at')
             ->select('id','city_name')
             ->get();
@@ -67,7 +67,7 @@ class CityDbRepository
     {
         return DB::table(CityEnum::DB_TABLE)
             ->where(CityEnum::PROVINCE_ID, $provinceId)
-            ->where(CityEnum::CITY_STATUS, 'active')
+            ->where(CityEnum::CITY_STATUS, '1')
             ->whereNull('deleted_at')
             ->select(CityEnum::ID, CityEnum::CITY_NAME)
             ->get()

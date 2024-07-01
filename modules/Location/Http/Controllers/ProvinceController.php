@@ -28,9 +28,9 @@ class ProvinceController extends Controller
     {
         try{
             $provinces = $this->service->getProvinceList();
-            $countries = $this->countryService->getCountriesForSelect();
+            // $countries = $this->countryService->getCountriesForSelect();
             // return view('bcscommon::location.province.index', compact('provinces', 'countries'));
-            return view('backoffice.location.province.index');
+            return view('backoffice.location.province.index', compact('provinces'));
         }catch (\Throwable $exception){
             dd($exception->getMessage());
             abort(500);

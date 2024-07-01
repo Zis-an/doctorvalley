@@ -58,7 +58,7 @@ class AreaDbRepository
     {
         return $this->model
             ->where('city_id', $cityId)
-            ->where(AreaEnum::AREA_STATUS, 'active')
+            ->where(AreaEnum::AREA_STATUS, '1')
             ->whereNull('deleted_at')
             ->get();
     }

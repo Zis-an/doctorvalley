@@ -9,7 +9,6 @@ namespace Modules\Location\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Modules\Location\Http\Requests\CityRequest;
-use Modules\Location\Models\Province;
 use Modules\Location\Services\CityService;
 use Modules\Location\Services\CountryService;
 use Modules\Location\Services\ProvinceService;
@@ -32,9 +31,10 @@ class CityController extends Controller
     {
         try{
             $cities = $this->service->getCityList();
-            $countries = $this->countryService->getCountriesForSelect();
+            $provinces = $this->provinceService->getProvincesForSelect();
+            // $countries = $this->countryService->getCountriesForSelect();
             // return view('bcscommon::location.city.index', compact('cities', 'countries'));
-            return view('backoffice.location.city.index');
+            return view('backoffice.location.city.index', compact('cities', 'provinces'));
         }catch (\Throwable $exception){
             dd($exception->getMessage());
             abort(500);
