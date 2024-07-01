@@ -63,12 +63,21 @@
                 </div>
             </div>
 
+<<<<<<< HEAD
             <!-- CREATE DIVISION FORM  START-->
+=======
+            <!-- CREATE PROVINCE FORM  START-->
+>>>>>>> 34453fb87d97e94bd10833b7fb74e3827ffbb3a4
             <div class="personalinfo-info">
                 <div class="details align-items-start">
                     <div class="details-body w-100">
                         <!-- ADD-PERSONAL-INFORMATION -->
+<<<<<<< HEAD
                         <form action="{{ route('backoffice.province.store') }}" method="POST" class="educationinfoform" id="personalinfoform">
+=======
+                        <form action="{{ route('backoffice.province.store') }}" method="POST" class="educationinfoform"
+                            id="personalinfoform">
+>>>>>>> 34453fb87d97e94bd10833b7fb74e3827ffbb3a4
                             @csrf
                             <div class="row g-3">
                                 <input type="hidden" name="country_id" value="200">
@@ -77,11 +86,19 @@
                                         <label for="coursename" class="inputlabel">
                                             Division Name <span>*</span>
                                         </label>
+<<<<<<< HEAD
                                         <input type="text" name="province_name" class="form-control"
                                             placeholder="Enter division name" autocomplete="off">
                                         {{-- <p class="error-message d-none">This field is required</p> --}}
                                         @if ($errors->has('province_name'))
                                             <p class="error-message">{{ $errors->first('province_name') }}</p>
+=======
+                                        <input type="text" id="coursename" name="province_name" class="form-control"
+                                            placeholder="Enter division name" autocomplete="off">
+                                        {{-- <p class="error-message d-none">This field is required</p> --}}
+                                        @if ($errors->has('province_name'))
+                                            <p class="error-message d-none">{{ $errors->first('province_name') }}</p>
+>>>>>>> 34453fb87d97e94bd10833b7fb74e3827ffbb3a4
                                         @endif
                                     </div>
                                 </div>
@@ -91,7 +108,11 @@
                                         <label for="status" class="inputlabel">
                                             Status <span>*</span>
                                         </label>
+<<<<<<< HEAD
                                         <select name="status" id="selectstatus" class="form-control" autocomplete="off">
+=======
+                                        <select id="selectstatus" name="status" class="form-control" autocomplete="off">
+>>>>>>> 34453fb87d97e94bd10833b7fb74e3827ffbb3a4
                                             <option value="" selected disabled>Select Status</option>
                                             <option value="1">Active</option>
                                             <option value="2">Inactive</option>
@@ -103,6 +124,8 @@
                                     </div>
                                 </div>
 
+                                <input type="hidden" name="country_id" value="1">
+
                                 <div class="col-12">
                                     <div class="edubtns">
                                         <button type="submit" class="btn-profile-add">Create</button>
@@ -113,9 +136,15 @@
                     </div>
                 </div>
             </div>
+<<<<<<< HEAD
             <!-- CREATE DIVISION FORM END  -->
 
             <!-- DIVISION TABLE VIEW STARTS -->
+=======
+            <!-- CREATE PROVINCE FORM END  -->
+
+            <!-- PROVINCE TABLE VIEW STARTS -->
+>>>>>>> 34453fb87d97e94bd10833b7fb74e3827ffbb3a4
             <div class="personalinfo-info">
                 <div class="details align-items-start">
                     <div class="details-body w-100">
@@ -130,6 +159,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($provinces as $key => $province)
+<<<<<<< HEAD
                                     <tr>
                                         <th scope="row">{{ $key + 1 }}</th>
                                         <td class="text-center">{{ $province->province_name }}</td>
@@ -219,12 +249,83 @@
                                                             </div>
 
                                                             <div class="col-12">
+=======
+                                        <tr>
+                                            <th scope="row">{{ $key + 1 }}</th>
+                                            <td class="text-center">{{ $province->province_name }}</td>
+                                            <td>
+                                                <div class="actions">
+                                                    <button type="button" class="btn-action" data-bs-toggle="modal"
+                                                        data-bs-target="#editModal">
+                                                        <svg data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            data-bs-title="Delete Province"
+                                                            xmlns="http://www.w3.org/2000/svg" width="16"
+                                                            height="16" fill="currentColor"
+                                                            class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                            <path
+                                                                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                            <path fill-rule="evenodd"
+                                                                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                                        </svg>
+                                                    </button>
+
+                                                    <button type="button" class="btn-action" data-bs-toggle="modal"
+                                                        data-bs-target="#confirmModal">
+                                                        <svg data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            data-bs-title="Delete Course"
+                                                            xmlns="http://www.w3.org/2000/svg" width="16"
+                                                            height="16" fill="currentColor" class="bi bi-trash"
+                                                            viewBox="0 0 16 16">
+                                                            <path
+                                                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
+                                                            <path
+                                                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
+                                                        </svg>
+                                                    </button>
+
+                                                    <div class="form-check form-switch">
+                                                        <input class="form-check-input" type="checkbox" role="switch"
+                                                            id="publish-toggle-1" data-bs-toggle="modal"
+                                                            {{ $province->status == 1 ? 'Checked' : '' }}
+                                                            data-bs-target="#confirmModal">
+                                                        <label class="form-check-label" for="publish-toggle-1"></label>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- EDIT MODAL -->
+                                        <div class="modal fade pe-0" id="editModal" tabindex="-1"
+                                            aria-labelledby="editModal" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-body">
+                                                        <form
+                                                            action="{{ route('backoffice.province.update', $province->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <div class="inputbox">
+                                                                <label for="coursename" class="inputlabel">
+                                                                    Province Name <span>*</span>
+                                                                </label>
+                                                                <input type="text" name="province_name" id="coursename"
+                                                                    class="form-control" placeholder="Enter province name"
+                                                                    autocomplete="off"
+                                                                    value="{{ $province->province_name }}">
+                                                            </div>
+                                                            <div class="col-md-12 mt-2">
+>>>>>>> 34453fb87d97e94bd10833b7fb74e3827ffbb3a4
                                                                 <div class="inputbox">
                                                                     <label for="status" class="inputlabel">
                                                                         Status <span>*</span>
                                                                     </label>
                                                                     <select id="selectstatus" name="status"
                                                                         class="form-control" autocomplete="off">
+<<<<<<< HEAD
+=======
+                                                                        <option value="" selected disabled>Select
+                                                                            Status</option>
+>>>>>>> 34453fb87d97e94bd10833b7fb74e3827ffbb3a4
                                                                         <option value="1"
                                                                             {{ $province->status == 1 ? 'selected' : '' }}>
                                                                             Active</option>
@@ -232,6 +333,7 @@
                                                                             {{ $province->status == 2 ? 'selected' : '' }}>
                                                                             Inactive</option>
                                                                     </select>
+<<<<<<< HEAD
                                                                     {{-- <p class="error-message d-none">This field is required</p> --}}
                                                                 </div>
                                                             </div>
@@ -241,12 +343,48 @@
                                                             <button type="button" class="btn-cancel"
                                                                 data-bs-dismiss="modal">No</button>
                                                         </div>
+=======
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12">
+                                                                <div class="edubtns">
+                                                                    <button type="submit"
+                                                                        class="btn-profile-add">Create</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+>>>>>>> 34453fb87d97e94bd10833b7fb74e3827ffbb3a4
                                                     </div>
                                                 </div>
                                                 </form>
                                             </div>
+<<<<<<< HEAD
                                             <!-- EDIT MODAL ENDS -->
                                     </tr>
+=======
+                                        </div>
+                                        <!-- DELETE-CONFIRM MODAL -->
+                                        <div class="modal fade pe-0" id="confirmModal" tabindex="-1"
+                                            aria-labelledby="confirmModal" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-body">
+                                                        <h5 class="delete-title">Are you sure you want to delete?</h5>
+                                                    </div>
+                                                    <form method="POST"
+                                                        action="{{ route('backoffice.province.delete', $province->id) }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <div class="modal-footer justify-content-end gap-3">
+                                                            <button type="submit" class="btn-remove">Yes</button>
+                                                            <button type="button" class="btn-cancel"
+                                                                data-bs-dismiss="modal">No</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+>>>>>>> 34453fb87d97e94bd10833b7fb74e3827ffbb3a4
                                     @endforeach
                                 </tbody>
                             </table>
@@ -304,7 +442,11 @@
                     </nav>
                 </div>
             </div>
+<<<<<<< HEAD
             <!-- DIVISION TABLE VIEW ENDS-->
+=======
+            <!-- PROVINCE TABLE VIEW ENDS-->
+>>>>>>> 34453fb87d97e94bd10833b7fb74e3827ffbb3a4
         </div>
         <!-- MAIN-SECTION END -->
     </main>

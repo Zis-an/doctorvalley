@@ -131,21 +131,38 @@
                                             <td class="text-center">{{ $country->country_name }}</td>
                                             <td>
                                                 <div class="actions">
+<<<<<<< HEAD
                                                     <a href="#" class="btn-action" data-bs-toggle="modal"
                                                         data-bs-target="#editModal{{ $country->id }}">
                                                         <svg data-bs-toggle="tooltip" data-bs-placement="top"
                                                             data-bs-title="Edit Course" xmlns="http://www.w3.org/2000/svg"
                                                             width="16" height="16" fill="currentColor"
+=======
+                                                    {{-- <button type="button" class="btn-action" data-bs-toggle="modal"
+                                                        data-bs-target="#editModal{{ $country->country_id }}">
+                                                        <svg data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            data-bs-title="Edit Country"
+                                                            xmlns="http://www.w3.org/2000/svg" width="16"
+                                                            height="16" fill="currentColor"
+>>>>>>> 34453fb87d97e94bd10833b7fb74e3827ffbb3a4
                                                             class="bi bi-pencil-square" viewBox="0 0 16 16">
                                                             <path
                                                                 d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                                                             <path fill-rule="evenodd"
                                                                 d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
                                                         </svg>
+<<<<<<< HEAD
                                                     </a>
 
                                                     <button type="button" class="btn-action" data-bs-toggle="modal"
                                                         data-bs-target="#confirmModal{{ $country->id }}">
+=======
+                                                    </button> --}}
+                                                    <a href="{{ route('backoffice.country.delete', $country->id) }}" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#danger-header-modal{{ $country->id }}">Delete</a>
+
+                                                    <button type="button" class="btn-action" data-bs-toggle="modal"
+                                                        data-bs-target="#confirmModal{{ $country->country_id }}">
+>>>>>>> 34453fb87d97e94bd10833b7fb74e3827ffbb3a4
                                                         <svg data-bs-toggle="tooltip" data-bs-placement="top"
                                                             data-bs-title="Delete Country"
                                                             xmlns="http://www.w3.org/2000/svg" width="16"
@@ -160,6 +177,7 @@
 
                                                     <div class="form-check form-switch">
                                                         <input class="form-check-input" type="checkbox" role="switch"
+<<<<<<< HEAD
                                                             id="publish-toggle-1" data-bs-toggle="modal"
                                                             data-bs-target="#confirmModal"
                                                             {{ $country->status == 1 ? 'checked' : '' }}>
@@ -246,6 +264,82 @@
                                                 </form>
                                             </div>
                                             <!-- EDIT MODAL ENDS -->
+=======
+                                                            id="publish-toggle-1" data-bs-toggle="modal" {{ $country->status == 1 ? "Checked": "" }}>
+                                                        <label class="form-check-label" for="publish-toggle-1"></label>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- EDIT MODAL -->
+                                        <div class="modal fade pe-0" id="editModal{{ $country->id }}" tabindex="-1"
+                                            aria-labelledby="editModal{{ $country->id }}" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-body">
+                                                        <form
+                                                            action="{{ route('backoffice.country.update', $country->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <div class="inputbox">
+                                                                <label for="coursename" class="inputlabel">
+                                                                    Country Name <span>*</span>
+                                                                </label>
+                                                                <input type="text" name="country_name" id="coursename"
+                                                                    class="form-control" placeholder="Enter country name"
+                                                                    autocomplete="off"
+                                                                    value="{{ $country->country_name }}">
+                                                            </div>
+                                                            <div class="col-md-12 mt-2">
+                                                                <div class="inputbox">
+                                                                    <label for="status" class="inputlabel">
+                                                                        Status <span>*</span>
+                                                                    </label>
+                                                                    <select id="selectstatus" name="status"
+                                                                        class="form-control" autocomplete="off">
+                                                                        <option value="" selected disabled>Select
+                                                                            Status</option>
+                                                                        <option value="1" {{ $country->status == 1 ? 'selected' : '' }}>Active</option>
+                                                                        <option value="2" {{ $country->status == 2 ? 'selected' : '' }}>Inactive</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12">
+                                                                <div class="edubtns">
+                                                                    <button type="submit"
+                                                                        class="btn-profile-add">Create</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- DELETE-CONFIRM MODAL -->
+
+
+
+
+                                                          <!-- Delete Modal -->
+                  <div id="danger-header-modal{{$country->id}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="danger-header-modalLabel{{$country->id}}" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header modal-colored-header bg-danger">
+                                <h4 class="modal-title" id="danger-header-modalLabe{{$country->id}}l">Delete</h4>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <h5 class="mt-0">Are You Went to Delete this {{$country->country_name}}? </h5>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                <a href="{{route('backoffice.country.delete',$country->id)}}" class="btn btn-danger">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+>>>>>>> 34453fb87d97e94bd10833b7fb74e3827ffbb3a4
                                     @endforeach
                                 </tbody>
                             </table>

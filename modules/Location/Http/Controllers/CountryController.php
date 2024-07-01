@@ -32,7 +32,11 @@ class CountryController extends Controller
             $countries = $this->service->getCountryList();
             // return view('bcscommon::location.country.index', compact('countries'));
             return view('backoffice.location.country.index', compact('countries'));
+<<<<<<< HEAD
         }catch (\Throwable $exception){
+=======
+        } catch (\Throwable $exception){
+>>>>>>> 34453fb87d97e94bd10833b7fb74e3827ffbb3a4
             dd($exception->getMessage());
             abort(500);
         }
