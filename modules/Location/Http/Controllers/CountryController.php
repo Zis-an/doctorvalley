@@ -29,10 +29,10 @@ class CountryController extends Controller
     public function index(): View|Factory|Application
     {
         try{
-            // $countries = $this->service->getCountryList();
+            $countries = $this->service->getCountryList();
             // return view('bcscommon::location.country.index', compact('countries'));
-            return view('backoffice.location.country.index');
-        }catch (\Throwable $exception){
+            return view('backoffice.location.country.index', compact('countries'));
+        } catch (\Throwable $exception){
             dd($exception->getMessage());
             abort(500);
         }
