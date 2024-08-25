@@ -1,4 +1,5 @@
 @extends('layouts.backend')
+@section('title', 'Dashboard')
 @section('content')
     <!-- MAIN-SECTION START -->
     <main class="mainsection" id="main-section">

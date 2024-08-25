@@ -1,4 +1,8 @@
-<form class="postform">
+<form action="{{ !empty($blog) ? route('backoffice.blog.update', $blog->id) : route('backoffice.blog.store') }}" method="POST" class="postform" enctype="multipart/form-data">
+    @csrf
+    @if (!empty($blog))
+        @method('PUT')
+    @endif
     <div class="row g-4">
         <div class="col-12">
             <div class="row g-4">
@@ -7,7 +11,7 @@
                         <div class="col-12">
                             <div class="d-flex flex-column gap-2">
                                 <label for="post-title">Post Title</label>
-                                <input type="text" id="post-title" class="form-control"
+                                <input type="text" name="blog_title" value="{{ !empty($blog) ? $blog->blog_title : '' }}" id="post-title" class="form-control"
                                     placeholder="Enter your blog title">
                             </div>
                         </div>
@@ -45,7 +49,7 @@
                                         </div>
                                     </div>
 
-                                    <input type="file" id="readUrl" multiple hidden>
+                                    <input type="file" name="thumb_path" id="readUrl" multiple hidden>
                                     <label class="btn-upload" for="readUrl" data-bs-toggle="tooltip"
                                         data-bs-placement="top" data-bs-title="Upload Blog Image">
                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -66,6 +70,7 @@
                         <label>Image Preview</label>
                         <figure class="upload-thumbnail">
                             <img id="uploadedImage"
+                            {{-- value="{{ !empty($blog) ? (asset('test_image/' . $blog->thumb_path) : '') }}" --}}
                                 src="{{ asset('dashboard/assets/images/uploaded/default-thumbnail.jpg') }}"
                                 alt="Uploaded Image" accept="image/png, image/jpeg">
                         </figure>
@@ -77,8 +82,32 @@
         <div class="col-12">
             <div class="d-flex flex-column gap-2">
                 <label for="editor">Blog Description</label>
-                <textarea id="editor"></textarea>
+                <textarea name="description" id="editor">{{ !empty($blog) ? (strip_tags($blog->description)) : '' }}</textarea>
             </div>
+        </div>
+
+        <div class="col-12">
+            <div class="inputbox">
+                <label for="status" class="inputlabel">
+                    Status <span>*</span>
+                </label>
+                <select id="selectstatus" name="status" class="form-control" autocomplete="off">
+                    <option value="" selected disabled>Select Status</option>
+                    <option value="1" {{ !empty($blog) ? ($blog->status == 1 ? 'selected' : '') : '' }}>Active</option>
+                    <option value="2" {{ !empty($blog) ? ($blog->status == 2 ? 'selected' : '') : '' }}>Inactive</option>
+                </select>
+                {{-- <p class="error-message d-none">This field is required</p> --}}
+                @if ($errors->has('status'))
+                    <p class="error-message">{{ $errors->first('status') }}</p>
+                @endif
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-12">
+        <div class="edubtns justify-content-end">
+            <button type="submit" class="btn-profile-add">Save</button>
         </div>
     </div>
 </form>

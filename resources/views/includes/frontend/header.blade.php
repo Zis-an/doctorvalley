@@ -13,7 +13,7 @@
           <!-- MOBILE-MENU START -->
           <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenu">
             <div class="offcanvas-header">
-              <a href="{{ route('frontend.index') }}" class="logo">
+              <a href="{{ route('index') }}" class="logo">
                 <img src="{{ asset('assets/images/logo/logo.png') }}" alt="brand-logo">
               </a>
 
@@ -27,7 +27,7 @@
             <div class="offcanvas-body">
               <ul class="mobilelist">
                 <li class="mobilelist-item">
-                  <a href="{{ route('frontend.index') }}" class="mobilelist-link active">Home</a>
+                  <a href="{{ route('index') }}" class="mobilelist-link active">Home</a>
                 </li>
 
                 <li class="mobilelist-item">
@@ -47,7 +47,7 @@
         </div>
 
         <!-- BRAND-LOGO -->
-        <a href="{{ route('frontend.index') }}" class="logo">
+        <a href="{{ route('index') }}" class="logo">
           <img src="{{ asset('assets/images/logo/logo.png') }}" alt="brand-logo">
         </a>
 
@@ -82,7 +82,7 @@
         <div class="d-none d-lg-block">
           <ul class="desktoplist">
             <li class="desktoplist-item">
-              <a href="{{ route('frontend.index') }}" class="desktoplist-link active">Home</a>
+              <a href="{{ route('index') }}" class="desktoplist-link active">Home</a>
             </li>
 
             <li class="desktoplist-item">

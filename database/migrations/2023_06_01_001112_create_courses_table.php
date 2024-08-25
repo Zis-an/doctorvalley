@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Modules\Course\Enums\CourseEnum;
 
 return new class extends Migration
 {
@@ -13,8 +14,8 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
-            $table->text('course_name');
-            $table->string('status')->default(config('global.status.inactive'))->nullable();
+            $table->string(CourseEnum::COURSE_NAME);
+            $table->boolean(CourseEnum::COURSE_STATUS)->default(config('global.status.inactive'));
             $table->timestamps();
             $table->softDeletes();
         });

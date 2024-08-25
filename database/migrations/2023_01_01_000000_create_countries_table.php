@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Modules\Location\Enums\CountryEnum;
 
 class CreateCountriesTable extends Migration
 {
@@ -15,11 +16,11 @@ class CreateCountriesTable extends Migration
     {
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
-            $table->string('country_name')->unique();
+            $table->string(CountryEnum::COUNTRY_NAME)->unique();
             $table->string('capital')->nullable();
             $table->string('short_name')->nullable();
             $table->string('country_code')->unique()->nullable();
-            $table->string('status');
+            $table->boolean(CountryEnum::COUNTRY_STATUS)->default(config('global.status.inactive'));
             $table->timestamps();
             $table->softDeletes();
         });

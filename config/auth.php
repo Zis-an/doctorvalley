@@ -83,7 +83,7 @@ return [
 
         'chambers' => [
             'driver' => 'eloquent',
-            'model' => Modules\Chamber\Models\Chamber::class,
+            'model' => Modules\ChamberAdmin\Models\ChamberAdmin::class
         ],
 
         'doctors' => [

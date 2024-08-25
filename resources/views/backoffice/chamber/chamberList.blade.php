@@ -69,7 +69,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="mobilefilter">
                 <!-- FILTER-OFFCANVAS -->
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileFilter" aria-labelledby="mobileFilter">
@@ -89,48 +88,36 @@
                             <div class="inputbox">
                                 <label for="doctorscategory-mobile" class="inputlabel text-white">CHAMBER</label>
                                 <select id="doctorscategory-mobile" placeholder-text="CHAMBER" autocomplete="off">
-                                    <option value="Hospital">Hospital</option>
-                                    <option value="Clinic">Clinic</option>
-                                    <option value="Diagonostic center">Diagonostic center</option>
-                                    <option value="Other">Other</option>
+                                    @foreach ($chamber_types as $type)
+                                        <option value="{{ $type }}" class="text-uppercase">{{ $type }}</option>
+                                    @endforeach
                                 </select>
                             </div>
 
                             <div class="inputbox">
                                 <label for="division-mobile" class="inputlabel text-white">DIVISION</label>
                                 <select id="division-mobile" placeholder-text="Dhaka" autocomplete="off">
-                                    <option value="Dhaka">Dhaka</option>
-                                    <option value="Mymensingh">Mymensingh</option>
-                                    <option value="Khulna">Khulna</option>
-                                    <option value="Rangpur">Rangpur</option>
-                                    <option value="Barishal">Barishal</option>
-                                    <option value="Chittagong">Chittagong</option>
-                                    <option value="Sylhet">Sylhet</option>
+                                    @foreach ($provinces as $province)
+                                        <option value="{{ $province->id }}">{{ $province->province_name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
 
                             <div class="inputbox">
                                 <label for="districts-mobile" class="inputlabel text-white">DISTIRCT</label>
                                 <select id="districts-mobile" placeholder-text="Sherpur" autocomplete="off">
-                                    <option value="Sherpur">Sherpur</option>
-                                    <option value="Dhaka">Dhaka</option>
-                                    <option value="Barishal">Barishal</option>
-                                    <option value="Sylhet">Sylhet</option>
-                                    <option value="Khulna">Khulna</option>
-                                    <option value="Chittagong">Chittagong</option>
-                                    <option value="Rangpur">Rangpur</option>
-                                    <option value="Mymensingh">Mymensingh</option>
+                                    @foreach ($cities as $city)
+                                        <option value="{{ $city->id }}">{{ $city->city_name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
 
                             <div class="inputbox">
                                 <label for="thanas-mobile" class="inputlabel text-white">THANA</label>
                                 <select id="thanas-mobile" placeholder-text="Sherpur Sadar" autocomplete="off">
-                                    <option value="Sherpur Sadar">Sherpur Sadar</option>
-                                    <option value="Nakla">Nakla</option>
-                                    <option value="Nalitabari">Nalitabari</option>
-                                    <option value="Sribordi">Sribordi</option>
-                                    <option value="Jhenaigati">Jhenaigati</option>
+                                    @foreach ($areas as $area)
+                                        <option value="{{ $area->id }}">{{ $area->area_name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -151,20 +138,23 @@
                                         <th scope="col">Email</th>
                                         <th scope="col">Phone</th>
                                         <th scope="col">Address</th>
+                                        <th scope="col">Status</th>
                                         <th scope="col">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($chambers as $key => $chamber)
                                     <tr>
-                                        <th scope="row">1</th>
-                                        <td>Abedin Hospital</td>
-                                        <td>123456789</td>
-                                        <td>raqubul.islam@gmail.com</td>
-                                        <td>01965088417</td>
-                                        <td>Griddanarayanpur, Sherpur</td>
-                                        <td>
+                                        <th scope="row">{{ $key + 1 }}</th>
+                                        <td>{{ $chamber->chamber_name }}</td>
+                                        <td>{{ $chamber->reg_no }}</td>
+                                        <td>{{ $chamber->email }}</td>
+                                        <td>{{ $chamber->phone_no }}</td>
+                                        <td>{{ $chamber->address }}</td>
+                                        <td>{{ $chamber->status == 1 ? 'Active' : 'Inactive' }}</td>
+                                        {{-- <td>
                                             <div class="actions">
-                                                <a href="chamberinfo.html" data-bs-toggle="tooltip"
+                                                <a href="{{ route('backoffice.chamber.edit', $chamber->id) }}" data-bs-toggle="tooltip"
                                                     data-bs-placement="top" data-bs-title="View Chamber"
                                                     class="btn-view">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -174,16 +164,65 @@
                                                             d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
                                                     </svg>
                                                 </a>
+                                            </div>
+                                        </td> --}}
+                                        <td>
+                                            <div class="actions">
+                                                <a href="{{ route('backoffice.chamber.edit', $chamber->id) }}"
+                                                    class="btn-action">
+                                                    <svg data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        data-bs-title="Edit Chamber"
+                                                        xmlns="http://www.w3.org/2000/svg" width="16"
+                                                        height="16" fill="currentColor"
+                                                        class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                        <path fill-rule="evenodd"
+                                                            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                                    </svg>
+                                                </a>
 
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" role="switch"
-                                                        id="publish-toggle-10" data-bs-toggle="modal"
-                                                        data-bs-target="#confirmModal">
-                                                    <label class="form-check-label" for="publish-toggle-10"></label>
-                                                </div>
+                                                <button type="button" class="btn-action" data-bs-toggle="modal"
+                                                    data-bs-target="#confirmModal{{ $chamber->id }}">
+                                                    <svg data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        data-bs-title="Delete Chamber"
+                                                        xmlns="http://www.w3.org/2000/svg" width="16"
+                                                        height="16" fill="currentColor" class="bi bi-trash"
+                                                        viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
+                                                        <path
+                                                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
+                                                    </svg>
+                                                </button>
                                             </div>
                                         </td>
+                                        <!-- DELETE-CONFIRM MODAL STARTS -->
+                                        <div class="modal fade pe-0" id="confirmModal{{ $chamber->id }}"
+                                            tabindex="-1" aria-labelledby="confirmModal" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-body">
+                                                        <h5 class="delete-title">Are you sure you want to delete
+                                                            {{ $chamber->chamber_name }}?</h5>
+                                                    </div>
+                                                    <div class="modal-footer justify-content-end gap-3">
+                                                        <form
+                                                            action="{{ route('backoffice.chamber.delete', $chamber->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn-remove">Delete</button>
+                                                        </form>
+                                                        <button type="button" class="btn-cancel"
+                                                            data-bs-dismiss="modal">Cancel</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- DELETE-CONFIRM MODAL ENDS -->
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

@@ -1,5 +1,6 @@
 <?php
 
+use Modules\Location\Models\Province;
 use Illuminate\Support\Facades\Schema;
 use Modules\Location\Enums\ProvinceEnum;
 use Illuminate\Database\Schema\Blueprint;
@@ -16,9 +17,9 @@ class CreateProvincesTable extends Migration
     {
         Schema::create(ProvinceEnum::DB_TABLE, function (Blueprint $table) {
             $table->id(ProvinceEnum::ID);
-            $table->unsignedBigInteger(ProvinceEnum::COUNTRY_ID)->nullable();
+            $table->unsignedBigInteger(ProvinceEnum::COUNTRY_ID);
             $table->string(ProvinceEnum::PROVINCE_NAME);
-            $table->string(ProvinceEnum::PROVINCE_STATUS);
+            $table->boolean(ProvinceEnum::PROVINCE_STATUS)->default(config('global.status.inactive'));
             $table->timestamps();
             $table->softDeletes();
         });

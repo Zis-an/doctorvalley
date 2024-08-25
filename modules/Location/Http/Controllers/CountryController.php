@@ -32,11 +32,7 @@ class CountryController extends Controller
             $countries = $this->service->getCountryList();
             // return view('bcscommon::location.country.index', compact('countries'));
             return view('backoffice.location.country.index', compact('countries'));
-<<<<<<< HEAD
         }catch (\Throwable $exception){
-=======
-        } catch (\Throwable $exception){
->>>>>>> 34453fb87d97e94bd10833b7fb74e3827ffbb3a4
             dd($exception->getMessage());
             abort(500);
         }
@@ -95,7 +91,7 @@ class CountryController extends Controller
     {
         try {
             $this->service->updateData($id, $request->validated());
-            return redirect()->route('backend.common.country.index')
+            return redirect()->route('backoffice.country.index')
                 ->with('success', 'Country updated successfully');
         }catch (\Throwable $throwable){
             return redirect()->back()->with('error', 'Country invalid data')->withInput($request->all());
@@ -110,7 +106,7 @@ class CountryController extends Controller
     {
         try {
             $this->service->deleteData($id);
-            return redirect()->route('backend.common.country.index')
+            return redirect()->route('backoffice.country.index')
                 ->with('success', 'Country delete successfully');
         }catch (\Throwable $throwable){
             return redirect()->back()->with('error', 'Invalid country information');

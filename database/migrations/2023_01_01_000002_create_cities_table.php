@@ -19,7 +19,7 @@ class CreateCitiesTable extends Migration
             $table->id(CityEnum::ID);
             $table->unsignedBigInteger(CityEnum::PROVINCE_ID);
             $table->string(CityEnum::CITY_NAME);
-            $table->string(CityEnum::CITY_STATUS);
+            $table->boolean(CityEnum::CITY_STATUS)->default(config('global.status.inactive'));
             $table->timestamps();
             $table->softDeletes();
         });

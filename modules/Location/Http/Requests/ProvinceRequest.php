@@ -19,11 +19,7 @@ class ProvinceRequest extends FormRequest
     public function rules()
     {
         return [
-<<<<<<< HEAD
              'country_id'=>['required'],
-=======
-            // 'country_id'=>['required'],
->>>>>>> 34453fb87d97e94bd10833b7fb74e3827ffbb3a4
             'province_name'=>['required', 'string'],
             'status'=>['required'],
         ];
@@ -37,11 +33,7 @@ class ProvinceRequest extends FormRequest
     public function messages()
     {
         return [
-<<<<<<< HEAD
              'country_id.required' => 'Select a Country ',
-=======
-            // 'country_id.required' => 'Select a Country ',
->>>>>>> 34453fb87d97e94bd10833b7fb74e3827ffbb3a4
 
             'province_name.required' => 'Province Name is required',
             'province_name.string' => 'Province must be in Characters',

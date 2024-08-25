@@ -9,8 +9,14 @@ return [
         "clinic"=>"clinic",
     ],
     "status"=>[
-        "active"=>'active',
-        'inactive'=>'inactive',
-        'block'=>'block'
+        "active"=>1,
+        "inactive"=>2,
+        "block"=>3,
+        "deleted"=>0,
+    ],
+    "degrees"=>[
+        "MBBS"=>"MBBS",
+        "DENTAL"=>"DENTAL",
+        "Other"=>"Other",
     ]
 ];

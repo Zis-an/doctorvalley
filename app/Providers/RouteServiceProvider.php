@@ -28,6 +28,8 @@ class RouteServiceProvider extends ServiceProvider
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
 
+        $this->loadModuleRoutes();
+
         $this->routes(function () {
             Route::middleware('api')
                 ->prefix('api')
@@ -35,12 +37,16 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
-            $this->loadBlogRoute();
+
         });
     }
 
-    private function loadBlogRoute(): void
+    private function loadModuleRoutes(): void
     {
+        Route::middleware('web')
+        ->prefix('/backoffice')
+        ->group(base_path('modules/Admin/Routes/web.php'));
+
         Route::middleware('web')
             ->group(base_path('modules/Blog/Routes/web.php'));
 
@@ -52,5 +58,17 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::middleware('web')
         ->group(base_path('modules/Location/Routes/web.php'));
+
+        Route::middleware('web')
+        ->group(base_path('modules/Course/Routes/web.php'));
+
+        Route::middleware('web')
+        ->group(base_path('modules/Speciality/Routes/web.php'));
+
+        Route::middleware('web')
+        ->group(base_path('modules/Institute/Routes/web.php'));
+
+        Route::middleware('web')
+        ->group(base_path('modules/ChamberAdmin/Routes/web.php'));
     }
 }

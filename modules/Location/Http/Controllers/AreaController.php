@@ -61,7 +61,7 @@ class AreaController extends Controller
 
         try {
             $this->service->storeArea($request->validated());
-            return redirect()->route('backend.common.area.index')->with('success', 'Area store successfully');
+            return redirect()->route('backoffice.area.index')->with('success', 'Area store successfully');
         }catch (\Throwable $throwable){
             return redirect()->back()->with('error', 'Area invalid data')->withInput($request->all());
         }
@@ -77,7 +77,7 @@ class AreaController extends Controller
             $provinces = $this->provinceService->getProvincesForSelect();
             $countries = $this->countryService->getCountriesForSelect();
 
-            return view('bcscommon::location.area.index',
+            return view('backoffice.location.area.index',
                 compact('area','areas','cities', 'provinces', 'countries')
             );
         }catch (\Throwable $throwable){
@@ -89,7 +89,7 @@ class AreaController extends Controller
     {
         try {
             $this->service->updateData($id, $request->validated());
-            return redirect()->route('backend.common.area.index')
+            return redirect()->route('backoffice.area.index')
                 ->with('success', 'Area updated successfully');
         }catch (\Throwable $throwable){
             return redirect()->back()->with('error', 'Area invalid data')->withInput($request->all());
@@ -117,7 +117,7 @@ class AreaController extends Controller
     {
         try {
             $this->service->deleteData($id);
-            return redirect()->route('backend.common.area.index')
+            return redirect()->route('backoffice.area.index')
                 ->with('success', 'Area delete successfully');
         }catch (\Throwable $throwable){
             return redirect()->back()->with('error', 'Invalid Area information');

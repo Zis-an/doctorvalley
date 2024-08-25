@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Modules\Doctor\Enums\DoctorDetailEnum;
 
 return new class extends Migration
 {
@@ -11,18 +12,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('doctor_details', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('doctor_id');
-            $table->unsignedBigInteger('division_id');
-            $table->unsignedBigInteger('district_id');
-            $table->unsignedBigInteger('thana_id');
-            $table->text('doctor_address')->nullable();
-            $table->longText('doctor_bio')->nullable();
-            $table->text('fb_link')->nullable();
-            $table->text('twitter_link')->nullable();
-            $table->text('youtube_link')->nullable();
-            $table->text('linkedin_link')->nullable();
+        Schema::create(DoctorDetailEnum::DB_TABLE, function (Blueprint $table) {
+            $table->id(DoctorDetailEnum::ID);
+            $table->foreignId(DoctorDetailEnum::DOCTOR_ID);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -33,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('doctor_details');
+        Schema::dropIfExists(DoctorDetailEnum::DB_TABLE);
     }
 };

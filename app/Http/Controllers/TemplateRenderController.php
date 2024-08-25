@@ -12,26 +12,6 @@ class TemplateRenderController extends Controller
         return view('backoffice.dashboard');
     }
 
-    public function backoffice_create_doctor()
-    {
-        return view('backoffice.doctor.createUpdateDoctor');
-    }
-
-    public function backoffice_doctor_list()
-    {
-        return view('backoffice.doctor.doctorList');
-    }
-
-    public function backoffice_create_chamber()
-    {
-        return view('backoffice.chamber.createUpdateChamber');
-    }
-
-    public function backoffice_chamber_list()
-    {
-        return view('backoffice.chamber.chamberList');
-    }
-
     public function backoffice_create_blog()
     {
         return view('backoffice.blog.createUpdateBlog');
@@ -40,36 +20,6 @@ class TemplateRenderController extends Controller
     public function backoffice_blog_list()
     {
         return view('backoffice.blog.blogList');
-    }
-
-    public function backoffice_create_speciality()
-    {
-        return view('backoffice.speciality.createUpdateSpeciality');
-    }
-
-    public function backoffice_speciality_list()
-    {
-        return view('backoffice.speciality.specialityList');
-    }
-
-    public function backoffice_create_institute()
-    {
-        return view('backoffice.institute.createUpdateInstitute');
-    }
-
-    public function backoffice_institute_list()
-    {
-        return view('backoffice.institute.instituteList');
-    }
-
-    public function backoffice_create_course()
-    {
-        return view('backoffice.course.createUpdateCourse');
-    }
-
-    public function backoffice_course_list()
-    {
-        return view('backoffice.course.courseList');
     }
 
     public function backoffice_feedback()
@@ -82,16 +32,11 @@ class TemplateRenderController extends Controller
         return view('backoffice.doctor.doctor-request');
     }
 
-    public function backoffice_doctor_info()
-    {
-        return view('backoffice.doctor.doctorinfo');
-    }
-
     public function backoffice_notifications()
     {
         return view('backoffice.notifications');
     }
-    
+
     // Backoffice Ends
 
 

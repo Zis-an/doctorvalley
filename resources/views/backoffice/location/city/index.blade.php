@@ -68,8 +68,12 @@
                 <div class="details align-items-start">
                     <div class="details-body w-100">
                         <!-- ADD-PERSONAL-INFORMATION -->
-                        <form action="{{ route('backoffice.city.store') }}" method="POST" class="educationinfoform"
-                            id="personalinfoform">
+                        <form
+                            action="{{ !empty($city) ? route('backoffice.city.update', $city->id) : route('backoffice.city.store') }}"
+                            method="POST" class="educationinfoform" id="personalinfoform">
+                            @if (!empty($city))
+                                @method('PUT')
+                            @endif
                             @csrf
                             <div class="row g-3">
                                 <div class="col-md-6">
@@ -77,8 +81,9 @@
                                         <label for="coursename" class="inputlabel">
                                             District Name <span>*</span>
                                         </label>
-                                        <input type="text" name="city_name" class="form-control"
-                                            placeholder="Enter district name" autocomplete="off">
+                                        <input type="text" name="city_name"
+                                            value="{{ !empty($city) ? $city->city_name : old('city_name') }}"
+                                            class="form-control" placeholder="Enter district name" autocomplete="off">
                                         {{-- <p class="error-message d-none">This field is required</p> --}}
                                         @if ($errors->has('city_name'))
                                             <p class="error-message">{{ $errors->first('city_name') }}</p>
@@ -93,8 +98,10 @@
                                         </label>
                                         <select name="status" id="selectstatus" class="form-control" autocomplete="off">
                                             <option value="" selected disabled>Select Status</option>
-                                            <option value="1">Active</option>
-                                            <option value="2">Inactive</option>
+                                            <option value="1"
+                                                {{ !empty($city) && $city->status == 1 ? 'selected' : '' }}>Active</option>
+                                            <option value="2"
+                                                {{ empty($city) || $city->status == 2 ? 'selected' : '' }}>Inactive</option>
                                         </select>
                                         {{-- <p class="error-message d-none">This field is required</p> --}}
                                         @if ($errors->has('status'))
@@ -110,7 +117,9 @@
                                         </label>
                                         <select id="selectinstitute" name="province_id" class="wide" autocomplete="off">
                                             @foreach ($provinces as $province)
-                                                <option value="{{ $province->id }}">{{ $province->province_name }}</option>
+                                                <option value="{{ $province->id }}"
+                                                    {{ !empty($city) ? $city->province_id == $province->id ? 'Selected' : '' : '' }}>
+                                                    {{ $province->province_name }}</option>
                                             @endforeach
                                         </select>
                                         {{-- <p class="error-message d-none">This field is required</p> --}}
@@ -122,7 +131,9 @@
 
                                 <div class="col-12">
                                     <div class="edubtns">
-                                        <button class="btn-profile-add">Create</button>
+                                        <button class="btn-profile-add">
+                                            {{ !empty($city) ? 'Update' : 'Create' }}
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -142,6 +153,7 @@
                                     <tr>
                                         <th scope="col">SL</th>
                                         <th scope="col" class="text-center">District Name</th>
+                                        <th scope="col" class="text-center">Status</th>
                                         <th scope="col">Actions</th>
                                     </tr>
                                 </thead>
@@ -151,11 +163,16 @@
                                             <th scope="row">{{ $key + 1 }}</th>
                                             <td class="text-center">{{ $city->city_name }}</td>
                                             <td>
+                                                <div class="text-center">
+                                                    {{ $city->status == 1 ? 'Active' : 'Inactive' }}
+                                                </div>
+                                            </td>
+                                            <td>
                                                 <div class="actions">
-                                                    <a href="#" class="btn-action" data-bs-toggle="modal"
-                                                        data-bs-target="#editModal{{ $city->id }}">
+                                                    <a href="{{ route('backoffice.city.edit', $city->id) }}"
+                                                        class="btn-action">
                                                         <svg data-bs-toggle="tooltip" data-bs-placement="top"
-                                                            data-bs-title="Edit District"
+                                                            data-bs-title="Edit Division"
                                                             xmlns="http://www.w3.org/2000/svg" width="16"
                                                             height="16" fill="currentColor"
                                                             class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -179,14 +196,6 @@
                                                                 d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
                                                         </svg>
                                                     </button>
-
-                                                    <div class="form-check form-switch">
-                                                        <input class="form-check-input" type="checkbox" role="switch"
-                                                            id="publish-toggle-1" data-bs-toggle="modal"
-                                                            data-bs-target="#confirmModal"
-                                                            {{ $city->status == 1 ? 'checked' : '' }}>
-                                                        <label class="form-check-label" for="publish-toggle-1"></label>
-                                                    </div>
                                                 </div>
                                             </td>
                                             <!-- DELETE-CONFIRM MODAL STARTS -->
@@ -213,84 +222,6 @@
                                                 </div>
                                             </div>
                                             <!-- DELETE-CONFIRM MODAL ENDS -->
-
-                                            <!-- EDIT MODAL STARTS -->
-                                            <div class="modal fade pe-0" id="editModal{{ $city->id }}"
-                                                tabindex="-1" aria-labelledby="editModal" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered">
-                                                    <form action="{{ route('backoffice.city.update', $city->id) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <div class="modal-content">
-                                                            <div class="modal-body">
-                                                                <div class="row g-3">
-                                                                    <div class="col-12">
-                                                                        <div class="inputbox">
-                                                                            <label for="coursename" class="inputlabel">
-                                                                                City Name <span>*</span>
-                                                                            </label>
-                                                                            <input type="text" name="city_name"
-                                                                                value="{{ $city->city_name }}"
-                                                                                class="form-control"
-                                                                                placeholder="Enter city name"
-                                                                                autocomplete="off">
-                                                                            {{-- <p class="error-message d-none">This field is required</p> --}}
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-12">
-                                                                        <div class="inputbox">
-                                                                            <label for="status" class="inputlabel">
-                                                                                Status <span>*</span>
-                                                                            </label>
-                                                                            <select id="selectstatus" name="status"
-                                                                                class="form-control" autocomplete="off">
-                                                                                <option value="1"
-                                                                                    {{ $city->status == 1 ? 'selected' : '' }}>
-                                                                                    Active</option>
-                                                                                <option value="2"
-                                                                                    {{ $city->status == 2 ? 'selected' : '' }}>
-                                                                                    Inactive</option>
-                                                                            </select>
-                                                                            {{-- <p class="error-message d-none">This field is required</p> --}}
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-md-6">
-                                                                        <div class="inputbox">
-                                                                            <label for="selectinstitute"
-                                                                                class="inputlabel">
-                                                                                Select Division <span>*</span>
-                                                                            </label>
-                                                                            <select id="selectinstitute"
-                                                                                name="province_id" class="wide"
-                                                                                autocomplete="off">
-                                                                                @foreach ($provinces as $province)
-                                                                                    <option value="{{ $province->id }}" {{ $city->province_id == $province->id ? 'selected' : '' }}>
-                                                                                        {{ $province->province_name }}
-                                                                                    </option>
-                                                                                @endforeach
-                                                                            </select>
-                                                                            {{-- <p class="error-message d-none">This field is required</p> --}}
-                                                                            @if ($errors->has('province_id'))
-                                                                                <p class="error-message">
-                                                                                    {{ $errors->first('province_id') }}</p>
-                                                                            @endif
-                                                                        </div>
-                                                                    </div>
-
-                                                                </div>
-                                                                <div class="modal-footer justify-content-end gap-3">
-                                                                    <button type="submit" class="btn-remove">Yes</button>
-                                                                    <button type="button" class="btn-cancel"
-                                                                        data-bs-dismiss="modal">No</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                                <!-- EDIT MODAL ENDS -->
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -364,6 +295,19 @@
         NiceSelect.bind(document.getElementById("selectinstitute"), {
             searchable: true,
             placeholder: 'Select Division'
+        });
+    </script>
+
+    {{-- To select "Select Status" as status by default --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('#personalinfoform');
+            const statusSelect = document.querySelector('#selectstatus');
+
+            // Check if the form action is the store route
+            if (form && form.action.includes('{{ route('backoffice.city.store') }}')) {
+                statusSelect.selectedIndex = 0; // Set the "Select Status" option as selected
+            }
         });
     </script>
 @endpush

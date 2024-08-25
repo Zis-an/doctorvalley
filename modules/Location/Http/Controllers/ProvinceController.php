@@ -30,11 +30,7 @@ class ProvinceController extends Controller
             $provinces = $this->service->getProvinceList();
             // $countries = $this->countryService->getCountriesForSelect();
             // return view('bcscommon::location.province.index', compact('provinces', 'countries'));
-<<<<<<< HEAD
             return view('backoffice.location.province.index', compact('provinces'));
-=======
-            return view('backoffice.location.province.index', compact('provinces', 'countries'));
->>>>>>> 34453fb87d97e94bd10833b7fb74e3827ffbb3a4
         }catch (\Throwable $exception){
             dd($exception->getMessage());
             abort(500);
@@ -50,7 +46,7 @@ class ProvinceController extends Controller
     {
         try {
             $this->service->storeProvince($request->validated());
-            return redirect()->route('backend.common.province.index')->with('success', 'Province store successfully');
+            return redirect()->route('backoffice.province.index')->with('success', 'Province store successfully');
         }catch (\Throwable $throwable){
             return redirect()->back()->with('error', 'Province invalid data')->withInput($request->all());
         }
@@ -63,7 +59,7 @@ class ProvinceController extends Controller
             $province = $this->service->getProvinceById($id);
             $countries = $this->countryService->getCountriesForSelect();
 
-            return view('bcscommon::location.province.index',
+            return view('backoffice.location.province.index',
                 compact('province', 'provinces', 'countries')
             );
         }catch (\Throwable $throwable){
@@ -75,7 +71,7 @@ class ProvinceController extends Controller
     {
         try {
             $this->service->updateData($id, $request->validated());
-            return redirect()->route('backend.common.province.index')
+            return redirect()->route('backoffice.province.index')
                 ->with('success', 'Province updated successfully');
         }catch (\Throwable $throwable){
             return redirect()->back()->with('error', 'Province invalid data')->withInput($request->all());
@@ -86,7 +82,7 @@ class ProvinceController extends Controller
     {
         try {
             $this->service->deleteData($id);
-            return redirect()->route('backend.common.province.index')
+            return redirect()->route('backoffice.province.index')
                 ->with('success', 'Province delete successfully');
         }catch (\Throwable $throwable){
             return redirect()->back()->with('error', 'Invalid Province information');

@@ -17,8 +17,12 @@ return new class extends Migration
             $table->text('thumb_path');
             $table->longText('description');
             $table->longText('blog_tags')->nullable();
-            $table->string('status')->default(config('global.status.inactive'))->nullable();
-            $table->morphs('authorable');
+            // $table->morphs('authorable');
+            $table->unsignedBigInteger('view')->nullable();
+            $table->unsignedBigInteger('share')->nullable();
+            $table->longText('meta_keys')->nullable();
+            $table->longText('meta_description')->nullable();
+            $table->boolean('status')->default(config('global.status.inactive'));
             $table->timestamps();
             $table->softDeletes();
         });

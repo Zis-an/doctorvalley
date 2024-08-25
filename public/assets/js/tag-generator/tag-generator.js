@@ -91,7 +91,7 @@
     return false;
   }
 
-  // Add tags programmatically 
+  // Add tags programmatically
   TagsInput.prototype.addData = function (array) {
     let plugin = this;
 
@@ -163,9 +163,9 @@
 
 })();
 
-const variant1 = new TagsInput({
-  selector: 'speciality',
-  duplicate: false,
-  max: 10
-});
-variant1.addData(['Neurologist', 'Pathologist']);
+// const variant1 = new TagsInput({
+//   selector: 'speciality',
+//   duplicate: false,
+//   max: 10
+// });
+// variant1.addData(['Neurologist', 'Pathologist']);

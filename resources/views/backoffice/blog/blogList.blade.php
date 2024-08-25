@@ -74,215 +74,95 @@
                                         <th scope="col">Blog Description</th>
                                         <th scope="col">Published Date</th>
                                         <th scope="col">Author</th>
+                                        <th scope="col">Status</th>
                                         <th scope="col">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Blog title 1</td>
-                                        <td>
-                                            <figure class="blogimg">
-                                                <img src="{{ asset('assets/images/blogs/blog-1.jpg') }}" alt="blog-thumb">
-                                            </figure>
-                                        </td>
-                                        <td>
-                                            <div class="description">
-                                                <p class="blogtext">
-                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis totam
-                                                    voluptatem voluptas, ab eum modi sint culpa libero saepe nostrum.
-                                                </p>
-                                            </div>
-                                        </td>
-                                        <td>28 June 2023</td>
-                                        <td>Ratul Al Mamun</td>
-                                        <td>
-                                            <div class="actions">
-                                                <a href="blogdescription.html" data-bs-toggle="tooltip"
-                                                    data-bs-placement="top" data-bs-title="View Blog Details"
-                                                    class="btn-view">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                        fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                                                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
-                                                        <path
-                                                            d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
-                                                    </svg>
-                                                </a>
+                                    @foreach ($blogs as $key => $blog)
+                                        <tr>
+                                            <th scope="row">{{ $key + 1 }}</th>
+                                            <td>{{ $blog->blog_title }}</td>
+                                            <td>
+                                                <figure class="blogimg">
+                                                    {{-- {{ dd($blog->thumb_path) }} --}}
+                                                    <img src="{{ asset('test_images/' . $blog->thumb_path) }}" alt="blog-thumb">
+                                                </figure>
+                                            </td>
+                                            <td>
+                                                <div class="description">
+                                                    <p class="blogtext">
+                                                        {{ strip_tags(Str::limit($blog->description, 20)) }}
+                                                    </p>
+                                                </div>
+                                            </td>
+                                            <td>{{ $blog->created_at->toDateString() }}</td>
+                                            <td>Ratul Al Mamun</td>
+                                            <td>{{ $blog->status == 1 ? 'Active' : 'Inactive' }}</td>
+                                            <td>
+                                                <div class="actions">
+                                                    <a href="{{ route('backoffice.blog.edit', $blog->id) }}"
+                                                        class="btn-action">
+                                                        <svg data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            data-bs-title="Edit Blog"
+                                                            xmlns="http://www.w3.org/2000/svg" width="16"
+                                                            height="16" fill="currentColor"
+                                                            class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                            <path
+                                                                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                            <path fill-rule="evenodd"
+                                                                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                                        </svg>
+                                                    </a>
 
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" role="switch"
-                                                        id="tabletoggle-1">
-                                                    <label class="form-check-label" for="tabletoggle-1"></label>
+                                                    <button type="button" class="btn-action" data-bs-toggle="modal"
+                                                        data-bs-target="#confirmModal{{ $blog->id }}">
+                                                        <svg data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            data-bs-title="Delete Blog"
+                                                            xmlns="http://www.w3.org/2000/svg" width="16"
+                                                            height="16" fill="currentColor" class="bi bi-trash"
+                                                            viewBox="0 0 16 16">
+                                                            <path
+                                                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
+                                                            <path
+                                                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                            <!-- DELETE-CONFIRM MODAL STARTS -->
+                                            <div class="modal fade pe-0" id="confirmModal{{ $blog->id }}"
+                                                tabindex="-1" aria-labelledby="confirmModal" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-body">
+                                                            <h5 class="delete-title">Are you sure you want to delete
+                                                                {{ $blog->blog_title }}?</h5>
+                                                        </div>
+                                                        <div class="modal-footer justify-content-end gap-3">
+                                                            <form
+                                                                action="{{ route('backoffice.blog.delete', $blog->id) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn-remove">Delete</button>
+                                                            </form>
+                                                            <button type="button" class="btn-cancel"
+                                                                data-bs-dismiss="modal">Cancel</button>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Blog title 2</td>
-                                        <td>
-                                            <figure class="blogimg">
-                                                <img src="{{ asset('assets/images/blogs/blog-2.jpg') }}" alt="blog-thumb">
-                                            </figure>
-                                        </td>
-                                        <td>
-                                            <div class="description">
-                                                <p class="blogtext">
-                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis totam
-                                                    voluptatem voluptas, ab eum modi sint culpa libero saepe nostrum.
-                                                </p>
-                                            </div>
-                                        </td>
-                                        <td>28 June 2023</td>
-                                        <td>Ratul Al Mamun</td>
-                                        <td>
-                                            <div class="actions">
-                                                <a href="blogdescription.html" data-bs-toggle="tooltip"
-                                                    data-bs-placement="top" data-bs-title="View Blog Details"
-                                                    class="btn-view">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                        fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                                                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
-                                                        <path
-                                                            d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
-                                                    </svg>
-                                                </a>
-
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" role="switch"
-                                                        id="tabletoggle-1">
-                                                    <label class="form-check-label" for="tabletoggle-1"></label>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Blog title 3</td>
-                                        <td>
-                                            <figure class="blogimg">
-                                                <img src="{{ asset('assets/images/blogs/blog-3.jpg') }}" alt="blog-thumb">
-                                            </figure>
-                                        </td>
-                                        <td>
-                                            <div class="description">
-                                                <p class="blogtext">
-                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis totam
-                                                    voluptatem voluptas, ab eum modi sint culpa libero saepe nostrum.
-                                                </p>
-                                            </div>
-                                        </td>
-                                        <td>28 June 2023</td>
-                                        <td>Ratul Al Mamun</td>
-                                        <td>
-                                            <div class="actions">
-                                                <a href="blogdescription.html" data-bs-toggle="tooltip"
-                                                    data-bs-placement="top" data-bs-title="View Blog Details"
-                                                    class="btn-view">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                        fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                                                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
-                                                        <path
-                                                            d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
-                                                    </svg>
-                                                </a>
-
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" role="switch"
-                                                        id="tabletoggle-1">
-                                                    <label class="form-check-label" for="tabletoggle-1"></label>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">4</th>
-                                        <td>Blog title 4</td>
-                                        <td>
-                                            <figure class="blogimg">
-                                                <img src="{{ asset('assets/images/blogs/blog-4.jpg') }}" alt="blog-thumb">
-                                            </figure>
-                                        </td>
-                                        <td>
-                                            <div class="description">
-                                                <p class="blogtext">
-                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis totam
-                                                    voluptatem voluptas, ab eum modi sint culpa libero saepe nostrum.
-                                                </p>
-                                            </div>
-                                        </td>
-                                        <td>28 June 2023</td>
-                                        <td>Ratul Al Mamun</td>
-                                        <td>
-                                            <div class="actions">
-                                                <a href="blogdescription.html" data-bs-toggle="tooltip"
-                                                    data-bs-placement="top" data-bs-title="View Blog Details"
-                                                    class="btn-view">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                        fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                                                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
-                                                        <path
-                                                            d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
-                                                    </svg>
-                                                </a>
-
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" role="switch"
-                                                        id="tabletoggle-1">
-                                                    <label class="form-check-label" for="tabletoggle-1"></label>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">5</th>
-                                        <td>Blog title 5</td>
-                                        <td>
-                                            <figure class="blogimg">
-                                                <img src="{{ asset('assets/images/blogs/blog-5.jpg') }}" alt="blog-thumb">
-                                            </figure>
-                                        </td>
-                                        <td>
-                                            <div class="description">
-                                                <p class="blogtext">
-                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis totam
-                                                    voluptatem voluptas, ab eum modi sint culpa libero saepe nostrum.
-                                                </p>
-                                            </div>
-                                        </td>
-                                        <td>28 June 2023</td>
-                                        <td>Ratul Al Mamun</td>
-                                        <td>
-                                            <div class="actions">
-                                                <a href="blogdescription.html" data-bs-toggle="tooltip"
-                                                    data-bs-placement="top" data-bs-title="View Blog Details"
-                                                    class="btn-view">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                        fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                                                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
-                                                        <path
-                                                            d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
-                                                    </svg>
-                                                </a>
-
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" role="switch"
-                                                        id="tabletoggle-1">
-                                                    <label class="form-check-label" for="tabletoggle-1"></label>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                            <!-- DELETE-CONFIRM MODAL ENDS -->
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
 
+                <!-- Pagination Starts -->
                 <div class="mt-5 d-flex justify-content-center">
                     <nav aria-label="Page navigation example" aria-labelledby="nav">
                         <ul class="pagination">
@@ -332,6 +212,7 @@
                         </ul>
                     </nav>
                 </div>
+                <!-- Pagination Ends -->
             </div>
         </div>
     </main>

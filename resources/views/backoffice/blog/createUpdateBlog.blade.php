@@ -8,10 +8,10 @@
                     <h5 class="blog-title">CREATE POST</h5>
                 </div>
 
-                <div class="rightinfo">
+                {{-- <div class="rightinfo">
                     <button class="btn-publish">PUBLISH</button>
                     <button class="btn-update">UPDATE</button>
-                </div>
+                </div> --}}
             </div>
 
             @include('components.create-blog.form')

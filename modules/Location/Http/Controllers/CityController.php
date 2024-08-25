@@ -58,7 +58,7 @@ class CityController extends Controller
 
         try {
             $this->service->storeCity($request->validated());
-            return redirect()->route('backend.common.city.index')->with('success', 'City store successfully');
+            return redirect()->route('backoffice.city.index')->with('success', 'City store successfully');
         }catch (\Throwable $throwable){
             return redirect()->back()->with('error', 'City invalid data')->withInput($request->all());
         }
@@ -71,7 +71,7 @@ class CityController extends Controller
             $city = $this->service->getCityById($id);
             $provinces = $this->provinceService->getProvincesForSelect();
 
-            return view('bcscommon::location.city.index',
+            return view('backoffice.location.city.index',
                 compact('city','cities', 'provinces')
             );
         }catch (\Throwable $throwable){
@@ -83,7 +83,7 @@ class CityController extends Controller
     {
         try {
             $this->service->updateData($id, $request->validated());
-            return redirect()->route('backend.common.city.index')
+            return redirect()->route('backoffice.city.index')
                 ->with('success', 'City updated successfully');
         }catch (\Throwable $throwable){
             return redirect()->back()->with('error', 'City invalid data')->withInput($request->all());
@@ -94,7 +94,7 @@ class CityController extends Controller
     {
         try {
             $this->service->deleteData($id);
-            return redirect()->route('backend.common.city.index')
+            return redirect()->route('backofice.city.index')
                 ->with('success', 'City delete successfully');
         }catch (\Throwable $throwable){
             return redirect()->back()->with('error', 'Invalid City information');
@@ -118,7 +118,4 @@ class CityController extends Controller
             ]);
         }
     }
-
-
-
 }

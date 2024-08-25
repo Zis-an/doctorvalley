@@ -67,8 +67,12 @@ class AreaService
         return $result;
     }
 
-
-
-
-
+    public function getAreasForSelect()
+    {
+        $result = $this->repository->fetchAreasForSelect();
+        if (empty($result)){
+            throw new Exception('Invalid Area info');
+        }
+        return $result;
+    }
 }

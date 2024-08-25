@@ -27,6 +27,9 @@
     <!-- DOCTORVALY CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 
+    <!-- csrf token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     @stack('before-styles')
 
     @vite(['resources/css/backend.css', 'resources/css/app.css'])
@@ -51,6 +54,8 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <!-- BOOTSTRAP-BUNDLE-JS[v5.3] -->
+    <script src="{{ asset('assets/js/jquery/jquery.min.js') }}"></script>
+
     <script src="{{ asset('assets/js/bootsrap/bootstrap.bundle.min.js') }}"></script>
 
     <!-- HAMBURER-ICON -->

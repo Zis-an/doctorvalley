@@ -19,7 +19,7 @@ class CreateAreasTable extends Migration
             $table->id(AreaEnum::ID);
             $table->unsignedBigInteger(AreaEnum::CITY_ID);
             $table->string(AreaEnum::AREA_NAME);
-            $table->string(AreaEnum::AREA_STATUS);
+            $table->boolean(AreaEnum::AREA_STATUS)->default(config('global.status.inactive'));
             $table->timestamps();
             $table->softDeletes();
         });

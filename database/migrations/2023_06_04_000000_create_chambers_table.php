@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Modules\Chamber\Enums\ChamberEnum;
 
 return new class extends Migration
 {
@@ -13,17 +14,19 @@ return new class extends Migration
     {
         Schema::create('chambers', function (Blueprint $table) {
             $table->id();
-            $table->string('chamber_name');
-            $table->string('reg_no');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('username')->unique();
-            $table->string('phone_no');
-            $table->string('chamber_type')->default(config('global.chamber_types.chamber'));
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('status')->default(config('global.status.inactive'))->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->string(ChamberEnum::CHAMBER_NAME);
+            $table->string(ChamberEnum::REG_NO);
+            $table->string(ChamberEnum::CHAMBER_EMAIL)->unique();
+            $table->string(ChamberEnum::CHAMBER_PHONE);
+            $table->string(ChamberEnum::CHAMBER_TYPE)->default(ChamberEnum::TYPE_CHAMBER);
+            $table->integer(ChamberEnum::COUNTRY_ID)->default(1);
+            $table->integer(ChamberEnum::PROVINCE_ID)->nullable();
+            $table->integer(ChamberEnum::CITY_ID)->nullable();
+            $table->integer(ChamberEnum::AREA_ID)->nullable();
+            $table->text(ChamberEnum::CHAMBER_ADDRESS)->nullable();
+            $table->longText(ChamberEnum::CHAMBER_DESCRIPTION)->nullable();
+            $table->longText(ChamberEnum::SOCIAL_LINKS)->nullable();
+            $table->boolean(ChamberEnum::STATUS)->default(config('global.status.inactive'));
             $table->timestamps();
             $table->softDeletes();
         });

@@ -11,7 +11,7 @@ class DoctorLoginRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return empty(auth()->guard('doctor')->user());
     }
 
     /**
@@ -22,7 +22,24 @@ class DoctorLoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'username'=>['required', 'string'],
+            'password'=>['required', 'min:8'],
+            'remember'=>['nullable'],
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'username.required' => 'Username/Email is required',
+            'username.string' => 'Username/Email must be string',
+            'password.required' => 'Password is required',
+            'password.min' => 'Password min 8 characters',
         ];
     }
 }

@@ -6,6 +6,7 @@
 */
 
 namespace Modules\Location\Models;
+use Modules\Doctor\Models\Doctor;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Location\Enums\CountryEnum;
 use Modules\Location\Enums\ProvinceEnum;
@@ -26,5 +27,10 @@ class Country extends Model
     public function provinces(): HasMany
     {
         return $this->hasMany(Province::class, ProvinceEnum::COUNTRY_ID, CountryEnum::ID);
+    }
+
+    public function doctor()
+    {
+        return $this->belongsTo(Doctor::class);
     }
 }

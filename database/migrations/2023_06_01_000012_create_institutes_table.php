@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Modules\Institute\Enums\InstituteEnum;
 
 return new class extends Migration
 {
@@ -13,9 +14,9 @@ return new class extends Migration
     {
         Schema::create('institutes', function (Blueprint $table) {
             $table->id();
-            $table->text('institute_name');
-            $table->text('institute_address')->nullable();
-            $table->string('status')->default(config('global.active'))->nullable();
+            $table->text(InstituteEnum::INSTITUTE_NAME);
+            $table->text(InstituteEnum:: INSTITUTE_ADDRESS)->nullable();
+            $table->boolean(InstituteEnum::INSTITUTE_STATUS)->default(config('global.status.inactive'));
             $table->timestamps();
             $table->softDeletes();
         });

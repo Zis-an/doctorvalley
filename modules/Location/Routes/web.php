@@ -9,7 +9,7 @@ use Modules\Location\Http\Controllers\ProvinceController;
 
 
 //Area
-Route::group(['as'=>'backoffice.area.', 'prefix'=>'/area', 'middleware'=>[]], function (){
+Route::group(['as'=>'backoffice.area.', 'prefix'=>'/area', 'middleware'=>['auth:admin']], function (){
     Route::get('/', [AreaController::class, 'index'])->name('index');
     Route::get('/create', [AreaController::class, 'create'])->name('create');
     Route::post('/store', [AreaController::class, 'store'])->name('store');
@@ -21,7 +21,7 @@ Route::group(['as'=>'backoffice.area.', 'prefix'=>'/area', 'middleware'=>[]], fu
 });
 
 //City
-Route::group(['as'=>'backoffice.city.', 'prefix'=>'/city', 'middleware'=>[]], function (){
+Route::group(['as'=>'backoffice.city.', 'prefix'=>'/city', 'middleware'=>['auth:admin']], function (){
     Route::get('/', [CityController::class, 'index'])->name('index');
     Route::get('/create', [CityController::class, 'create'])->name('create');
     Route::post('/store', [CityController::class, 'store'])->name('store');
@@ -32,7 +32,7 @@ Route::group(['as'=>'backoffice.city.', 'prefix'=>'/city', 'middleware'=>[]], fu
 });
 
 //Province
-Route::group(['as'=>'backoffice.province.', 'prefix'=>'/province', 'middleware'=>[]], function (){
+Route::group(['as'=>'backoffice.province.', 'prefix'=>'/province', 'middleware'=>['auth:admin']], function (){
     Route::get('/', [ProvinceController::class, 'index'])->name('index');
     Route::get('/create', [ProvinceController::class, 'create'])->name('create');
     Route::post('/store', [ProvinceController::class, 'store'])->name('store');
@@ -43,7 +43,7 @@ Route::group(['as'=>'backoffice.province.', 'prefix'=>'/province', 'middleware'=
 });
 
 //Country
-Route::group(['as'=>'backoffice.country.', 'prefix'=>'/country', 'middleware'=>[]], function (){
+Route::group(['as'=>'backoffice.country.', 'prefix'=>'/country', 'middleware'=>['auth:admin']], function (){
     Route::get('/', [CountryController::class, 'index'])->name('index');
     Route::get('/create', [CountryController::class, 'create'])->name('create');
     Route::post('/store', [CountryController::class, 'store'])->name('store');

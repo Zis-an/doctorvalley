@@ -54,6 +54,15 @@ class AreaDbRepository
             ->delete();
     }
 
+    public function fetchAreasForSelect()
+    {
+        return DB::table(AreaEnum::DB_TABLE)
+            ->where(AreaEnum::AREA_STATUS, '1')
+            ->whereNull('deleted_at')
+            ->select('id','area_name')
+            ->get();
+    }
+
     public function fetchAreaByCityId(int $cityId)
     {
         return $this->model
