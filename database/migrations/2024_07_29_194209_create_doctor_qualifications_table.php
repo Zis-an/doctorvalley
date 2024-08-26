@@ -23,6 +23,7 @@ return new class extends Migration
             $table->date(DoctorQualificationEnum::TO_DATE);
             $table->boolean(DoctorQualificationEnum::IS_CURRENT);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

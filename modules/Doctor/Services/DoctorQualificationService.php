@@ -77,11 +77,39 @@ class DoctorQualificationService
         return $result;
     }
 
-    public function updateData(int $id, array $formData): mixed
+    public function updateQualification(int $id, array $formData): mixed
     {
-        $result = $this->repository->update($formData, $id);
-        if (empty($result)) {
-            throw new Exception('Invalid Doctor Qualification update data');
+        // $result = $this->repository->update($formData, $id);
+        // if (empty($result)) {
+        //     throw new Exception('Invalid Doctor Qualification update data');
+        // }
+        // return $result;
+
+        $numEntries = count($formData['degree_id']);
+        $qualifications = [];
+        for ($i = 0; $i < $numEntries; $i++) {
+            $qualification = [
+                'doctor_id' => $formData['doctor_id'],
+                'degree_id' => $formData['degree_id'][$i],
+                'institute_id' => $formData['institute_id'][$i],
+                'from' => $formData['from'][$i],
+                'to' => $formData['to'][$i],
+                'current' => $formData['current'][$i],
+                'major' => $formData['major'][$i],
+            ];
+
+            if (!empty($formData['institute_name'][$i])) {
+                $qualification['institute_name'] = $formData['institute_name'][$i];
+            }
+
+            $qualifications[] = $qualification;
+        }
+        // Store each row in the database
+        foreach ($qualifications as $qualification) {
+            $result = $this->repository->updateDoctorQualificationData($qualification, $qualification['doctor_id']);
+            if (empty($result)) {
+                throw new Exception('Invalid data format');
+            }
         }
         return $result;
     }

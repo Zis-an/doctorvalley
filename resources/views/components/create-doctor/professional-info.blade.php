@@ -70,100 +70,219 @@
                             </div>
                         </div>
 
-                        <!-- ADD-EXPERIENCE -->
-                        <div id="form-container">
-                            <fieldset class="experience-fieldset">
-                                <legend>Professional Experience</legend>
-                                {{-- <form action="{{ route('backoffice.doctor.store.professional', $_GET['doctor_id'] ?? 0) }}" method="POST"
-                                    class="educationinfoform mt-3" id="experienceform" enctype="multipart/form-data"> --}}
-                                <form action="{{ route('backoffice.doctor.store.professional') }}" method="POST"
-                                    class="educationinfoform mt-3" id="experienceform" enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="row g-3">
-                                        <!-- Doctor ID -->
-                                        {{-- <input type="hidden" id="doctor_id" value="{{ $_GET['doctor_id'] ?? 0  }}" name="doctor_id"> --}}
-                                        <input type="hidden" id="doctor_id" value="{{ $_GET['doctor_id'] }}" name="doctor_id">
+                        @if (!empty($experience))
+                            @foreach ($experience as $ex)
+                                <!-- ADD-EXPERIENCE -->
+                                <div class="form-container">
+                                    <fieldset class="experience-fieldset">
+                                        <legend>Professional Experience</legend>
+                                        <form action="{{ route('backoffice.doctor.update.professional', $ex->doctor_id) }}"
+                                            method="POST" class="educationinfoform mt-3 experience-form"
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="row g-3">
+                                                <!-- Doctor ID -->
+                                                <input type="hidden" name="doctor_id" value="{{ $ex->doctor_id }}">
 
-                                        <div class="col-md-6">
-                                            <div class="inputbox">
-                                                <label for="organization-name" class="inputlabel">
-                                                    Institute/Organization Name <span>*</span>
-                                                </label>
-                                                <input type="text" name="organization_name[]" class="form-control"
-                                                    placeholder="Dhaka Medical College" autocomplete="off">
-                                                @if ($errors->has('organization_name.*'))
-                                                    <p class="error-message">{{ $errors->first('organization_name.*') }}</p>
-                                                @endif
+                                                <div class="col-md-6">
+                                                    <div class="inputbox">
+                                                        <label for="organization-name-{{ $loop->index }}"
+                                                            class="inputlabel">
+                                                            Institute/Organization Name <span>*</span>
+                                                        </label>
+                                                        <input type="text" name="organization_name[]"
+                                                            id="organization-name-{{ $loop->index }}"
+                                                            value="{{ $ex->organization_name }}" class="form-control"
+                                                            placeholder="Dhaka Medical College" autocomplete="off">
+                                                        @if ($errors->has('organization_name.*'))
+                                                            <p class="error-message">
+                                                                {{ $errors->first('organization_name.*') }}</p>
+                                                        @endif
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="inputbox">
+                                                        <label for="designation-{{ $loop->index }}" class="inputlabel">
+                                                            Designation <span>*</span>
+                                                        </label>
+                                                        <input type="text" name="designation[]"
+                                                            id="designation-{{ $loop->index }}"
+                                                            value="{{ $ex->designation }}" class="form-control"
+                                                            placeholder="Designation" autocomplete="off">
+                                                        @if ($errors->has('designation.*'))
+                                                            <p class="error-message">{{ $errors->first('designation.*') }}
+                                                            </p>
+                                                        @endif
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="inputbox">
+                                                        <label for="from-{{ $loop->index }}" class="inputlabel">
+                                                            From Date <span>*</span>
+                                                        </label>
+                                                        <input type="date" name="from[]" id="from-{{ $loop->index }}"
+                                                            value="{{ $ex->from }}" class="form-control"
+                                                            placeholder="01/01/2016" autocomplete="off">
+                                                        @if ($errors->has('from.*'))
+                                                            <p class="error-message">{{ $errors->first('from.*') }}</p>
+                                                        @endif
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="inputbox">
+                                                        <label for="to-{{ $loop->index }}" class="inputlabel">
+                                                            To Date <span>*</span>
+                                                        </label>
+                                                        <input type="date" name="to[]" id="to-{{ $loop->index }}"
+                                                            value="{{ $ex->to }}" class="form-control"
+                                                            placeholder="31/12/2020" autocomplete="off">
+                                                        @if ($errors->has('to.*'))
+                                                            <p class="error-message">{{ $errors->first('to.*') }}</p>
+                                                        @endif
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12">
+                                                    <div class="checkfield">
+                                                        <!-- Hidden input with default value of 0 -->
+                                                        <input type="hidden" name="current[]" value="0">
+                                                        <!-- Checkbox input -->
+                                                        <input type="checkbox" id="current-working-{{ $loop->index }}"
+                                                            name="current[]" value="1" class="checkinput"
+                                                            autocomplete="off" hidden
+                                                            {{ $ex->current == 1 ? 'checked' : '' }}>
+                                                        <label for="current-working-{{ $loop->index }}"
+                                                            class="checklabel">
+                                                            Currently Working
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12">
+                                                    <div class="inputbox">
+                                                        <label for="location-{{ $loop->index }}" class="inputlabel">
+                                                            Institute/Organization Location
+                                                        </label>
+                                                        <input type="text" name="location[]"
+                                                            id="location-{{ $loop->index }}"
+                                                            value="{{ $ex->location }}" class="form-control"
+                                                            placeholder="Sherpur Sadar, Sherpur" autocomplete="off">
+                                                        @if ($errors->has('location.*'))
+                                                            <p class="error-message">{{ $errors->first('location.*') }}
+                                                            </p>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </fieldset>
+                                </div>
+                            @endforeach
+                        @else
+                            <!-- ADD-EXPERIENCE -->
+                            <div class="form-container">
+                                <fieldset class="experience-fieldset">
+                                    <legend>Professional Experience</legend>
+                                    <form action="{{ route('backoffice.doctor.store.professional') }}" method="POST"
+                                        class="educationinfoform mt-3 experience-form" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="row g-3">
+                                            <!-- Doctor ID -->
+                                            <input type="hidden" name="doctor_id"
+                                                value="{{ isset($_GET['doctor_id']) ? $_GET['doctor_id'] : 0 }}">
+
+                                            <div class="col-md-6">
+                                                <div class="inputbox">
+                                                    <label for="organization-name-new" class="inputlabel">
+                                                        Institute/Organization Name <span>*</span>
+                                                    </label>
+                                                    <input type="text" name="organization_name[]"
+                                                        id="organization-name-new" class="form-control"
+                                                        placeholder="Dhaka Medical College" autocomplete="off">
+                                                    @if ($errors->has('organization_name.*'))
+                                                        <p class="error-message">
+                                                            {{ $errors->first('organization_name.*') }}</p>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="inputbox">
+                                                    <label for="designation-new" class="inputlabel">
+                                                        Designation <span>*</span>
+                                                    </label>
+                                                    <input type="text" name="designation[]" id="designation-new"
+                                                        class="form-control" placeholder="Designation"
+                                                        autocomplete="off">
+                                                    @if ($errors->has('designation.*'))
+                                                        <p class="error-message">{{ $errors->first('designation.*') }}</p>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="inputbox">
+                                                    <label for="from-new" class="inputlabel">
+                                                        From Date <span>*</span>
+                                                    </label>
+                                                    <input type="date" name="from[]" id="from-new"
+                                                        class="form-control" placeholder="01/01/2016" autocomplete="off">
+                                                    @if ($errors->has('from.*'))
+                                                        <p class="error-message">{{ $errors->first('from.*') }}</p>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="inputbox">
+                                                    <label for="to-new" class="inputlabel">
+                                                        To Date <span>*</span>
+                                                    </label>
+                                                    <input type="date" name="to[]" id="to-new"
+                                                        class="form-control" placeholder="31/12/2020" autocomplete="off">
+                                                    @if ($errors->has('to.*'))
+                                                        <p class="error-message">{{ $errors->first('to.*') }}</p>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="checkfield">
+                                                    <!-- Hidden input with default value of 0 -->
+                                                    <input type="hidden" name="current[]" value="0">
+                                                    <!-- Checkbox input -->
+                                                    <input type="checkbox" id="current-working-new" name="current[]"
+                                                        value="1" class="checkinput" autocomplete="off" hidden>
+                                                    <label for="current-working-new" class="checklabel">
+                                                        Currently Working
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="inputbox">
+                                                    <label for="location-new" class="inputlabel">
+                                                        Institute/Organization Location
+                                                    </label>
+                                                    <input type="text" name="location[]" id="location-new"
+                                                        class="form-control" placeholder="Sherpur Sadar, Sherpur"
+                                                        autocomplete="off">
+                                                    @if ($errors->has('location.*'))
+                                                        <p class="error-message">{{ $errors->first('location.*') }}</p>
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
+                                    </form>
+                                </fieldset>
+                            </div>
+                        @endif
 
-                                        <div class="col-md-6">
-                                            <div class="inputbox">
-                                                <label for="designation" class="inputlabel">
-                                                    Designation <span>*</span>
-                                                </label>
-                                                <input type="text" name="designation[]" class="form-control"
-                                                    placeholder="Dhaka Medical College" autocomplete="off">
-                                                @if ($errors->has('designation.*'))
-                                                    <p class="error-message">{{ $errors->first('designation.*') }}</p>
-                                                @endif
-                                            </div>
-                                        </div>
 
-                                        <div class="col-md-6">
-                                            <div class="inputbox">
-                                                <label for="starting-calendar" class="inputlabel">
-                                                    From Date <span>*</span>
-                                                </label>
-                                                <input type="date" name="from[]" class="form-control"
-                                                    placeholder="01/01/2016" autocomplete="off">
-                                                @if ($errors->has('from.*'))
-                                                    <p class="error-message">{{ $errors->first('from.*') }}</p>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class="inputbox">
-                                                <label for="ending-calendar" class="inputlabel">
-                                                    To Date <span>*</span>
-                                                </label>
-                                                <input type="date" name="to[]" class="form-control"
-                                                    placeholder="31/12/2020" autocomplete="off">
-                                                @if ($errors->has('to.*'))
-                                                    <p class="error-message">{{ $errors->first('to.*') }}</p>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12">
-                                            <div class="checkfield">
-                                                <!-- Hidden input with default value of 0 -->
-                                                <input type="hidden" name="current[]" value="0">
-                                                <!-- Checkbox input -->
-                                                <input type="checkbox" id="current-working" name="current[]" value="1" class="checkinput" autocomplete="off" hidden>
-                                                <label for="current-working" class="checklabel">
-                                                    Currently Working
-                                                </label>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12">
-                                            <div class="inputbox">
-                                                <label for="institutelocation" class="inputlabel">
-                                                    Institute/Organization Location
-                                                </label>
-                                                <input type="text" name="location[]" class="form-control"
-                                                    placeholder="Sherpur Sadar, Sherpur" autocomplete="off">
-                                                @if ($errors->has('location.*'))
-                                                    <p class="error-message">{{ $errors->first('location.*') }}</p>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </fieldset>
-                        </div>
                         <!-- Button to add more forms -->
                         <div class="col-12">
                             <div class="edubtns d-flex justify-content-center">
@@ -192,7 +311,8 @@
                         <!-- Single ADD button to submit all forms -->
                         <div class="col-12">
                             <div class="edubtns col-md-6 col-12">
-                                <button type="submit" id="submit-all-forms" class="btn-profile-add border-2 mt-3">SAVE</button>
+                                <button type="submit" id="submit-all-forms"
+                                    class="btn-profile-add border-2 mt-3">SAVE</button>
                             </div>
                         </div>
                     </div>

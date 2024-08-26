@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string(DoctorEnum::DOCTOR_USER_NAME);
             $table->string(DoctorEnum::DOCTOR_BMDC)->unique();
             $table->string(DoctorEnum::DOCTOR_GENDER)->default('male');
-            $table->string(DoctorEnum::DOCTOR_SPECIALITY);
+            // $table->string(DoctorEnum::DOCTOR_SPECIALITY);
             $table->longText(DoctorEnum::DOCTOR_PHOTO)->nullable();
             $table->string(DoctorEnum::DOCTOR_PASSWORD);
             $table->boolean(DoctorEnum::DOCTOR_STATUS)->default(config('global.status.inactive'));

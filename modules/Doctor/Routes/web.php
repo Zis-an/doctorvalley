@@ -9,9 +9,7 @@ Route::group(['as' => 'backoffice.doctor.', 'prefix' => 'doctors', 'middleware' 
 
     Route::get('/', [DoctorManagementController::class, 'index'])->name('index');
 
-    // Route::get('/create', [DoctorManagementController::class, 'create'])->name('create');
     Route::get('/create', [DoctorManagementController::class, 'personalInfo'])->name('create');
-
 
     Route::get('/profile/personal', [DoctorManagementController::class, 'personalInfo'])->name('profile.personal');
     Route::get('/profile/professional', [DoctorManagementController::class, 'professionalInfo'])->name('profile.professional');
@@ -19,14 +17,25 @@ Route::group(['as' => 'backoffice.doctor.', 'prefix' => 'doctors', 'middleware' 
     Route::get('/profile/image', [DoctorManagementController::class, 'profileImage'])->name('profile.image');
 
 
-    Route::post('/store-personal', [DoctorManagementController::class, 'storePersonal'])->name('store.personal');
-    Route::post('/store-professional', [DoctorManagementController::class, 'storeProfessional'])->name('store.professional');
-    Route::post('/store-qualification', [DoctorManagementController::class, 'storeQualification'])->name('store.qualification');
-    Route::post('/store-image', [DoctorManagementController::class, 'storeImage'])->name('store.image');
+    Route::post('/store/personal', [DoctorManagementController::class, 'storePersonal'])->name('store.personal');
+    Route::post('/store/professional', [DoctorManagementController::class, 'storeProfessional'])->name('store.professional');
+    Route::post('/store/qualification', [DoctorManagementController::class, 'storeQualification'])->name('store.qualification');
+    Route::post('/store/image', [DoctorManagementController::class, 'storeImage'])->name('store.image');
 
-    Route::get('/{doctor_id}/edit', [DoctorManagementController::class, 'edit'])->name('edit');
+    // Route::get('/edit/{doctor_id}', [DoctorManagementController::class, 'edit'])->name('edit');
 
-    Route::put('/{doctor_id}/update', [DoctorManagementController::class, 'update'])->name('update');
+    Route::get('/edit/personal/{doctor_id}', [DoctorManagementController::class, 'personalInfoEdit'])->name('profile.personal.edit');
+    Route::get('/edit/professional/{doctor_id}', [DoctorManagementController::class, 'professionalInfoEdit'])->name('profile.professional.edit');
+    Route::get('/edit/educational/{doctor_id}', [DoctorManagementController::class, 'educationalInfoEdit'])->name('profile.educational.edit');
+    Route::get('/edit/image/{doctor_id}', [DoctorManagementController::class, 'profileImageEdit'])->name('profile.image.edit');
+
+
+    Route::put('/update/personal/{doctor_id}', [DoctorManagementController::class, 'updatePersonal'])->name('update.personal');
+    Route::put('/update/professional/{doctor_id}', [DoctorManagementController::class, 'updateProfessional'])->name('update.professional');
+    Route::put('/update/educational/{doctor_id}', [DoctorManagementController::class, 'updateEducational'])->name('update.educational');
+    Route::put('/update/image/{doctor_id}', [DoctorManagementController::class, 'updateImage'])->name('update.image');
+
+
     Route::delete('/{doctor_id}', [DoctorManagementController::class, 'destroy'])->name('delete');
 
     Route::get('/doctor-info/{doctor_id}', [DoctorManagementController::class, 'info'])->name('info');

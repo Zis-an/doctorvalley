@@ -76,7 +76,7 @@
                                     @csrf
                                     <div class="row g-3">
                                         <!-- Doctor ID -->
-                                        <input type="hidden" id="personal-info-id" value="{{ $_GET['doctor_id'] }}" name="doctor_id">
+                                        <input type="hidden" id="personal-info-id" value="{{ isset($_GET['doctor_id']) ? $_GET['doctor_id'] : 0 }}" name="doctor_id">
                                         <div class="col-md-6">
                                             <div class="inputbox">
                                                 {{-- <label for="normal-select-1" class="inputlabel"> --}}

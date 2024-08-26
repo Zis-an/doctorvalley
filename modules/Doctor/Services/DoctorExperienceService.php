@@ -71,11 +71,30 @@ class DoctorExperienceService
         return $result;
     }
 
-    public function updateData(int $id, array $formData): mixed
+    public function updateExperience(int $id, array $formData): mixed
     {
-        $result = $this->repository->update($formData, $id);
-        if (empty($result)) {
-            throw new Exception('Invalid Doctor Experience update data');
+        // Delete all existing records for the given doctor_id
+        // $this->repository->deleteByDoctorId($id);
+
+        $numEntries = count($formData['organization_name']);
+        $experiences = [];
+        for ($i = 0; $i < $numEntries; $i++) {
+            $experiences[] = [
+                'doctor_id' => $formData['doctor_id'],
+                'organization_name' => $formData['organization_name'][$i],
+                'designation' => $formData['designation'][$i],
+                'from' => $formData['from'][$i],
+                'to' => $formData['to'][$i],
+                'current' => $formData['current'][$i],
+                'location' => $formData['location'][$i],
+            ];
+        }
+        // Store each row in the database
+        foreach ($experiences as $experience) {
+            $result = $this->repository->updateDoctorExperienceData($experience, $experience['doctor_id']);
+            if (empty($result)) {
+                throw new Exception('Invalid data format');
+            }
         }
         return $result;
     }

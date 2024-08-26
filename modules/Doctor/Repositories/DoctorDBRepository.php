@@ -32,6 +32,13 @@ class DoctorDbRepository
         return $this->model->create($data);
     }
 
+    public function getDoctorPhoto(int $id): ?string
+    {
+        return $this->model
+            ->where(DoctorEnum::ID, $id)
+            ->value(DoctorEnum::DOCTOR_PHOTO); // Get the photo path directly
+    }
+
     public function updateDoctorPhoto(int $id, string $photoPath): bool
     {
         return $this->model
@@ -69,7 +76,7 @@ class DoctorDbRepository
         return $doctor;
     }
 
-    public function update(array $data, int $id): mixed
+    public function updateDoctorData(array $data, int $id): mixed
     {
         return $this->model
             ->where(DoctorEnum::ID, $id)

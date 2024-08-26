@@ -46,10 +46,10 @@ class DoctorQualificationDbRepository
             ->get();
     }
 
-    public function update(array $data, int $id): mixed
+    public function updateDoctorQualificationData(array $data, int $id): mixed
     {
         return $this->model
-            ->where(DoctorQualificationEnum::ID, $id)
+            ->where(DoctorQualificationEnum::DOCTOR_ID, $id)
             ->update($data);
     }
 

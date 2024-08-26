@@ -22,6 +22,7 @@ return new class extends Migration
             $table->date(DoctorExperienceEnum::TO_DATE);
             $table->boolean(DoctorExperienceEnum::IS_CURRENT)->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

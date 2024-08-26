@@ -13,7 +13,7 @@ final class DoctorEnum
     public const DOCTOR_USER_NAME = 'username';
     public const DOCTOR_BMDC = 'bmdc';
     public const DOCTOR_GENDER = 'gender';
-    public const DOCTOR_SPECIALITY = 'speciality';
+    // public const DOCTOR_SPECIALITY = 'speciality';
     public const DOCTOR_PHOTO = 'photo';
     public const DOCTOR_PASSWORD = 'password';
     public const DOCTOR_STATUS = 'status';
@@ -32,7 +32,7 @@ final class DoctorEnum
         self::DOCTOR_USER_NAME,
         self::DOCTOR_BMDC,
         self::DOCTOR_GENDER,
-        self::DOCTOR_SPECIALITY,
+        // self::DOCTOR_SPECIALITY,
         self::DOCTOR_PHOTO,
         self::DOCTOR_PASSWORD,
         self::DOCTOR_STATUS,

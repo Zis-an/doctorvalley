@@ -67,14 +67,14 @@
                         <li>
                             <strong>Gender:</strong> {{ ucfirst($doctor->gender) }}
                         </li>
-                        <li>
+                        {{-- <li>
                             <strong>Speciality:</strong>
                             @foreach (json_decode($doctor->speciality, true) as $key => $speciality)
                                 {{ $speciality }}@if ($key !== array_key_last(json_decode($doctor->speciality, true)))
                                     ,
                                 @endif
                             @endforeach
-                        </li>
+                        </li> --}}
                         <li>
                             <strong>Division:</strong> {{ $doctor->province->province_name }}
                         </li>
@@ -141,7 +141,6 @@
 
                 <div class="info-body">
                     @foreach ($qualifications as $qualification)
-                    {{ dd($qualification) }}
                     <ul class="py-3">
                         <li>
                             <strong>Degree Title:</strong> {{ $qualification->degree_id }}
@@ -150,13 +149,16 @@
                             <strong>Major Course:</strong> {{ $qualification->major }}
                         </li>
                         <li>
-                            <strong>Institution Name:</strong> {{ $qualification-> }}
+                            <strong>Institution Name:</strong> {{ $qualification->institute_name }}
                         </li>
                         <li>
-                            <strong>From Date:</strong> {{ $qualification-> }}
+                            <strong>From Date:</strong> {{ $qualification->from }}
                         </li>
                         <li>
-                            <strong>To Date:</strong> {{ $qualification-> }}
+                            <strong>To Date:</strong> {{ $qualification->to }}
+                        </li>
+                        <li>
+                            <strong>Current Status:</strong> {{ $qualification->current == 1 ? 'Studying' : 'Not Studying' }}
                         </li>
                     </ul>
                     @endforeach

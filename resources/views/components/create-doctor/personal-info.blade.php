@@ -33,8 +33,12 @@
                 <div class="details">
                     <div class="details-body">
                         <!-- ADD-PERSONAL-INFORMATION -->
-                        <form action="{{ route('backoffice.doctor.store.personal') }}" method="POST"
-                            class="educationinfoform" id="personalinfoform">
+                        <form
+                            action="{{ !empty($doctor) ? route('backoffice.doctor.update.personal', $doctor->id) : route('backoffice.doctor.store.personal') }}"
+                            method="POST" class="educationinfoform" id="personalinfoform">
+                            @if (!empty($doctor))
+                                @method('PUT')
+                            @endif
                             @csrf
 
                             <!-- Country ID -->
@@ -46,7 +50,8 @@
                                         <label for="full-name" class="inputlabel">
                                             Full Name <span>*</span>
                                         </label>
-                                        <input type="text" id="full-name" name="name" class="form-control"
+                                        <input type="text" id="full-name" name="name"
+                                            value="{{ !empty($doctor) ? $doctor->name : old('name') }}" class="form-control"
                                             placeholder="Dr Stephen Strange" autocomplete="off">
                                         @if ($errors->has('name'))
                                             <p class="error-message">{{ $errors->first('name') }}</p>
@@ -59,7 +64,8 @@
                                         <label for="bmdcnumber" class="inputlabel">
                                             BMDC Registration No <span>*</span>
                                         </label>
-                                        <input type="text" id="bmdcnumber" name="bmdc" class="form-control"
+                                        <input type="text" id="bmdcnumber" name="bmdc"
+                                            value="{{ !empty($doctor) ? $doctor->bmdc : old('bmdc') }}" class="form-control"
                                             placeholder="A-40742" autocomplete="off">
                                         @if ($errors->has('bmdc'))
                                             <p class="error-message">{{ $errors->first('bmdc') }}</p>
@@ -72,8 +78,9 @@
                                         <label for="emailaddress" class="inputlabel">
                                             E-mail <span>*</span>
                                         </label>
-                                        <input type="email" id="emailaddress" name="email" class="form-control"
-                                            placeholder="doctor.strange@gmail.com" autocomplete="off">
+                                        <input type="email" id="emailaddress" name="email"
+                                            value="{{ !empty($doctor) ? $doctor->email : old('email') }}"
+                                            class="form-control" placeholder="doctor.strange@gmail.com" autocomplete="off">
                                         @if ($errors->has('email'))
                                             <p class="error-message">{{ $errors->first('email') }}</p>
                                         @endif
@@ -85,8 +92,9 @@
                                         <label for="phonenumber" class="inputlabel">
                                             Phone Number <span>*</span>
                                         </label>
-                                        <input type="tel" id="phonenumber" name="phone" class="form-control"
-                                            placeholder="01965088417" autocomplete="off">
+                                        <input type="tel" id="phonenumber"
+                                            value="{{ !empty($doctor) ? $doctor->phone : old('phone') }}" name="phone"
+                                            class="form-control" placeholder="01965088417" autocomplete="off">
                                         @if ($errors->has('phone'))
                                             <p class="error-message">{{ $errors->first('phone') }}</p>
                                         @endif
@@ -101,7 +109,8 @@
 
                                         <div class="gender-box">
                                             <div class="gender-single">
-                                                <input type="radio" id="male" name="gender" value="male" checked
+                                                <input type="radio" id="male" name="gender" value="male"
+                                                    {{ !empty($doctor) ? ($doctor->gender == 'male' ? 'checked' : '') : 'checked' }}
                                                     hidden>
                                                 @if ($errors->has('gender'))
                                                     <p class="error-message">{{ $errors->first('gender') }}</p>
@@ -120,8 +129,9 @@
                                             </div>
 
                                             <div class="gender-single">
-                                                <input type="radio" id="female" value="female" name="gender"
-                                                    hidden>
+                                                <input type="radio" id="female" value="female"
+                                                    {{ !empty($doctor) ? ($doctor->gender == 'female' ? 'checked' : '') : '' }}
+                                                    name="gender" hidden>
                                                 @if ($errors->has('gender'))
                                                     <p class="error-message">{{ $errors->first('gender') }}</p>
                                                 @endif
@@ -140,6 +150,8 @@
 
                                             <div class="gender-single">
                                                 <input type="radio" id="others" value="others" name="gender"
+                                                    value="others"
+                                                    {{ !empty($doctor) ? ($doctor->gender == 'others' ? 'checked' : '') : '' }}
                                                     hidden>
                                                 @if ($errors->has('gender'))
                                                     <p class="error-message">{{ $errors->first('gender') }}</p>
@@ -161,7 +173,7 @@
                                 </div>
 
                                 <!-- Speciality -->
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="inputbox">
                                         <label for="speciality" class="inputlabel">
                                             Speciality <span>*</span>
@@ -172,7 +184,7 @@
                                             <p class="error-message">{{ $errors->first('speciality') }}</p>
                                         @endif
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <!-- Province -->
                                 <div class="col-md-6 col-12">
@@ -180,8 +192,9 @@
                                         <label for="divisions" class="inputlabel">Division <span>*</span></label>
                                         <select id="divisions" name="province_id" class="wide">
                                             <option value="">Select Division</option>
-                                            @foreach($provinces as $province)
-                                                <option value="{{ $province->id }}" {{ old('province_id') == $province->id ? 'selected' : '' }}>
+                                            @foreach ($provinces as $province)
+                                                <option value="{{ $province->id }}"
+                                                    {{ !empty($doctor) ? ($doctor->province_id == $province->id ? 'selected' : '') : (old('province_id') == $province->id ? 'selected' : '') }}>
                                                     {{ $province->province_name }}
                                                 </option>
                                             @endforeach
@@ -198,8 +211,9 @@
                                         <label for="districts" class="inputlabel">District <span>*</span></label>
                                         <select id="districts" name="city_id" class="wide">
                                             <option value="">Select District</option>
-                                            @foreach($cities as $city)
-                                                <option value="{{ $city->id }}" {{ old('city_id') == $city->id ? 'selected' : '' }}>
+                                            @foreach ($cities as $city)
+                                                <option value="{{ $city->id }}"
+                                                    {{ !empty($doctor) ? ($doctor->city_id == $city->id ? 'selected' : '') : (old('city_id') == $city->id ? 'selected' : '') }}>
                                                     {{ $city->city_name }}
                                                 </option>
                                             @endforeach
@@ -216,8 +230,9 @@
                                         <label for="thanas" class="inputlabel">Thana <span>*</span></label>
                                         <select id="thanas" name="area_id" class="wide">
                                             <option value="">Select Thana</option>
-                                            @foreach($areas as $area)
-                                                <option value="{{ $area->id }}" {{ old('area_id') == $area->id ? 'selected' : '' }}>
+                                            @foreach ($areas as $area)
+                                                <option value="{{ $area->id }}"
+                                                    {{ !empty($doctor) ? ($doctor->area_id == $area->id ? 'selected' : '') : (old('area_id') == $area->id ? 'selected' : '') }}>
                                                     {{ $area->area_name }}
                                                 </option>
                                             @endforeach
@@ -233,7 +248,8 @@
                                         <label for="address" class="inputlabel">
                                             Address
                                         </label>
-                                        <input type="text" id="address" name="address" class="form-control"
+                                        <input type="text" id="address" name="address"
+                                            value="{{ !empty($doctor) ? $doctor->address : old('address') }}" class="form-control"
                                             placeholder="Sherpur Sadar, Sherpur" autocomplete="off">
                                         @if ($errors->has('address'))
                                             <p class="error-message">{{ $errors->first('address') }}</p>
@@ -241,24 +257,27 @@
                                     </div>
                                 </div>
 
+
                                 <div class="col-md-6 col-12">
                                     <div class="inputbox">
                                         <label for="password" class="inputlabel">
                                             Password
                                         </label>
-                                        <input type="password" id="password" name="password" class="form-control">
+                                        <input type="password" id="password" value="{{ !empty($doctor) ? $doctor->password : old('password') }}" name="password" class="form-control">
                                         @if ($errors->has('password'))
                                             <p class="error-message">{{ $errors->first('password') }}</p>
                                         @endif
                                     </div>
                                 </div>
 
+
                                 <div class="col-md-6 col-12">
                                     <div class="inputbox">
                                         <label for="username" class="inputlabel">
                                             Username
                                         </label>
-                                        <input type="text" id="username" name="username" class="form-control">
+                                        <input type="text" id="username" name="username"
+                                            value="{{ !empty($doctor) ? $doctor->username : old('username') }}" class="form-control">
                                         @if ($errors->has('username'))
                                             <p class="error-message">{{ $errors->first('username') }}</p>
                                         @endif
@@ -271,14 +290,14 @@
                                             Bio
                                         </label>
                                         <textarea id="bio" name="bio" class="form-control"
-                                            placeholder="He is Marvel Universe doctor. who has the ability to do magic." rows="4" autocomplete="off"></textarea>
+                                            placeholder="He is Marvel Universe doctor. who has the ability to do magic." rows="4" autocomplete="off">{{ !empty($doctor) ? $doctor->bio : old('bio') }}</textarea>
                                         @if ($errors->has('bio'))
                                             <p class="error-message">{{ $errors->first('bio') }}</p>
                                         @endif
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 col-12">
+                                {{-- <div class="col-md-6 col-12">
                                     <div class="socialbox">
                                         <span class="icon">
                                             <i class="fa-brands fa-facebook-f"></i>
@@ -324,6 +343,62 @@
                                                 placeholder="https://linkedin.com/ratulalmamun" autocomplete="off">
                                         </div>
                                     </div>
+                                </div> --}}
+
+                                @php
+                                    $links = !empty($doctor) ? json_decode($doctor->links, true) : [];
+                                @endphp
+
+                                <div class="col-md-6 col-12">
+                                    <div class="socialbox">
+                                        <span class="icon">
+                                            <i class="fa-brands fa-facebook-f"></i>
+                                        </span>
+                                        <div class="detail">
+                                            <input type="text" name="links[]"
+                                                placeholder="https://facebook.com/ratulalmamun"
+                                                value="{{ $links[0] ?? '' }}" autocomplete="off">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="socialbox">
+                                        <span class="icon">
+                                            <i class="fa-brands fa-twitter"></i>
+                                        </span>
+                                        <div class="detail">
+                                            <input type="text" name="links[]"
+                                                placeholder="https://twitter.com/ratulalmamun"
+                                                value="{{ $links[1] ?? '' }}" autocomplete="off">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="socialbox">
+                                        <span class="icon">
+                                            <i class="fa-brands fa-youtube"></i>
+                                        </span>
+                                        <div class="detail">
+                                            <input type="text" name="links[]"
+                                                placeholder="https://youtube.com/ratulalmamun"
+                                                value="{{ $links[2] ?? '' }}" autocomplete="off">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="socialbox">
+                                        <span class="icon">
+                                            <i class="fa-brands fa-linkedin-in"></i>
+                                        </span>
+                                        <div class="detail">
+                                            <input type="text" name="links[]"
+                                                placeholder="https://linkedin.com/ratulalmamun"
+                                                value="{{ $links[3] ?? '' }}" autocomplete="off">
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="col-12">
@@ -331,11 +406,10 @@
                                         <label for="status" class="inputlabel">
                                             Status <span>*</span>
                                         </label>
-                                        <select id="selectstatus" name="status" class="form-control"
-                                            autocomplete="off">
-                                            <option value="" selected disabled>Select Status</option>
-                                            <option value="1">Active</option>
-                                            <option value="2">Inactive</option>
+                                        <select id="selectstatus" name="status" class="form-control" autocomplete="off">
+                                            <option value="" disabled {{ empty($doctor) ? 'selected' : '' }}>Select Status</option>
+                                            <option value="1" {{ !empty($doctor) && $doctor->status == 1 ? 'selected' : '' }}>Active</option>
+                                            <option value="2" {{ !empty($doctor) && $doctor->status == 2 ? 'selected' : '' }}>Inactive</option>
                                         </select>
                                         @if ($errors->has('status'))
                                             <p class="error-message">{{ $errors->first('status') }}</p>
@@ -345,8 +419,7 @@
 
                                 <div class="col-12">
                                     <div class="edubtns">
-                                        <button type="submit" id="save-personal-info"
-                                            class="btn-profile-add">SAVE</button>
+                                        <button type="submit" class="btn-profile-add">{{ !empty($doctor) ? "UPDATE" : "SAVE" }}</button>
                                     </div>
                                 </div>
                             </div>

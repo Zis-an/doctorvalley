@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger(DoctorSpecialityEnum::DOCTOR_ID);
             $table->unsignedBigInteger(DoctorSpecialityEnum::DOCTOR_SPECIALITY_ID);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

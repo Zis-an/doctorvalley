@@ -43,7 +43,7 @@
                             <img src="{{ asset('assets/images/avatar/default-profile.svg') }}" alt="default-profile"
                                 id="uploadedImage" class="default-image">
                             <!-- Doctor ID -->
-                            <input type="hidden" id="personal-info-id" value="{{ $_GET['doctor_id'] }}" name="doctor_id">
+                            <input type="hidden" id="personal-info-id" value="{{ isset($_GET['doctor_id']) ? $_GET['doctor_id'] : 0 }}" name="doctor_id">
                             <input type="file" id="profileImage" name="photo" multiple hidden>
                             <label for="profileImage" data-bs-toggle="tooltip" data-bs-placement="top"
                                 data-bs-title="Upload Profile">

@@ -27,9 +27,10 @@ class DoctorStoreRequest extends FormRequest
             'name'=>['required', 'string'],
             'email'=>['required'],
             'phone'=>['required'],
+            'username'=>['required'],
             'bmdc'=>['required'],
             'gender'=>['required'],
-            'speciality'=>['required'],
+            // 'speciality'=>['required'],
             'country_id'=>['required'],
             'province_id'=>'required|exists:provinces,id',
             'city_id'=>'required|exists:cities,id',
@@ -38,7 +39,6 @@ class DoctorStoreRequest extends FormRequest
             'bio'=>['required'],
             'links'=>['nullable'],
             'password'=>['required'],
-            'username'=>['required'],
             'photo'=>['nullable'],
             'status'=>['required']
         ];
@@ -54,11 +54,13 @@ class DoctorStoreRequest extends FormRequest
 
             'phone.required' => 'Phone number is required',
 
+            'username.required' => 'Username is required',
+
             'bmdc.required' => 'BMDC Number is required',
 
             'gender.required' => 'Gender is required',
 
-            'specality.required' => 'Speciality is required',
+            // 'specality.required' => 'Speciality is required',
 
             'country_id.required' => 'Country is required',
 
@@ -75,8 +77,6 @@ class DoctorStoreRequest extends FormRequest
             // 'links.required' => 'Social Links are required',
 
             'password.required' => 'Password is required',
-
-            'username.required' => 'Username is required',
 
             // 'photo.required' => 'Photo is required',
 

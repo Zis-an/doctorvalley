@@ -56,21 +56,6 @@ class DoctorManagementController extends Controller
         }
     }
 
-    // public function create(): View|Factory|Application
-    // {
-    //     try{
-    //         $doctors = $this->service->getDoctorList();
-    //         $provinces = $this->provinceService->getProvinceList();
-    //         $cities = $this->cityService->getCityList();
-    //         $areas = $this->areaService->getAreaList();
-    //         // return view('backoffice.doctor.createUpdateDoctor', compact('doctors', 'provinces', 'cities', 'areas'));
-    //         return view('components.create-doctor.personal-info', compact('doctors', 'provinces', 'cities', 'areas'));
-    //     }catch (\Throwable $exception){
-    //         dd($exception->getMessage());
-    //         abort(500);
-    //     }
-    // }
-
     public function personalInfo(): View | Factory | Application
     {
         try {
@@ -165,6 +150,119 @@ class DoctorManagementController extends Controller
         }
     }
 
+    public function personalInfoEdit($id): View | Factory | Application
+    {
+        try {
+            $doctor = $this->service->getDoctorById($id);
+            $provinces = $this->provinceService->getProvinceList();
+            $cities = $this->cityService->getCityList();
+            $areas = $this->areaService->getAreaList();
+            $specialities = $this->specialityService->getSpecialityList();
+            $specialityList = $specialities->pluck('speciality_name')->toArray();
+            return view('components.create-doctor.personal-info', compact('doctor', 'provinces', 'cities', 'areas', 'specialityList'));
+        } catch (\Throwable $exception) {
+            dd($exception->getMessage());
+            abort(500);
+        }
+    }
+
+    public function professionalInfoEdit($id): View | Factory | Application
+    {
+        try {
+            $experience = $this->experienceService->getDoctorExperienceByDoctorId($id);
+            // dd($experience);
+            // return view('components.create-doctor.professional-info', compact('experience'));
+            return view('components.create-doctor.professional-info', ['experience' => $experience, 'doctor_id' => $id]);
+        } catch (\Throwable $exception) {
+            dd($exception->getMessage());
+            abort(500);
+        }
+    }
+
+    public function educationalInfoEdit($id): View | Factory | Application
+    {
+        try {
+            $qualification = $this->qualificationService->getDoctorQualificationByDoctorId($id);
+            $degrees = config('global.degrees');
+            $institutes = $this->instituteService->getInstituteList();
+            return view('components.create-doctor.educational-info', compact('qualification', 'degrees', 'institutes'));
+        } catch (\Throwable $exception) {
+            dd($exception->getMessage());
+            abort(500);
+        }
+    }
+
+    public function profileImageEdit($id): View | Factory | Application
+    {
+        try {
+            $doctor = $this->service->getDoctorById($id);
+            return view('components.create-doctor.profile-image', compact('doctor'));
+        } catch (\Throwable $exception) {
+            dd($exception->getMessage());
+            abort(500);
+        }
+    }
+
+    public function updatePersonal(DoctorStoreRequest $request, int $id): RedirectResponse
+    {
+        try {
+            $doctor = $this->service->updateDoctor($id, $request->validated());
+            return redirect()->route('backoffice.doctor.index')
+                ->with('success', 'Personal Information updated successfully');
+        } catch (\Throwable $throwable) {
+            dd($throwable);
+            return redirect()->back()->with('error', 'Doctor invalid data')->withInput($request->all());
+        }
+    }
+
+    public function updateProfessional(DoctorExperienceRequest $request, int $id): RedirectResponse
+    {
+        try {
+            $doctor = $this->experienceService->updateExperience($id, $request->validated());
+            return redirect()->route('backoffice.doctor.index')
+                ->with('success', 'Professional Information updated successfully');
+        } catch (\Throwable $throwable) {
+            dd($throwable);
+            return redirect()->back()->with('error', 'Doctor invalid data')->withInput($request->all());
+        }
+    }
+
+    public function updateEducational(DoctorQualificationRequest $request, int $id): RedirectResponse
+    {
+        try {
+            $doctor = $this->qualificationService->updateQualification($id, $request->validated());
+            return redirect()->route('backoffice.doctor.index')
+                ->with('success', 'Educational Information updated successfully');
+        } catch (\Throwable $throwable) {
+            dd($throwable);
+            return redirect()->back()->with('error', 'Doctor invalid data')->withInput($request->all());
+        }
+    }
+
+    public function updateImage(DoctorImageRequest $request, int $id): RedirectResponse
+    {
+        try {
+            $this->service->updateImage($request->validated());
+            return redirect()->route('backoffice.doctor.index')
+                ->with('success', 'Doctor image updated successfully');
+        } catch (\Throwable $throwable) {
+            // dd($throwable);
+            return redirect()->back()->with('error', 'Doctor invalid data')->withInput($request->all());
+        }
+    }
+
+
+
+    // public function destroy(int $id): RedirectResponse
+    // {
+    //     try {
+    //         $this->service->deleteData($id);
+    //         return redirect()->route('backoffice.doctor.index')->with('success', 'Doctor delete successfully');
+    //     }catch (\Throwable $throwable){
+    //         return redirect()->back()->with('error', 'Invalid Doctor information');
+    //     }
+    // }
+
     public function info($id): View | Factory | Application
     {
         try {
@@ -177,35 +275,4 @@ class DoctorManagementController extends Controller
             abort(500);
         }
     }
-
-    // public function edit(int $id): Factory|View|Application
-    // {
-    //     try {
-    //         $doctors = $this->service->getDoctorList();
-    //         $doctor = $this->service->getDoctorById($id);
-    //         return view('backoffice.doctor.index',compact('doctors','doctor'));
-    //     }catch (\Throwable $throwable){
-    //         return abort(500);
-    //     }
-    // }
-
-    // public function update(DoctorStoreRequest $request, int $id): RedirectResponse
-    // {
-    //     try {
-    //         $this->service->updateData($id, $request->validated());
-    //         return redirect()->route('backoffice.doctor.index')->with('success', 'Doctor updated successfully');
-    //     }catch (\Throwable $throwable){
-    //         return redirect()->back()->with('error', 'Doctor invalid data')->withInput($request->all());
-    //     }
-    // }
-
-    // public function destroy(int $id): RedirectResponse
-    // {
-    //     try {
-    //         $this->service->deleteData($id);
-    //         return redirect()->route('backoffice.doctor.index')->with('success', 'Doctor delete successfully');
-    //     }catch (\Throwable $throwable){
-    //         return redirect()->back()->with('error', 'Invalid Doctor information');
-    //     }
-    // }
 }

@@ -9,6 +9,7 @@ use Modules\Doctor\Enums\DoctorExperienceEnum;
 class DoctorExperience extends Model
 {
     use SoftDeletes;
+    
     protected $table = DoctorExperienceEnum::DB_TABLE;
 
     protected $primaryKey = DoctorExperienceEnum::ID;
