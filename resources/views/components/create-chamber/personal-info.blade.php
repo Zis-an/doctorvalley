@@ -63,18 +63,15 @@
                     <div class="col-md-6 col-12">
                         <div class="inputbox">
                             <label for="divisions" class="inputlabel">
-                                Division <span>*</span>
+                                Select Division <span>*</span>
                             </label>
-                            <select id="divisions" name="province_id" class="form-select" placeholder-text="Select Division"
-                                autocomplete="off">
+                            <select id="divisions" name="province_id" class="wide" autocomplete="off">
                                 @foreach ($provinces as $province)
-                                    <option value="{{ $province->id }}" class="select-dropdown__list-item" {{ !empty($chamber) ? ($chamber->province_id == $province->id ? 'selected' : '') : '' }}>{{ $province->province_name }}</option>
+                                    <option value="{{ $province->id }}" {{ !empty($chamber) ? ($chamber->province_id == $province->id ? 'Selected' : '') : '' }}>
+                                        {{ $province->province_name }}</option>
                                 @endforeach
-                                @if($provinces->isEmpty())
-                                    <option value="" class="select-dropdown__list-item" disabled>No Divisions Available</option>
-                                @endif
                             </select>
-                            @if($errors->has('province_id'))
+                            @if ($errors->has('province_id'))
                                 <p class="error-message">{{ $errors->first('province_id') }}</p>
                             @endif
                         </div>
@@ -83,16 +80,12 @@
                     <div class="col-md-6 col-12">
                         <div class="inputbox">
                             <label for="districts" class="inputlabel">
-                                District <span>*</span>
+                                Select District <span>*</span>
                             </label>
-                            <select id="districts" name="city_id" class="form-select" placeholder-text="Select District"
-                                autocomplete="off">
+                            <select id="districts" name="city_id" class="wide" autocomplete="off">
                                 @foreach ($cities as $city)
-                                    <option value="{{ $city->id }}" class="select-dropdown__list-item" {{ !empty($chamber) ? ($chamber->city_id == $city->id ? 'selected' : '') : '' }}>{{ $city->city_name }}</option>
+                                    <option value="{{ $city->id }}" {{ !empty($chamber) ? ($chamber->city_id == $city->id ? 'selected' : '') : '' }}>{{ $city->city_name }}</option>
                                 @endforeach
-                                @if($cities->isEmpty())
-                                    <option value="" class="select-dropdown__list-item" disabled>No Districts Available</option>
-                                @endif
                             </select>
                             @if($errors->has('city_id'))
                                 <p class="error-message">{{ $errors->first('city_id') }}</p>
@@ -105,14 +98,10 @@
                             <label for="thanas" class="inputlabel">
                                 Thana <span>*</span>
                             </label>
-                            <select id="thanas" name="area_id" class="form-select" placeholder-text="Select Thana"
-                                autocomplete="off">
+                            <select id="thanas" name="area_id" class="wide" autocomplete="off">
                                 @foreach ($areas as $area)
-                                    <option value="{{ $area->id }}" class="select-dropdown__list-item" {{ !empty($chamber) ? ($chamber->area_id == $area->id ? 'selected' : '') : '' }}>{{ $area->area_name }}</option>
+                                    <option value="{{ $area->id }}" {{ !empty($chamber) ? ($chamber->area_id == $area->id ? 'selected' : '') : '' }}>{{ $area->area_name }}</option>
                                 @endforeach
-                                @if($areas->isEmpty())
-                                    <option value="" class="select-dropdown__list-item" disabled>No Thanas Available</option>
-                                @endif
                             </select>
                             @if($errors->has('area_id'))
                                 <p class="error-message">{{ $errors->first('area_id') }}</p>

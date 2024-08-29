@@ -1,4 +1,8 @@
 @extends('layouts.backend')
+@push('after-styles')
+    <!-- NICE-SELECT2 -->
+    <link rel="stylesheet" href="{{ asset('assets/css/nice-select/nice-select2.css') }}">
+@endpush
 @section('content')
     <!-- MY-PROFILE SECTION START -->
     <main class="myprofile" id="main-section">
@@ -31,7 +35,50 @@
 
             @include('components.create-chamber.personal-info')
 
+
         </div>
     </main>
     <!-- MY-PROFILE SECTION END -->
 @endsection
+
+@push('after-scripts')
+    <script src="{{ asset('assets/js/nice-select/nice-select2.js') }}"></script>
+    <script>
+        NiceSelect.bind(document.getElementById("divisions"), {
+            searchable: true,
+            placeholder: 'Select Division'
+        });
+
+        NiceSelect.bind(document.getElementById("districts"), {
+            searchable: true,
+            placeholder: 'Select Division'
+        });
+
+        NiceSelect.bind(document.getElementById("thanas"), {
+            searchable: true,
+            placeholder: 'Select Division'
+        });
+    </script>
+    {{-- <script>
+        $(document).ready(function() {
+            $('#divisions').on('change', function() {
+                var provinceId = $(this).val();
+
+                $.ajax({
+                    url: '{{ route('getDistricts') }}', // Change this to your route
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        province_id: provinceId
+                    },
+                    success: function(response) {
+                        // Handle the response if needed
+                    },
+                    error: function(xhr) {
+                        // Handle errors if needed
+                    }
+                });
+            });
+        });
+    </script> --}}
+@endpush

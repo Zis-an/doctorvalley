@@ -63,7 +63,7 @@
     <!-- professional-info's creation script  -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const formContainer = document.getElementById('form-container');
+            const formContainer = document.querySelector('.form-container');
             const addButton = document.getElementById('add-experience-form');
             const submitEdButton = document.getElementById('submit-all-forms');
 
@@ -93,10 +93,10 @@
                         checkbox.addEventListener('change', function() {
                             if (this.checked) {
                                 this.previousElementSibling.disabled =
-                                    true; // Disable hidden input (value=0) when checked
+                                true; // Disable hidden input (value=0) when checked
                             } else {
                                 this.previousElementSibling.disabled =
-                                    false; // Enable hidden input when unchecked
+                                false; // Enable hidden input when unchecked
                             }
                         });
                     });
@@ -112,9 +112,9 @@
                 addButton.addEventListener('click', function() {
                     const newFieldset = formContainer.querySelector('fieldset').cloneNode(true);
                     const newForm = newFieldset.querySelector('form');
-                    newForm.reset();
+                    newForm.reset(); // Reset form inputs
                     assignUniqueId(newForm);
-                    formContainer.appendChild(newFieldset);
+                    formContainer.appendChild(newFieldset); // Append the new fieldset to the container
                 });
 
                 // Submit button's functionality
@@ -124,7 +124,7 @@
                     const mainForm = document.createElement('form');
                     mainForm.method = 'POST';
                     mainForm.action =
-                        '{{ route('backoffice.doctor.store.professional') }}'; // Update with your route
+                    '{{ route('backoffice.doctor.store.professional') }}'; // Update with your route
                     document.body.appendChild(mainForm);
                     forms.forEach((form) => {
                         const formElements = form.querySelectorAll('input, select, textarea');
@@ -201,7 +201,7 @@
                     assignUniqueId(defaultForm);
                 }
 
-                // Add Event Listener to Add Experience Button
+                // Add Event Listener to Add Qualification Button
                 addButton.addEventListener('click', function() {
                     const newFieldset = formContainer.querySelector('fieldset').cloneNode(true);
                     const newForm = newFieldset.querySelector('form');
@@ -264,9 +264,131 @@
                 updateImageButton.addEventListener('click', function() {
                     form.submit();
                 });
-            } else {
+            } else {}
+        });
+    </script>
+
+    <!-- professional-info's update script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const formContainer = document.getElementById('experience-forms-container');
+            const addButton = document.getElementById('add-experience-form-update');
+            const submitEdButton = document.getElementById('submit-all-forms-update');
+
+            if (formContainer && addButton && submitEdButton) {
+                let updateFormCounter = 1;
+                let checkboxCounter = 1;
+
+                function assignUniqueUpdateId(form) {
+                    const uniqueUpdateFormId = `experience-form-update-${updateFormCounter}`;
+                    form.id = uniqueUpdateFormId;
+                    updateFormCounter++;
+
+                    // Add _method hidden input for PUT request
+                    let methodInput = form.querySelector('input[name="_method"]');
+                    if (!methodInput) {
+                        methodInput = document.createElement('input');
+                        methodInput.type = 'hidden';
+                        methodInput.name = '_method';
+                        methodInput.value = 'PUT';
+                        form.appendChild(methodInput);
+                    }
+
+                    // Handle checkboxes within the form
+                    const checkboxes = form.querySelectorAll('input[type="checkbox"]');
+                    checkboxes.forEach((checkbox) => {
+                        const label = form.querySelector(`label[for="${checkbox.id}"]`);
+                        if (label) {
+                            // Generate a unique ID for the checkbox
+                            const uniqueCheckboxId = `current-working-${checkboxCounter}`;
+                            checkbox.id = uniqueCheckboxId;
+                            // Update the label's 'for' attribute to match the new checkbox ID
+                            label.setAttribute('for', uniqueCheckboxId);
+                            // Increment the checkboxCounter
+                            checkboxCounter++;
+                        }
+                        // Add event listener to handle checkbox state
+                        checkbox.addEventListener('change', function() {
+                            if (this.checked) {
+                                this.previousElementSibling.disabled = true; // Disable hidden input (value=0) when checked
+                            } else {
+                                this.previousElementSibling.disabled = false; // Enable hidden input when unchecked
+                            }
+                        });
+                    });
+                }
+
+                // Assign unique IDs to pre-existing forms and add _method input
+                const existingForms = formContainer.querySelectorAll('.form-container-update form');
+                existingForms.forEach((form) => {
+                    assignUniqueUpdateId(form);
+                });
+
+                // Add new forms
+                addButton.addEventListener('click', function() {
+                    const newFieldset = formContainer.querySelector('.form-container-update').cloneNode(true);
+                    const newForm = newFieldset.querySelector('form');
+
+                    // Clear all input fields in the cloned form
+                    newForm.querySelectorAll('input, select, textarea').forEach((element) => {
+                        if (element.type === 'checkbox' || element.type === 'radio') {
+                            element.checked = false;
+                        } else if (element.tagName === 'SELECT') {
+                            element.selectedIndex = 0;
+                        } else {
+                            element.value = '';
+                        }
+                    });
+
+                    // Assign unique IDs to the new form and its elements
+                    assignUniqueUpdateId(newForm);
+                    formContainer.appendChild(newFieldset);
+                });
+
+                // Submit all forms
+                submitEdButton.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const forms = formContainer.querySelectorAll('form');
+                    const mainForm = document.createElement('form');
+                    mainForm.method = 'POST'; // POST is correct, _method field will handle it
+                    mainForm.action = '{{ route('backoffice.doctor.update.professional', ['doctor_id' => '__doctorId__']) }}'
+                        .replace('__doctorId__', document.querySelector('input[name="doctor_id"]').value || 0);
+
+                    // Add _method hidden input for PUT request
+                    const methodInput = document.createElement('input');
+                    methodInput.type = 'hidden';
+                    methodInput.name = '_method';
+                    methodInput.value = 'PUT';
+                    mainForm.appendChild(methodInput);
+
+                    // Add CSRF Token
+                    const csrfToken = document.querySelector('input[name="_token"]').value;
+                    const csrfInput = document.createElement('input');
+                    csrfInput.type = 'hidden';
+                    csrfInput.name = '_token';
+                    csrfInput.value = csrfToken;
+                    mainForm.appendChild(csrfInput);
+
+                    // Remove existing elements from the mainForm to prevent duplication
+                    const existingElements = mainForm.querySelectorAll('input, select, textarea');
+                    existingElements.forEach((element) => element.remove());
+
+                    // Add data from existing forms
+                    forms.forEach((form) => {
+                        const formElements = form.querySelectorAll('input, select, textarea');
+                        formElements.forEach((element) => {
+                            const clonedElement = element.cloneNode(true);
+                            mainForm.appendChild(clonedElement);
+                        });
+                    });
+
+                    // Submit the main form
+                    document.body.appendChild(mainForm);
+                    mainForm.submit();
+                });
             }
         });
     </script>
+
 
 @endpush

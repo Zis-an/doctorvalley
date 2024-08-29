@@ -218,6 +218,7 @@ class DoctorManagementController extends Controller
     public function updateProfessional(DoctorExperienceRequest $request, int $id): RedirectResponse
     {
         try {
+            dd($request->all());
             $doctor = $this->experienceService->updateExperience($id, $request->validated());
             return redirect()->route('backoffice.doctor.index')
                 ->with('success', 'Professional Information updated successfully');

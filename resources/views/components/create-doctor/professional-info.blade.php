@@ -69,140 +69,130 @@
                                 </p>
                             </div>
                         </div>
+                        <!-- ADD-EXPERIENCE -->
+                        @if(!empty($experience))
+                            <div id="experience-forms-container">
+                                @foreach($experience as $ex)
+                                    <div class="form-container-update">
+                                        <fieldset class="experience-fieldset">
+                                            <legend>Professional Experience</legend>
+                                            <form action="{{ route('backoffice.doctor.update.professional', $ex->doctor_id) }}" method="POST"
+                                                  class="educationinfoform mt-3 experience-form" enctype="multipart/form-data">
+                                                @csrf
+                                                @method('PUT')
+                                                <div class="row g-3">
+                                                    <!-- Doctor ID -->
+                                                    <input type="hidden" name="doctor_id"
+                                                           value="{{ $ex->doctor_id }}">
+                                                    <!-- Include _method hidden input -->
+                                                    <input type="hidden" name="_method" value="PUT">
 
-                        @if (!empty($experience))
-                            @foreach ($experience as $ex)
-                                <!-- ADD-EXPERIENCE -->
-                                <div class="form-container">
-                                    <fieldset class="experience-fieldset">
-                                        <legend>Professional Experience</legend>
-                                        <form action="{{ route('backoffice.doctor.update.professional', $ex->doctor_id) }}"
-                                            method="POST" class="educationinfoform mt-3 experience-form"
-                                            enctype="multipart/form-data">
-                                            @csrf
-                                            @method('PUT')
-                                            <div class="row g-3">
-                                                <!-- Doctor ID -->
-                                                <input type="hidden" name="doctor_id" value="{{ $ex->doctor_id }}">
+                                                    <div class="col-md-6">
+                                                        <div class="inputbox">
+                                                            <label for="organization-name-new" class="inputlabel">
+                                                                Institute/Organization Name <span>*</span>
+                                                            </label>
+                                                            <input type="text" name="organization_name[]" id="organization-name-new" value="{{ $ex->organization_name }}"
+                                                                   class="form-control" placeholder="Dhaka Medical College"
+                                                                   autocomplete="off">
+                                                            @if ($errors->has('organization_name.*'))
+                                                                <p class="error-message">
+                                                                    {{ $errors->first('organization_name.*') }}</p>
+                                                            @endif
+                                                        </div>
+                                                    </div>
 
-                                                <div class="col-md-6">
-                                                    <div class="inputbox">
-                                                        <label for="organization-name-{{ $loop->index }}"
-                                                            class="inputlabel">
-                                                            Institute/Organization Name <span>*</span>
-                                                        </label>
-                                                        <input type="text" name="organization_name[]"
-                                                            id="organization-name-{{ $loop->index }}"
-                                                            value="{{ $ex->organization_name }}" class="form-control"
-                                                            placeholder="Dhaka Medical College" autocomplete="off">
-                                                        @if ($errors->has('organization_name.*'))
-                                                            <p class="error-message">
-                                                                {{ $errors->first('organization_name.*') }}</p>
-                                                        @endif
+                                                    <div class="col-md-6">
+                                                        <div class="inputbox">
+                                                            <label for="designation-new" class="inputlabel">
+                                                                Designation <span>*</span>
+                                                            </label>
+                                                            <input type="text" name="designation[]" id="designation-new" value="{{ $ex->designation }}"
+                                                                   class="form-control" placeholder="Designation" autocomplete="off">
+                                                            @if ($errors->has('designation.*'))
+                                                                <p class="error-message">{{ $errors->first('designation.*') }}</p>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="inputbox">
+                                                            <label for="from-new" class="inputlabel">
+                                                                From Date <span>*</span>
+                                                            </label>
+                                                            <input type="date" name="from[]" id="from-new" class="form-control" value="{{ $ex->from }}"
+                                                                   placeholder="01/01/2016" autocomplete="off">
+                                                            @if ($errors->has('from.*'))
+                                                                <p class="error-message">{{ $errors->first('from.*') }}</p>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="inputbox">
+                                                            <label for="to-new" class="inputlabel">
+                                                                To Date <span>*</span>
+                                                            </label>
+                                                            <input type="date" name="to[]" id="to-new" class="form-control" value="{{ $ex->to }}"
+                                                                   placeholder="31/12/2020" autocomplete="off">
+                                                            @if ($errors->has('to.*'))
+                                                                <p class="error-message">{{ $errors->first('to.*') }}</p>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="checkfield">
+                                                            <!-- Hidden input with default value of 0 -->
+                                                            <input type="hidden" name="current[]" value="0">
+                                                            <!-- Checkbox input -->
+                                                            <input type="checkbox" id="current-working-new" name="current[]"
+                                                                   value="1" class="checkinput" autocomplete="off" hidden {{ $ex->current == 1 ? 'checked' : '' }}>
+                                                            <label for="current-working-new" class="checklabel">
+                                                                Currently Working
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="inputbox">
+                                                            <label for="location-new" class="inputlabel">
+                                                                Institute/Organization Location
+                                                            </label>
+                                                            <input type="text" name="location[]" id="location-new" value="{{ $ex->location }}"
+                                                                   class="form-control" placeholder="Sherpur Sadar, Sherpur"
+                                                                   autocomplete="off">
+                                                            @if ($errors->has('location.*'))
+                                                                <p class="error-message">{{ $errors->first('location.*') }}</p>
+                                                            @endif
+                                                        </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-md-6">
-                                                    <div class="inputbox">
-                                                        <label for="designation-{{ $loop->index }}" class="inputlabel">
-                                                            Designation <span>*</span>
-                                                        </label>
-                                                        <input type="text" name="designation[]"
-                                                            id="designation-{{ $loop->index }}"
-                                                            value="{{ $ex->designation }}" class="form-control"
-                                                            placeholder="Designation" autocomplete="off">
-                                                        @if ($errors->has('designation.*'))
-                                                            <p class="error-message">{{ $errors->first('designation.*') }}
-                                                            </p>
-                                                        @endif
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-6">
-                                                    <div class="inputbox">
-                                                        <label for="from-{{ $loop->index }}" class="inputlabel">
-                                                            From Date <span>*</span>
-                                                        </label>
-                                                        <input type="date" name="from[]" id="from-{{ $loop->index }}"
-                                                            value="{{ $ex->from }}" class="form-control"
-                                                            placeholder="01/01/2016" autocomplete="off">
-                                                        @if ($errors->has('from.*'))
-                                                            <p class="error-message">{{ $errors->first('from.*') }}</p>
-                                                        @endif
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-6">
-                                                    <div class="inputbox">
-                                                        <label for="to-{{ $loop->index }}" class="inputlabel">
-                                                            To Date <span>*</span>
-                                                        </label>
-                                                        <input type="date" name="to[]" id="to-{{ $loop->index }}"
-                                                            value="{{ $ex->to }}" class="form-control"
-                                                            placeholder="31/12/2020" autocomplete="off">
-                                                        @if ($errors->has('to.*'))
-                                                            <p class="error-message">{{ $errors->first('to.*') }}</p>
-                                                        @endif
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-12">
-                                                    <div class="checkfield">
-                                                        <!-- Hidden input with default value of 0 -->
-                                                        <input type="hidden" name="current[]" value="0">
-                                                        <!-- Checkbox input -->
-                                                        <input type="checkbox" id="current-working-{{ $loop->index }}"
-                                                            name="current[]" value="1" class="checkinput"
-                                                            autocomplete="off" hidden
-                                                            {{ $ex->current == 1 ? 'checked' : '' }}>
-                                                        <label for="current-working-{{ $loop->index }}"
-                                                            class="checklabel">
-                                                            Currently Working
-                                                        </label>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-12">
-                                                    <div class="inputbox">
-                                                        <label for="location-{{ $loop->index }}" class="inputlabel">
-                                                            Institute/Organization Location
-                                                        </label>
-                                                        <input type="text" name="location[]"
-                                                            id="location-{{ $loop->index }}"
-                                                            value="{{ $ex->location }}" class="form-control"
-                                                            placeholder="Sherpur Sadar, Sherpur" autocomplete="off">
-                                                        @if ($errors->has('location.*'))
-                                                            <p class="error-message">{{ $errors->first('location.*') }}
-                                                            </p>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </fieldset>
-                                </div>
-                            @endforeach
+                                            </form>
+                                        </fieldset>
+                                    </div>
+                                @endforeach
+                            </div>
                         @else
-                            <!-- ADD-EXPERIENCE -->
                             <div class="form-container">
                                 <fieldset class="experience-fieldset">
                                     <legend>Professional Experience</legend>
                                     <form action="{{ route('backoffice.doctor.store.professional') }}" method="POST"
-                                        class="educationinfoform mt-3 experience-form" enctype="multipart/form-data">
+                                          class="educationinfoform mt-3 experience-form" enctype="multipart/form-data">
                                         @csrf
                                         <div class="row g-3">
                                             <!-- Doctor ID -->
                                             <input type="hidden" name="doctor_id"
-                                                value="{{ isset($_GET['doctor_id']) ? $_GET['doctor_id'] : 0 }}">
+                                                   value="{{ isset($_GET['doctor_id']) ? $_GET['doctor_id'] : 0 }}">
 
                                             <div class="col-md-6">
                                                 <div class="inputbox">
                                                     <label for="organization-name-new" class="inputlabel">
                                                         Institute/Organization Name <span>*</span>
                                                     </label>
-                                                    <input type="text" name="organization_name[]"
-                                                        id="organization-name-new" class="form-control"
-                                                        placeholder="Dhaka Medical College" autocomplete="off">
+                                                    <input type="text" name="organization_name[]" id="organization-name-new"
+                                                           class="form-control" placeholder="Dhaka Medical College"
+                                                           autocomplete="off">
                                                     @if ($errors->has('organization_name.*'))
                                                         <p class="error-message">
                                                             {{ $errors->first('organization_name.*') }}</p>
@@ -216,8 +206,7 @@
                                                         Designation <span>*</span>
                                                     </label>
                                                     <input type="text" name="designation[]" id="designation-new"
-                                                        class="form-control" placeholder="Designation"
-                                                        autocomplete="off">
+                                                           class="form-control" placeholder="Designation" autocomplete="off">
                                                     @if ($errors->has('designation.*'))
                                                         <p class="error-message">{{ $errors->first('designation.*') }}</p>
                                                     @endif
@@ -229,8 +218,8 @@
                                                     <label for="from-new" class="inputlabel">
                                                         From Date <span>*</span>
                                                     </label>
-                                                    <input type="date" name="from[]" id="from-new"
-                                                        class="form-control" placeholder="01/01/2016" autocomplete="off">
+                                                    <input type="date" name="from[]" id="from-new" class="form-control"
+                                                           placeholder="01/01/2016" autocomplete="off">
                                                     @if ($errors->has('from.*'))
                                                         <p class="error-message">{{ $errors->first('from.*') }}</p>
                                                     @endif
@@ -242,8 +231,8 @@
                                                     <label for="to-new" class="inputlabel">
                                                         To Date <span>*</span>
                                                     </label>
-                                                    <input type="date" name="to[]" id="to-new"
-                                                        class="form-control" placeholder="31/12/2020" autocomplete="off">
+                                                    <input type="date" name="to[]" id="to-new" class="form-control"
+                                                           placeholder="31/12/2020" autocomplete="off">
                                                     @if ($errors->has('to.*'))
                                                         <p class="error-message">{{ $errors->first('to.*') }}</p>
                                                     @endif
@@ -256,7 +245,7 @@
                                                     <input type="hidden" name="current[]" value="0">
                                                     <!-- Checkbox input -->
                                                     <input type="checkbox" id="current-working-new" name="current[]"
-                                                        value="1" class="checkinput" autocomplete="off" hidden>
+                                                           value="1" class="checkinput" autocomplete="off" hidden>
                                                     <label for="current-working-new" class="checklabel">
                                                         Currently Working
                                                     </label>
@@ -269,8 +258,8 @@
                                                         Institute/Organization Location
                                                     </label>
                                                     <input type="text" name="location[]" id="location-new"
-                                                        class="form-control" placeholder="Sherpur Sadar, Sherpur"
-                                                        autocomplete="off">
+                                                           class="form-control" placeholder="Sherpur Sadar, Sherpur"
+                                                           autocomplete="off">
                                                     @if ($errors->has('location.*'))
                                                         <p class="error-message">{{ $errors->first('location.*') }}</p>
                                                     @endif
@@ -284,14 +273,40 @@
 
 
                         <!-- Button to add more forms -->
-                        <div class="col-12">
-                            <div class="edubtns d-flex justify-content-center">
-                                <button id="add-experience-form"
-                                    class="mt-3 d-flex justify-content-center align-items-center z-doc-exp">
-                                    ADD MORE EXPERIENCE
-                                    <span class="icon">
+                        @if(!empty($experience))
+                            <div class="col-12">
+                                <div class="edubtns d-flex justify-content-center">
+                                    <button id="add-experience-form-update"
+                                            class="mt-3 d-flex justify-content-center align-items-center z-doc-exp">
+                                        ADD MORE EXPERIENCE
+                                        <span class="icon">
+                                            <svg width="21" height="21" viewBox="0 0 21 21" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <g clip-path="url(#plus-symble-1)">
+                                                    <path
+                                                        d="M10.4014 20.6365C15.9248 20.6365 20.4014 16.1599 20.4014 10.6365C20.4014 5.11304 15.9248 0.636475 10.4014 0.636475C4.87793 0.636475 0.401367 5.11304 0.401367 10.6365C0.401367 16.1599 4.87793 20.6365 10.4014 20.6365ZM9.46387 14.074V11.574H6.96387C6.44434 11.574 6.02637 11.156 6.02637 10.6365C6.02637 10.1169 6.44434 9.69897 6.96387 9.69897H9.46387V7.19897C9.46387 6.67944 9.88184 6.26147 10.4014 6.26147C10.9209 6.26147 11.3389 6.67944 11.3389 7.19897V9.69897H13.8389C14.3584 9.69897 14.7764 10.1169 14.7764 10.6365C14.7764 11.156 14.3584 11.574 13.8389 11.574H11.3389V14.074C11.3389 14.5935 10.9209 15.0115 10.4014 15.0115C9.88184 15.0115 9.46387 14.5935 9.46387 14.074Z"
+                                                        fill="#F04130" />
+                                                </g>
+                                                <defs>
+                                                    <clipPath id="plus-symble-1">
+                                                        <rect width="20" height="20" fill="white"
+                                                              transform="translate(0.401367 0.636475)" />
+                                                    </clipPath>
+                                                </defs>
+                                            </svg>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        @else
+                            <div class="col-12">
+                                <div class="edubtns d-flex justify-content-center">
+                                    <button id="add-experience-form"
+                                            class="mt-3 d-flex justify-content-center align-items-center z-doc-exp">
+                                        ADD MORE EXPERIENCE
+                                        <span class="icon">
                                         <svg width="21" height="21" viewBox="0 0 21 21" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
+                                             xmlns="http://www.w3.org/2000/svg">
                                             <g clip-path="url(#plus-symble-1)">
                                                 <path
                                                     d="M10.4014 20.6365C15.9248 20.6365 20.4014 16.1599 20.4014 10.6365C20.4014 5.11304 15.9248 0.636475 10.4014 0.636475C4.87793 0.636475 0.401367 5.11304 0.401367 10.6365C0.401367 16.1599 4.87793 20.6365 10.4014 20.6365ZM9.46387 14.074V11.574H6.96387C6.44434 11.574 6.02637 11.156 6.02637 10.6365C6.02637 10.1169 6.44434 9.69897 6.96387 9.69897H9.46387V7.19897C9.46387 6.67944 9.88184 6.26147 10.4014 6.26147C10.9209 6.26147 11.3389 6.67944 11.3389 7.19897V9.69897H13.8389C14.3584 9.69897 14.7764 10.1169 14.7764 10.6365C14.7764 11.156 14.3584 11.574 13.8389 11.574H11.3389V14.074C11.3389 14.5935 10.9209 15.0115 10.4014 15.0115C9.88184 15.0115 9.46387 14.5935 9.46387 14.074Z"
@@ -300,21 +315,31 @@
                                             <defs>
                                                 <clipPath id="plus-symble-1">
                                                     <rect width="20" height="20" fill="white"
-                                                        transform="translate(0.401367 0.636475)" />
+                                                          transform="translate(0.401367 0.636475)" />
                                                 </clipPath>
                                             </defs>
                                         </svg>
                                     </span>
-                                </button>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
+                        @endif
+
                         <!-- Single ADD button to submit all forms -->
-                        <div class="col-12">
-                            <div class="edubtns col-md-6 col-12">
-                                <button type="submit" id="submit-all-forms"
-                                    class="btn-profile-add border-2 mt-3">SAVE</button>
+                        @if(!empty($experience))
+                            <div class="col-12">
+                                <div class="edubtns col-md-6 col-12">
+                                    <button type="submit" id="submit-all-forms-update" class="btn-profile-add border-2 mt-3">UPDATE</button>
+                                </div>
                             </div>
-                        </div>
+                        @else
+                            <div class="col-12">
+                                <div class="edubtns col-md-6 col-12">
+                                    <button type="submit" id="submit-all-forms"
+                                            class="btn-profile-add border-2 mt-3">SAVE</button>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

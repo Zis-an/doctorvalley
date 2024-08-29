@@ -10,9 +10,9 @@ Route::group(['as'=>'backoffice.chamber.admin.', 'prefix'=>'/chamber-admin', 'mi
     Route::get('/', [ChamberAdminManagementController::class, 'index'])->name('index');
     Route::get('/create', [ChamberAdminManagementController::class, 'create'])->name('create');
     Route::post('/store', [ChamberAdminManagementController::class, 'store'])->name('store');
-    Route::get('/{chamber_id}/edit', [ChamberAdminManagementController::class, 'edit'])->name('edit');
-    Route::put('/{chamber_id}/update', [ChamberAdminManagementController::class, 'update'])->name('update');
-    Route::delete('/{chamber_id}', [ChamberAdminManagementController::class, 'destroy'])->name('delete');
+    Route::get('/{chamber_admin_id}/edit', [ChamberAdminManagementController::class, 'edit'])->name('edit');
+    Route::put('/{chamber_admin_id}/update', [ChamberAdminManagementController::class, 'update'])->name('update');
+    Route::delete('/{chamber_admin_id}', [ChamberAdminManagementController::class, 'destroy'])->name('delete');
 });
 
 
