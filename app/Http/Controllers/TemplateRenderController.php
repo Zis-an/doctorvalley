@@ -106,24 +106,9 @@ class TemplateRenderController extends Controller
         return view('doctor.notifications');
     }
 
-    public function doctor_schedule()
-    {
-        return view('doctor.schedule');
-    }
-
-    public function doctor_blogs()
-    {
-        return view('doctor.blogs.index');
-    }
-
     public function doctor_add_post()
     {
         return view('doctor.blogs.add_post');
-    }
-
-    public function doctor_feedback()
-    {
-        return view('doctor.feedback');
     }
 
     // Doctor Ends

@@ -35,6 +35,21 @@ class AdminAuthService
         }
     }
 
+    public function authLogout(): void
+    {
+        try {
+            // Perform logout for the 'doctor' guard
+            Auth::guard('doctor')->logout();
+
+            // Invalidate and regenerate the session to ensure a clean logout
+            request()->session()->invalidate();
+            request()->session()->regenerateToken();
+        } catch (\Throwable $throwable) {
+            // Throw exception if anything goes wrong during logout
+            throw new Exception('An error occurred during logout. Please try again.');
+        }
+    }
+
     /**
      * Check either username or email.
      * @param $identity

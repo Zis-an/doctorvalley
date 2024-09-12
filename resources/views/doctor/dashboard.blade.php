@@ -10,7 +10,7 @@
                     <div class="card-welcome">
                         <div class="card-detail">
                             <h1 class="cardtitle">
-                                Good Morning, <span>Doctor Strange</span>
+                                Good Morning, <span>{{ $doctor->name }}</span>
                             </h1>
 
                             <div class="textbox">
@@ -25,7 +25,7 @@
                         </div>
 
                         <figure class="card-thumbnail">
-                            <img src="../assets/images/avatar/profile.svg" alt="card-thumbnail">
+                            <img src="{{ asset($doctor->photo) }}" alt="card-thumbnail">
                         </figure>
                     </div>
 

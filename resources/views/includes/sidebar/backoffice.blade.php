@@ -174,7 +174,7 @@
 
     <li class="sidelist-item">
         <a href="{{ route('backoffice.country.index') }}" class="sidelist-link {{ request()->routeIs('backoffice.country.index') ? 'active' : '' }}" data-bs-toggle="tooltip"
-           data-bs-placement="right" data-bs-title="Feedback">
+           data-bs-placement="right" data-bs-title="Country">
                       <span class="icon">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#F04130"
                                class="bi bi-chat-right-dots-fill" viewBox="0 0 16 16">
@@ -188,7 +188,7 @@
 
     <li class="sidelist-item">
         <a href="{{ route('backoffice.province.index') }}" class="sidelist-link {{ request()->routeIs('backoffice.province.index') ? 'active' : '' }}" data-bs-toggle="tooltip"
-           data-bs-placement="right" data-bs-title="Feedback">
+           data-bs-placement="right" data-bs-title="Division">
                       <span class="icon">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#F04130"
                                class="bi bi-chat-right-dots-fill" viewBox="0 0 16 16">
@@ -202,7 +202,7 @@
 
     <li class="sidelist-item">
         <a href="{{ route('backoffice.city.index') }}" class="sidelist-link {{ request()->routeIs('backoffice.city.index') ? 'active' : '' }}" data-bs-toggle="tooltip"
-           data-bs-placement="right" data-bs-title="Feedback">
+           data-bs-placement="right" data-bs-title="District">
                       <span class="icon">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#F04130"
                                class="bi bi-chat-right-dots-fill" viewBox="0 0 16 16">
@@ -216,7 +216,7 @@
 
     <li class="sidelist-item">
         <a href="{{ route('backoffice.area.index') }}" class="sidelist-link {{ request()->routeIs('backoffice.area.index') ? 'active' : '' }}" data-bs-toggle="tooltip"
-           data-bs-placement="right" data-bs-title="Feedback">
+           data-bs-placement="right" data-bs-title="Thana">
                       <span class="icon">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#F04130"
                                class="bi bi-chat-right-dots-fill" viewBox="0 0 16 16">

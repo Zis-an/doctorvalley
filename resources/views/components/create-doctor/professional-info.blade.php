@@ -144,7 +144,8 @@
                                                     <div class="col-12">
                                                         <div class="checkfield">
                                                             <!-- Hidden input with default value of 0 -->
-                                                            <input type="hidden" name="current[]" value="0">
+                                                            <input type="hidden" id="current-working-new" name="current[]"
+                                                                   autocomplete="off" value="0" {{ $ex->current == 0 ? 'checked' : '' }}>
                                                             <!-- Checkbox input -->
                                                             <input type="checkbox" id="current-working-new" name="current[]"
                                                                    value="1" class="checkinput" autocomplete="off" hidden {{ $ex->current == 1 ? 'checked' : '' }}>

@@ -4,7 +4,9 @@
         <div class="sidebar-header">
             <a href="{{ route('profile') }}" class="userlink">
               <span class="user-avatar">
-                  <img src="{{ asset('assets/images/avatar/avatar.svg') }}" alt="user-avatar">
+                  @if(auth('doctor')->check())
+                      <img src="{{ asset($doctor->photo) }}" alt="user-avatar">
+                  @endif
               </span>
 
                 <span class="userlink-info">

@@ -31,10 +31,7 @@ Route::get('/chamber/doctor-profile', [TemplateRenderController::class, 'chamber
 //Route::get('/chamber/notifications', [TemplateRenderController::class, 'chamber_notifications'])->name('chamber.notifications');
 
 // Doctor
-Route::get('/doctor/schedule', [TemplateRenderController::class, 'doctor_schedule'])->name('doctor.schedule');
-Route::get('/doctor/blogs', [TemplateRenderController::class, 'doctor_blogs'])->name('doctor.blogs');
 Route::get('/doctor/add-post', [TemplateRenderController::class, 'doctor_add_post'])->name('doctor.add.post');
-Route::get('/doctor/feedback', [TemplateRenderController::class, 'doctor_feedback'])->name('doctor.feedback');
 
 // Backoffice
 

@@ -31,7 +31,7 @@
     </li>
 
     <li class="sidelist-item">
-        <a href="{{ route('doctor.blogs') }}" class="sidelist-link" data-bs-toggle="tooltip" data-bs-placement="right"
+        <a href="{{ route('doctor.blog') }}" class="sidelist-link" data-bs-toggle="tooltip" data-bs-placement="right"
            data-bs-title="Blogs">
                     <span class="icon">
                         <svg width="19" height="18" viewBox="0 0 19 18" fill="none"

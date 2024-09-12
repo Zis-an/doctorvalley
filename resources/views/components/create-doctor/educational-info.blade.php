@@ -68,121 +68,236 @@
                         </div>
 
                         <!-- ADD-EDUCATION -->
-                        <div id="education-form-container">
-                            <fieldset class="experience-fieldset">
-                                <legend>Educational Information</legend>
-                                <form action="{{ route('backoffice.doctor.store.qualification') }}" method="POST"
-                                    class="educationinfoform mt-5" id="educationform" enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="row g-3">
-                                        <!-- Doctor ID -->
-                                        <input type="hidden" id="personal-info-id" value="{{ isset($_GET['doctor_id']) ? $_GET['doctor_id'] : 0 }}" name="doctor_id">
-                                        <div class="col-md-6">
-                                            <div class="inputbox">
-                                                {{-- <label for="normal-select-1" class="inputlabel"> --}}
-                                                <label for="dropdown-select-1" class="inputlabel">
-                                                    Degree Title <span>*</span>
-                                                </label>
-                                                {{-- <select id="normal-select-1" name="degree_id[]" class="wide"
-                                                    autocomplete="off"> --}}
+                        @if(!empty($qualification))
+                            @foreach($qualification as $qua)
+                                <div id="education-forms-container" class="mb-5">
+                                    <fieldset class="education-fieldset">
+                                        <legend>Educational Information</legend>
+                                        <form action="{{ route('backoffice.doctor.update.educational', $qua->doctor_id) }}" method="POST"
+                                              class="educationinfoform mt-5" id="educationform" enctype="multipart/form-data">
+                                            @method('PUT')
+                                            @csrf
+                                            <div class="row g-3">
+                                                <!-- Doctor ID -->
+                                                <input type="hidden" id="personal-info-id" value="{{ $qua->doctor_id }}" name="doctor_id">
+                                                <div class="col-md-6">
+                                                    <div class="inputbox">
+                                                        <label for="dropdown-select-1" class="inputlabel">
+                                                            Degree Title <span>*</span>
+                                                        </label>
+                                                        <select id="dropdown-select-1" name="degree_id[]" class="wide">
+                                                            @foreach ($degrees as $degree)
+                                                                <option value="{{ $degree }}"{{ $qua->degree_id == $degree ? 'selected' : ''  }}>
+                                                                    {{ $degree }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                        @if ($errors->has('degree_id.*'))
+                                                            <p class="error-message">{{ $errors->first('degree_id.*') }}</p>
+                                                        @endif
+                                                    </div>
+                                                </div>
 
-                                                <select id="dropdown-select-1" name="degree_id[]" class="wide">
-                                                    @foreach ($degrees as $degree)
-                                                        <option value="{{ $degree }}">{{ $degree }}</option>
-                                                    @endforeach
-                                                </select>
-                                                @if ($errors->has('degree_id.*'))
-                                                    <p class="error-message">{{ $errors->first('degree_id.*') }}</p>
-                                                @endif
+                                                <div class="col-md-6">
+                                                    <div class="inputbox">
+                                                        <label for="dropdown-select-2" class="inputlabel">
+                                                            Select Institute <span>*</span>
+                                                        </label>
+                                                        <select id="dropdown-select-2" name="institute_id[]" class="wide" autocomplete="off">
+                                                            @foreach ($institutes as $institute)
+                                                                <option value="{{ $institute->id }}" {{ $qua->institute_id == $institute->id ? 'selected' : '' }}>
+                                                                    {{ $institute->institute_name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                        @if ($errors->has('institute_id.*'))
+                                                            <p class="error-message">{{ $errors->first('institute_id.*') }}</p>
+                                                        @endif
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12">
+                                                    <div class="inputbox">
+                                                        <label for="majorcourse" class="inputlabel">
+                                                            Major Course <span>*</span>
+                                                        </label>
+                                                        <input type="text" name="major[]" id="majorcourse"
+                                                               class="form-control" value="{{ $qua->major }}" placeholder="Dental" autocomplete="off">
+                                                        @if ($errors->has('major.*'))
+                                                            <p class="error-message">{{ $errors->first('major.*') }}</p>
+                                                        @endif
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12">
+                                                    <div class="inputbox">
+                                                        <label for="institutename" class="inputlabel">
+                                                            Institution Name <span>*</span>
+                                                        </label>
+                                                        <input type="text" name="institute_name[]" value="{{ $qua->institute_name }}" id="institutename"
+                                                               class="form-control" placeholder="Dental" autocomplete="off">
+                                                        <p class="error-message d-none">This field is required</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="inputbox">
+                                                        <label for="starting-calendar" class="inputlabel">
+                                                            From Date <span>*</span>
+                                                        </label>
+                                                        <input type="date" name="from[]" value="{{ $qua->from }}" class="form-control"
+                                                               placeholder="01/01/2016" id="starting-calendar" autocomplete="off">
+                                                        @if ($errors->has('from.*'))
+                                                            <p class="error-message">{{ $errors->first('from.*') }}</p>
+                                                        @endif
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="inputbox">
+                                                        <label for="ending-calendar" class="inputlabel">
+                                                            To Date <span>*</span>
+                                                        </label>
+                                                        <input type="date" name="to[]" value="{{ $qua->to }}" class="form-control"
+                                                               placeholder="31/12/2020" id="ending-calendar" autocomplete="off">
+                                                        @if ($errors->has('to.*'))
+                                                            <p class="error-message">{{ $errors->first('to.*') }}</p>
+                                                        @endif
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12">
+                                                    <div class="checkfield">
+                                                        <!-- Hidden input with default value of 0 -->
+                                                        <input type="hidden" name="current[]" value="0">
+                                                        <!-- Checkbox input -->
+                                                        <input type="checkbox" id="current-studying" name="current[]"
+                                                               value="1" class="checkinput" autocomplete="off" hidden {{ $qua->current == 1 ? 'checked' : '' }}>
+                                                        <label for="current-studying" class="checklabel">
+                                                            Currently Studying
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </fieldset>
+                                </div>
+                            @endforeach
+                        @else
+                            <div id="education-form-container">
+                                <fieldset class="experience-fieldset">
+                                    <legend>Educational Information</legend>
+                                    <form action="{{ route('backoffice.doctor.store.qualification') }}" method="POST"
+                                          class="educationinfoform mt-5" id="educationform" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="row g-3">
+                                            <!-- Doctor ID -->
+                                            <input type="hidden" id="personal-info-id" value="{{ isset($_GET['doctor_id']) ? $_GET['doctor_id'] : 0 }}" name="doctor_id">
+                                            <div class="col-md-6">
+                                                <div class="inputbox">
+                                                    <label for="dropdown-select-1" class="inputlabel">
+                                                        Degree Title <span>*</span>
+                                                    </label>
+                                                    <select id="dropdown-select-1" name="degree_id[]" class="wide">
+                                                        @foreach ($degrees as $degree)
+                                                            <option value="{{ $degree }}">{{ $degree }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @if ($errors->has('degree_id.*'))
+                                                        <p class="error-message">{{ $errors->first('degree_id.*') }}</p>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="inputbox">
+                                                    {{-- <label for="selectinstitute" class="inputlabel"> --}}
+                                                    <label for="dropdown-select-2" class="inputlabel">
+                                                        Select Institute <span>*</span>
+                                                    </label>
+                                                    {{-- <select id="selectinstitute" name="institute_id[]" class="wide"
+                                                        autocomplete="off"> --}}
+                                                    <select id="dropdown-select-2" name="institute_id[]" class="wide" autocomplete="off">
+                                                        @foreach ($institutes as $institute)
+                                                            <option value="{{ $institute->id }}">{{ $institute->institute_name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @if ($errors->has('institute_id.*'))
+                                                        <p class="error-message">{{ $errors->first('institute_id.*') }}</p>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="inputbox">
+                                                    <label for="majorcourse" class="inputlabel">
+                                                        Major Course <span>*</span>
+                                                    </label>
+                                                    <input type="text" name="major[]" id="majorcourse"
+                                                           class="form-control" placeholder="Dental" autocomplete="off">
+                                                    @if ($errors->has('major.*'))
+                                                        <p class="error-message">{{ $errors->first('major.*') }}</p>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="inputbox">
+                                                    <label for="institutename" class="inputlabel">
+                                                        Institution Name <span>*</span>
+                                                    </label>
+                                                    <input type="text" name="institute_name[]" id="institutename"
+                                                           class="form-control" placeholder="Dental" autocomplete="off">
+                                                    <p class="error-message d-none">This field is required</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="inputbox">
+                                                    <label for="starting-calendar" class="inputlabel">
+                                                        From Date <span>*</span>
+                                                    </label>
+                                                    <input type="date" name="from[]" class="form-control"
+                                                           placeholder="01/01/2016" id="starting-calendar" autocomplete="off">
+                                                    @if ($errors->has('from.*'))
+                                                        <p class="error-message">{{ $errors->first('from.*') }}</p>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="inputbox">
+                                                    <label for="ending-calendar" class="inputlabel">
+                                                        To Date <span>*</span>
+                                                    </label>
+                                                    <input type="date" name="to[]" class="form-control"
+                                                           placeholder="31/12/2020" id="ending-calendar" autocomplete="off">
+                                                    @if ($errors->has('to.*'))
+                                                        <p class="error-message">{{ $errors->first('to.*') }}</p>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="checkfield">
+                                                    <!-- Hidden input with default value of 0 -->
+                                                    <input type="hidden" name="current[]" value="0">
+                                                    <!-- Checkbox input -->
+                                                    <input type="checkbox" id="current-studying" name="current[]"
+                                                           value="1" class="checkinput" autocomplete="off" hidden>
+                                                    <label for="current-studying" class="checklabel">
+                                                        Currently Studying
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
+                                    </form>
+                                </fieldset>
 
-                                        <div class="col-md-6">
-                                            <div class="inputbox">
-                                                {{-- <label for="selectinstitute" class="inputlabel"> --}}
-                                                <label for="dropdown-select-2" class="inputlabel">
-                                                    Select Institute <span>*</span>
-                                                </label>
-                                                {{-- <select id="selectinstitute" name="institute_id[]" class="wide"
-                                                    autocomplete="off"> --}}
-                                                <select id="dropdown-select-2" name="institute_id[]" class="wide" autocomplete="off">
-                                                    @foreach ($institutes as $institute)
-                                                        <option value="{{ $institute->id }}">{{ $institute->institute_name }}</option>
-                                                    @endforeach
-                                                </select>
-                                                @if ($errors->has('institute_id.*'))
-                                                    <p class="error-message">{{ $errors->first('institute_id.*') }}</p>
-                                                @endif
-                                            </div>
-                                        </div>
+                            </div>
+                        @endif
 
-                                        <div class="col-md-12">
-                                            <div class="inputbox">
-                                                <label for="majorcourse" class="inputlabel">
-                                                    Major Course <span>*</span>
-                                                </label>
-                                                <input type="text" name="major[]" id="majorcourse"
-                                                    class="form-control" placeholder="Dental" autocomplete="off">
-                                                @if ($errors->has('major.*'))
-                                                    <p class="error-message">{{ $errors->first('major.*') }}</p>
-                                                @endif
-                                            </div>
-                                        </div>
 
-                                        <div class="col-12">
-                                            <div class="inputbox">
-                                                <label for="institutename" class="inputlabel">
-                                                    Institution Name <span>*</span>
-                                                </label>
-                                                <input type="text" name="institute_name[]" id="institutename"
-                                                    class="form-control" placeholder="Dental" autocomplete="off">
-                                                <p class="error-message d-none">This field is required</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class="inputbox">
-                                                <label for="starting-calendar" class="inputlabel">
-                                                    From Date <span>*</span>
-                                                </label>
-                                                <input type="date" name="from[]" class="form-control"
-                                                    placeholder="01/01/2016" id="starting-calendar" autocomplete="off">
-                                                @if ($errors->has('from.*'))
-                                                    <p class="error-message">{{ $errors->first('from.*') }}</p>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class="inputbox">
-                                                <label for="ending-calendar" class="inputlabel">
-                                                    To Date <span>*</span>
-                                                </label>
-                                                <input type="date" name="to[]" class="form-control"
-                                                    placeholder="31/12/2020" id="ending-calendar" autocomplete="off">
-                                                @if ($errors->has('to.*'))
-                                                    <p class="error-message">{{ $errors->first('to.*') }}</p>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12">
-                                            <div class="checkfield">
-                                                <!-- Hidden input with default value of 0 -->
-                                                <input type="hidden" name="current[]" value="0">
-                                                <!-- Checkbox input -->
-                                                <input type="checkbox" id="current-studying" name="current[]"
-                                                    value="1" class="checkinput" autocomplete="off" hidden>
-                                                <label for="current-studying" class="checklabel">
-                                                    Currently Studying
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </fieldset>
-
-                        </div>
                         <!-- Button to add more forms -->
                         <div class="col-12">
                             <div class="edubtns d-flex justify-content-center">

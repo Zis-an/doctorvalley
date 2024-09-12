@@ -51,4 +51,7 @@ Route::group(['as' => 'doctor.', 'prefix' => '/doctor', 'middleware' => ['auth:d
     Route::get('/dashboard', [DoctorHomeController::class, 'index'])->name('dashboard');
     Route::get('/profile', [DoctorHomeController::class, 'profile'])->name('profile');
     Route::get('/notifications', [DoctorHomeController::class, 'notification'])->name('notification');
+    Route::get('/blogs', [DoctorHomeController::class, 'blog'])->name('blog');
+    Route::get('/schedules', [DoctorHomeController::class, 'schedule'])->name('schedule');
+    Route::get('/feedback', [DoctorHomeController::class, 'feedback'])->name('feedback');
 });

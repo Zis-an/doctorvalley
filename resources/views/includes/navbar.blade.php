@@ -66,9 +66,15 @@
             </div>
 
             <!-- SITE-LOGO -->
-            <a href="{{ route('profile') }}" class="logo">
-                <img src="{{ asset('assets/images/logo/logo.svg') }}" alt="logo">
-            </a>
+            @if(auth('doctor')->check())
+                <a href="{{ route('doctor.dashboard') }}" class="logo">
+                    <img src="{{ asset('assets/images/logo/logo.svg') }}" alt="logo">
+                </a>
+            @else
+                <a href="{{ route('profile') }}" class="logo">
+                    <img src="{{ asset('assets/images/logo/logo.svg') }}" alt="logo">
+                </a>
+            @endif
 
         </div>
 
