@@ -18,9 +18,9 @@ class SpecialityService
         $this->repository = new SpecialityDbRepository();
     }
 
-    public function getSpecialityList(): mixed
+    public function getSpecialityList(array $filterData): mixed
     {
-        $result = $this->repository->getSpecialityData();
+        $result = $this->repository->getSpecialityData($filterData);
         if (empty($result)){
             return [];
         }
@@ -59,6 +59,15 @@ class SpecialityService
         $result = $this->repository->deleteById($id);
         if (empty($result)){
             throw new Exception('Invalid Speciality info');
+        }
+        return $result;
+    }
+
+    public function getAllSpecialityList(): mixed
+    {
+        $result = $this->repository->getAllSpecialities();
+        if (empty($result)){
+            return [];
         }
         return $result;
     }

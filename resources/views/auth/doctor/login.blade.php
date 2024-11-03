@@ -8,7 +8,7 @@
             <div class="container" >
 
                 <div class="authentication-body" style="max-width: 40rem; margin: 0 auto;">
-                    <h3 class="title text-center">Chamber Sign In</h3>
+                    <h3 class="title text-center">Doctor Sign In</h3>
 
                     <div class="authinfo">
                         <x-message.alert></x-message.alert>
@@ -48,8 +48,15 @@
                                                 Remember me
                                             </label>
                                         </div>
+
+                                        <div class="checkfield">
+                                            <label class="px-2">Don't have an account?</label>
+                                            <a href="{{ route('doctor.registrationForm') }}">Sign Up</a>
+                                        </div>
                                     </div>
                                 </div>
+
+
                                 <div class="col-12">
                                     <div class="d-flex flex-column align-items-center justify-content-center gap-3">
                                         <button type="submit" class="btn-submit">Sign In</button>

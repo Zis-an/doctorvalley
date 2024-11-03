@@ -3,7 +3,10 @@
 namespace Modules\ChamberAdmin\Services;
 
 use Exception;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Modules\ChamberAdmin\Repositories\ChamberAdminDBRepository;
+use RealRashid\SweetAlert\Facades\Alert;
 
 
 class ChamberAdminService
@@ -16,9 +19,9 @@ class ChamberAdminService
         $this->repository = new ChamberAdminDBRepository();
     }
 
-    public function getChamberAdminList(): mixed
+    public function getChamberAdminList(array $filterData): mixed
     {
-        $result = $this->repository->getChamberAdminData();
+        $result = $this->repository->getChamberAdminData($filterData);
         if (empty($result)){
             return [];
         }
@@ -60,4 +63,28 @@ class ChamberAdminService
         }
         return $result;
     }
+
+    public function getChamberAdminByIdAndChamberId(int $id, int $chamberId): mixed
+    {
+        $result = $this->repository->getChamberAdminByIdAndChamberId($id, $chamberId);
+        if (empty($result)){
+            throw new Exception('Chamber Admin Data not found');
+        }
+        return $result;
+    }
+
+    public function updateChamberAdminPassword(array $formData): mixed
+    {
+        if (!Hash::check($formData['current_password'], auth('chamber')->user()->password)) {
+            // Throw an exception instead of returning a redirect
+            throw new \Exception('Your current password does not match!');
+        }
+
+        $formData['password'] = Hash::make($formData['password']);
+        unset($formData['current_password'], $formData['password_confirmation']);
+
+        return $this->repository->updateChamberAdminPassword($formData);
+    }
+
+
 }

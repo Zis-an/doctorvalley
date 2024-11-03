@@ -19,12 +19,15 @@ class CourseDbRepository
         $this->model=new Course();
     }
 
-    public function getCourseData(): mixed
+    public function getCourseData(array $filters=[]): mixed
     {
-        return $this->model
-        ->whereNull('deleted_at')
-        ->latest()
-        ->get();
+        $query = $this->model
+            ->whereNull('deleted_at')
+            ->latest();
+
+        $query = $this->getFilterQuery($query, $filters);
+
+        return $query->paginate(10);
     }
 
     public function storeCourseData(array $data): mixed
@@ -52,4 +55,18 @@ class CourseDbRepository
             ->where(CourseEnum::ID, $id)
             ->delete();
     }
+
+
+    private function getFilterQuery($query , array $filters=[])
+    {
+        if (!empty($filters['course'])) {
+            $query = $query->where(function ($q) use ($filters) {
+                $q->where('course_name', 'like', '%' . $filters['course'] . '%');
+            });
+        }
+
+        return $query;
+    }
+
+
 }

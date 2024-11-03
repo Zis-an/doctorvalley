@@ -1,4 +1,9 @@
 @extends('layouts.backend')
+
+@push('after-styles')
+    <link rel="stylesheet" href="{{ asset('assets/css/nice-select/nice-select2.css') }}">
+@endpush
+
 @section('content')
     <!-- MAIN-SECTION START -->
     <main class="myprofile" id="main-section">
@@ -27,7 +32,6 @@
                             <h2 class="profile-title">CHAMBER LIST</h2>
                         </div>
                     </div>
-
                     <div class="filteroptions">
                         <button type="button" class="btn-search" data-bs-toggle="collapse"
                             data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
@@ -51,79 +55,116 @@
                 </div>
             </div>
 
-            <div class="blogsearch px-4">
-                <div class="collapse" id="collapseExample">
-                    <div class="searchform">
-                        <button class="btn-search">
-                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M12.9028 11.4444H12.1347L11.8625 11.1819C12.8153 10.0736 13.3889 8.63472 13.3889 7.06944C13.3889 3.57917 10.5597 0.75 7.06944 0.75C3.57917 0.75 0.75 3.57917 0.75 7.06944C0.75 10.5597 3.57917 13.3889 7.06944 13.3889C8.63472 13.3889 10.0736 12.8153 11.1819 11.8625L11.4444 12.1347V12.9028L16.3056 17.7542L17.7542 16.3056L12.9028 11.4444V11.4444ZM7.06944 11.4444C4.64861 11.4444 2.69444 9.49028 2.69444 7.06944C2.69444 4.64861 4.64861 2.69444 7.06944 2.69444C9.49028 2.69444 11.4444 4.64861 11.4444 7.06944C11.4444 9.49028 9.49028 11.4444 7.06944 11.4444Z"
-                                    fill="white"></path>
-                            </svg>
-                        </button>
+            <x-message.alert></x-message.alert>
 
-                        <div class="mysearches">
-                            <input type="search" placeholder="What are you looking for?" class="searchfield">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="mobilefilter">
-                <!-- FILTER-OFFCANVAS -->
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileFilter" aria-labelledby="mobileFilter">
-                    <div class="offcanvas-header">
-                        <h5 class="text-white">Filter Chamber</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-x-lg" viewBox="0 0 16 16">
-                                <path
-                                    d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
-                            </svg>
-                        </button>
-                    </div>
+            <form action="{{ route('backoffice.chamber.index') }}" method="GET">
+                <div class="blogsearch px-4">
+                    <div class="collapse" id="collapseExample">
+                        <div class="searchform">
+                            <button type="submit" class="btn-search">
+                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12.9028 11.4444H12.1347L11.8625 11.1819C12.8153 10.0736 13.3889 8.63472 13.3889 7.06944C13.3889 3.57917 10.5597 0.75 7.06944 0.75C3.57917 0.75 0.75 3.57917 0.75 7.06944C0.75 10.5597 3.57917 13.3889 7.06944 13.3889C8.63472 13.3889 10.0736 12.8153 11.1819 11.8625L11.4444 12.1347V12.9028L16.3056 17.7542L17.7542 16.3056L12.9028 11.4444V11.4444ZM7.06944 11.4444C4.64861 11.4444 2.69444 9.49028 2.69444 7.06944C2.69444 4.64861 4.64861 2.69444 7.06944 2.69444C9.49028 2.69444 11.4444 4.64861 11.4444 7.06944C11.4444 9.49028 9.49028 11.4444 7.06944 11.4444Z"
+                                        fill="white"></path>
+                                </svg>
+                            </button>
 
-                    <div class="offcanvas-body">
-                        <div class="filter d-flex flex-column gap-3">
-                            <div class="inputbox">
-                                <label for="doctorscategory-mobile" class="inputlabel text-white">CHAMBER</label>
-                                <select id="doctorscategory-mobile" placeholder-text="CHAMBER" autocomplete="off">
-                                    @foreach ($chamber_types as $type)
-                                        <option value="{{ $type }}" class="text-uppercase">{{ $type }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="inputbox">
-                                <label for="division-mobile" class="inputlabel text-white">DIVISION</label>
-                                <select id="division-mobile" placeholder-text="Dhaka" autocomplete="off">
-                                    @foreach ($provinces as $province)
-                                        <option value="{{ $province->id }}">{{ $province->province_name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="inputbox">
-                                <label for="districts-mobile" class="inputlabel text-white">DISTIRCT</label>
-                                <select id="districts-mobile" placeholder-text="Sherpur" autocomplete="off">
-                                    @foreach ($cities as $city)
-                                        <option value="{{ $city->id }}">{{ $city->city_name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="inputbox">
-                                <label for="thanas-mobile" class="inputlabel text-white">THANA</label>
-                                <select id="thanas-mobile" placeholder-text="Sherpur Sadar" autocomplete="off">
-                                    @foreach ($areas as $area)
-                                        <option value="{{ $area->id }}">{{ $area->area_name }}</option>
-                                    @endforeach
-                                </select>
+                            <div class="mysearches">
+                                <input type="search" name="search_chamber" value="{{ request('search_chamber') }}" placeholder="What are you looking for?" class="searchfield">
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
+
+
+            <form action="{{ route('backoffice.chamber.index') }}" method="GET">
+                <div class="mobilefilter">
+                    <!-- FILTER-OFFCANVAS -->
+                    <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileFilter" aria-labelledby="mobileFilter">
+                        <div class="offcanvas-header">
+                            <h5 class="text-white">Filter Chamber</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-x-lg" viewBox="0 0 16 16">
+                                    <path
+                                        d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div class="offcanvas-body">
+                            <div class="filter d-flex flex-column gap-3">
+                                <div class="inputbox">
+                                    <label for="specialities" class="inputlabel text-white">Chamber Type</label>
+                                    <select id="specialities" name="chamber_type" autocomplete="off" class="wide">
+                                        <option class="" selected disabled>Select Chamber Type</option>
+                                        @foreach ($chamber_types as $type)
+                                            <option value="{{ $type }}" class="text-uppercase"
+                                                {{ !empty($_GET['chamber_type']) && $_GET['chamber_type'] == $type ? 'selected' : '' }}>
+                                                {{ $type }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="inputbox">
+                                    <label for="divisions" class="inputlabel text-white">Division</label>
+                                    <select id="divisions" name="province_id" autocomplete="off" class="wide">
+                                        <option class="" selected disabled>Select Division</option>
+                                        @if(!empty($provinces))
+                                            @foreach ($provinces as $province)
+                                                <option value="{{ $province->id }}"
+                                                    {{ !empty($_GET['province_id']) && $_GET['province_id'] == $province->id ? 'selected' : '' }}>{{ $province->province_name }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+
+                                <div class="inputbox">
+                                    <label for="districts" class="inputlabel text-white">District </label>
+                                    <select id="districts" name="city_id" class="wide">
+                                        <option value="" selected disabled>Select District</option>
+                                        @if(!empty($cities))
+                                            @foreach ($cities as $city)
+                                                <option value="{{ $city->id }}"
+                                                    {{ !empty($_GET['city_id']) && $_GET['city_id'] == $city->id ? 'selected' : '' }}>
+                                                    {{ $city->city_name }}
+                                                </option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+
+                                <div class="inputbox">
+                                    <label for="thanas" class="inputlabel text-white">Thana </label>
+                                    <select id="thanas" name="area_id" class="wide">
+                                        <option value="" selected disabled>Select Thana</option>
+                                        @if(!empty($areas))
+                                            @foreach ($areas as $area)
+                                                <option value="{{ $area->id }}"
+                                                    {{ !empty($_GET['area_id']) && $_GET['area_id'] == $area->id ? 'selected' : '' }}>
+                                                    {{ $area->area_name }}
+                                                </option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 col-12 edubtns">
+                                        <button type="submit" class="btn-profile-add">Filter</button>
+                                    </div>
+                                    <div class="col-md-6 col-12 edubtns">
+                                        <a href="{{ route('backoffice.chamber.index') }}" class="btn-profile-add">Clear</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
 
             <div class="personalinfo-info">
                 <div class="details align-items-start">
@@ -145,7 +186,7 @@
                                 <tbody>
                                     @foreach($chambers as $key => $chamber)
                                     <tr>
-                                        <th scope="row">{{ $key + 1 }}</th>
+                                        <th scope="row">{{ ($chambers->currentPage() - 1) * $chambers->perPage() + $loop->iteration }}</th>
                                         <td>{{ $chamber->chamber_name }}</td>
                                         <td>{{ $chamber->reg_no }}</td>
                                         <td>{{ $chamber->email }}</td>
@@ -231,51 +272,7 @@
 
                 <div class="mt-5 d-flex justify-content-center">
                     <nav aria-label="Page navigation example" aria-labelledby="nav">
-                        <ul class="pagination">
-                            <li class="page-item">
-                                <a href="#" class="btn-previous" aria-label="Previous">
-                                    <span aria-hidden="true">
-                                        <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <circle cx="17.5" cy="17.5" r="17.5" fill="white" />
-                                            <path
-                                                d="M22 23.2375L16.4372 17.5L22 11.7625L20.2874 10L13 17.5L20.2874 25L22 23.2375Z"
-                                                fill="black" />
-                                        </svg>
-                                    </span>
-                                </a>
-                            </li>
-                            <ul class="pagination-list">
-                                <li class="page-item active" aria-current="page">
-                                    <a href="#" class="page-link">1</a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link">2</a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link">3</a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link">...</a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link">9</a>
-                                </li>
-                            </ul>
-                            <li class="page-item">
-                                <a href="#" class="btn-next" aria-label="Next">
-                                    <span aria-hidden="true">
-                                        <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <circle cx="17.5" cy="17.5" r="17.5" fill="white" />
-                                            <path
-                                                d="M13 11.7625L18.5628 17.5L13 23.2375L14.7126 25L22 17.5L14.7126 10L13 11.7625Z"
-                                                fill="black" />
-                                        </svg>
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
+                        <x-pagination :items="$chambers" />
                     </nav>
                 </div>
             </div>
@@ -283,3 +280,11 @@
     </main>
     <!-- MAIN-SECTION END -->
 @endsection
+
+
+@push('after-scripts')
+    <script src="{{ asset('assets/js/tag-generator/tag-generator.js') }}"></script>
+    <script src="{{ asset('assets/js/showhide/showhide.js') }}"></script>
+    <script src="{{ asset('assets/js/nice-select/nice-select2.js') }}"></script>
+    <script src="{{ asset('assets/js/nice-select/doctorselect.js') }}"></script>
+@endpush

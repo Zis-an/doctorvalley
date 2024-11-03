@@ -1,5 +1,7 @@
 <?php
 
+use Modules\Chamber\Models\Chamber;
+
 if (!function_exists('role_base_user_info')) {
     function role_base_user_info()
     {

@@ -21,11 +21,11 @@ class ChamberAdminRequest extends FormRequest
         $rules = [
             'name' => ['required', 'string'],
             'username' => ['required'],
-            'email' => ['required'],
+            'email' => 'required|email:rfc,dns',
             'phone' => ['required'],
             'chamber_id' => ['required'],
             'status' => ['required'],
-            'role_id' => ['required', 'integer'],
+//            'role_id' => ['required', 'integer'],
         ];
 
         if ($this->isMethod('post')) {
@@ -49,6 +49,7 @@ class ChamberAdminRequest extends FormRequest
             'username.required' => 'Username is required',
 
             'email.required' => 'Email is required',
+            'email.unique' => 'This email already taken try another',
 
             'phone.required' => 'Phone is required',
 
@@ -58,8 +59,8 @@ class ChamberAdminRequest extends FormRequest
 
             'status.required' => 'Status is required',
 
-            'role_id.required' => 'Role is required',
-            'role_id.integer' => 'Role must have to be a number',
+//            'role_id.required' => 'Role is required',
+//            'role_id.integer' => 'Role must have to be a number',
         ];
     }
 

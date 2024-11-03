@@ -25,10 +25,12 @@ class DoctorExperienceRequest extends FormRequest
     {
         return [
             'doctor_id'=>['required'],
+            'experience_id.*'=>['nullable'],
             'organization_name.*'=>['required'],
             'designation.*'=>['required'],
+            'department.*'=>['required'],
             'from.*'=>['required'],
-            'to.*'=>['required'],
+            'to.*'=>['nullable'],
             'current.*'=>['nullable', 'boolean'],
             'location.*'=>['required']
         ];
@@ -42,6 +44,7 @@ class DoctorExperienceRequest extends FormRequest
             'organization_name.*.required' => 'Organization Name is required',
 
             'designation.*.required' => 'Designation is required',
+            'department.*.required' => 'Department is required',
 
             'from.*.required' => 'From Date is required',
 

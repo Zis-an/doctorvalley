@@ -1,4 +1,4 @@
-@extends('backoffice.doctor.createUpdateDoctor')
+{{--@extends('backoffice.doctor.createUpdateDoctor')
 @section('tab-content')
     @if (session('success'))
         <div class="alert alert-success">
@@ -37,13 +37,15 @@
             <div class="profileimage-info">
                 <div class="details emptyprofile">
                     <figure class="default-thumb">
-                        <form id="profileImageForm" action="{{ route('backoffice.doctor.store.image') }}" method="POST"
+                        <form id="profileImageForm" action="{{ !empty($doctor) ?route('backoffice.doctor.store.image', $doctor->id) : route('backoffice.doctor.store.image') }}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
+                            @if(!empty($doctor)) @method('PUT') @endif
+
                             <img src="{{ asset('assets/images/avatar/default-profile.svg') }}" alt="default-profile"
                                 id="uploadedImage" class="default-image">
                             <!-- Doctor ID -->
-                            <input type="hidden" id="personal-info-id" value="{{ isset($_GET['doctor_id']) ? $_GET['doctor_id'] : 0 }}" name="doctor_id">
+                            <input type="hidden" id="personal-info-id" value="{{ $doctor_id ?? '' }}" name="doctor_id">
                             <input type="file" id="profileImage" name="photo" multiple hidden>
                             <label for="profileImage" data-bs-toggle="tooltip" data-bs-placement="top"
                                 data-bs-title="Upload Profile">
@@ -72,4 +74,225 @@
             </div>
         </div>
     </div>
+@endsection--}}
+
+
+{{--@extends('backoffice.doctor.createUpdateDoctor')--}}
+{{--@section('tab-content')--}}
+{{--    @if (session('success'))--}}
+{{--        <div class="alert alert-success">--}}
+{{--            {{ session('success') }}--}}
+{{--        </div>--}}
+{{--    @endif--}}
+
+{{--    @if (session('error'))--}}
+{{--        <div class="alert alert-success">--}}
+{{--            {{ session('error') }}--}}
+{{--        </div>--}}
+{{--    @endif--}}
+
+{{--    <div class="tab-pane fade show active" id="userprofileimage-tab-pane" role="tabpanel" aria-labelledby="userprofileimage-tab" tabindex="0">--}}
+{{--        <div class="profileimage">--}}
+{{--            <div class="myprofile-detail">--}}
+{{--                <figure class="icon">--}}
+{{--                    <!-- SVG Icon for Profile -->--}}
+{{--                </figure>--}}
+
+{{--                <div class="detail">--}}
+{{--                    <h2 class="profile-title">PROFILE IMAGE</h2>--}}
+{{--                    <p class="profiletext">--}}
+{{--                        {{ !empty($doctor) ? 'Update' : 'Upload' }} your profile image here.--}}
+{{--                        This will help us to show your profile with proper image.--}}
+{{--                    </p>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+
+{{--            <div class="profileimage-info">--}}
+{{--                <div class="details emptyprofile">--}}
+{{--                    <figure class="default-thumb">--}}
+{{--                        <form id="profileImageForm" action="{{ !empty($doctor) ? route('backoffice.doctor.update.image', $doctor->id) : route('backoffice.doctor.store.image') }}" method="POST" enctype="multipart/form-data">--}}
+{{--                            @csrf--}}
+{{--                            @if (!empty($doctor))--}}
+{{--                                @method('PUT')--}}
+{{--                            @endif--}}
+
+{{--                            <!-- Display the existing profile image if it exists, otherwise show the default image -->--}}
+{{--                            @if(!empty($doctor) && !empty($doctor->photo))--}}
+{{--                                <img src="{{ asset($doctor->photo) }}" alt="Profile Image" id="uploadedImage" class="default-image">--}}
+{{--                            @else--}}
+{{--                                <img src="{{ asset('assets/images/avatar/default-profile.svg') }}" alt="default-profile" id="uploadedImage" class="default-image">--}}
+{{--                            @endif--}}
+
+{{--                            <!-- Hidden input for Doctor ID -->--}}
+{{--                            <input type="hidden" id="personal-info-id" value="{{ $doctor_id ?? '' }}" name="doctor_id">--}}
+
+{{--                            <!-- File input for the profile image -->--}}
+{{--                            <input type="file" id="profileImage" name="photo" hidden>--}}
+
+{{--                            <!-- Label for image upload button -->--}}
+{{--                            <label for="profileImage" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Upload Profile">--}}
+{{--                                <svg width="56" height="57" viewBox="0 0 56 57" fill="none" xmlns="http://www.w3.org/2000/svg">--}}
+{{--                                    <path d="M55.5 28.4C55.5 43.8154 43.1811 56.2999 28 56.2999C12.8188 56.2999 0.5 43.8154 0.5 28.4C0.5 12.9845 12.8188 0.5 28 0.5C43.1811 0.5 55.5 12.9845 55.5 28.4Z" fill="#707070" stroke="white"/>--}}
+{{--                                    <path d="M31.0119 22.9519L32.3473 24.3064L19.1972 37.6462H17.8619V36.2916L31.0119 22.9519ZM36.2371 14.0881C35.8743 14.0881 35.4969 14.2354 35.2211 14.5151L32.565 17.2096L38.0079 22.731L40.664 20.0365C41.2301 19.4623 41.2301 18.5347 40.664 17.9605L37.2677 14.5151C36.9774 14.2206 36.6145 14.0881 36.2371 14.0881ZM31.0119 18.785L14.959 35.0695V40.591H20.4019L36.4548 24.3064L31.0119 18.785Z" fill="white"/>--}}
+{{--                                </svg>--}}
+{{--                            </label>--}}
+{{--                        </form>--}}
+{{--                    </figure>--}}
+
+{{--                    <div class="empty-info">--}}
+{{--                        @if(!empty($doctor) && !empty($doctor->photo))--}}
+{{--                            <p>Current photo uploaded. You can update your photo by clicking the upload icon.</p>--}}
+{{--                        @else--}}
+{{--                            <p>You don't have any photo yet. Please upload one by clicking the upload icon.</p>--}}
+{{--                        @endif--}}
+{{--                    </div>--}}
+
+{{--                    <div class="updateinfo">--}}
+{{--                        <button type="submit" form="profileImageForm" class="btn-update">--}}
+{{--                            {{ !empty($doctor) ? 'UPDATE IMAGE' : 'UPLOAD IMAGE' }}--}}
+{{--                        </button>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--@endsection--}}
+
+
+{{--@push('after-scripts')--}}
+{{--    <!-- profile-image's creation and update script -->--}}
+{{--    <script>--}}
+{{--        window.onload = function() {--}}
+{{--            const profileImageInput = document.getElementById('profileImage');--}}
+{{--            const uploadedImage = document.getElementById('uploadedImage');--}}
+{{--            const form = document.getElementById('profileImageForm');--}}
+
+{{--            if (profileImageInput && uploadedImage && form) {--}}
+{{--                // Listen for changes to the file input--}}
+{{--                profileImageInput.addEventListener('change', function(event) {--}}
+{{--                    const file = event.target.files[0]; // Get the selected file--}}
+{{--                    if (file) {--}}
+{{--                        const reader = new FileReader(); // Create a new FileReader to read the file--}}
+{{--                        reader.onload = function(e) {--}}
+{{--                            uploadedImage.src = e.target.result; // Set the preview image source to the selected file--}}
+{{--                        }--}}
+{{--                        reader.readAsDataURL(file); // Read the file and trigger the onload event--}}
+{{--                    }--}}
+{{--                });--}}
+{{--            } else {--}}
+{{--                console.error("Required DOM elements for profile image not found.");--}}
+{{--            }--}}
+{{--        };--}}
+{{--    </script>--}}
+{{--@endpush--}}
+
+
+@extends('backoffice.doctor.createUpdateDoctor')
+@section('tab-content')
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    <div class="tab-pane fade show active" id="userprofileimage-tab-pane" role="tabpanel" aria-labelledby="userprofileimage-tab" tabindex="0">
+        <div class="profileimage">
+            <div class="myprofile-detail">
+                <figure class="icon">
+                    <!-- SVG Icon for Profile -->
+                </figure>
+
+                <div class="detail">
+                    <h2 class="profile-title">PROFILE IMAGE</h2>
+                    <p class="profiletext">
+                        {{ !empty($doctor) ? 'Update' : 'Upload' }} your profile image here.
+                        This will help us to show your profile with a proper image.
+                    </p>
+                </div>
+            </div>
+
+            <div class="profileimage-info">
+                <form id="profileImageForm" action="{{ !empty($doctor) ? route('doctor.update.image', $doctor->id) : route('doctor.store.image') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @if (!empty($doctor))
+                        @method('PUT')
+                    @endif
+
+                    <div class="details emptyprofile">
+                        <figure class="default-thumb">
+                            <!-- Display the existing profile image if it exists, otherwise show the default image -->
+                            @if(!empty($doctor) && !empty($doctor->photo))
+                                <img src="{{ asset('storage/' . $doctor->photo) }}" alt="Profile Image" id="uploadedImage" class="default-image">
+                            @else
+                                <img src="{{ asset('assets/images/avatar/default-profile.svg') }}" alt="default-profile" id="uploadedImage" class="default-image">
+                            @endif
+
+                            <!-- Hidden input for Doctor ID -->
+                            <input type="hidden" id="personal-info-id" value="{{ !empty($doctor) ? $doctor->id : $doctor_id ?? '' }}" name="doctor_id">
+
+                            <!-- File input for the profile image -->
+                            <input type="file" id="profileImage" name="photo" hidden>
+
+                            <!-- Label for image upload button -->
+                            <label for="profileImage" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Upload Profile">
+                                <svg width="56" height="57" viewBox="0 0 56 57" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M55.5 28.4C55.5 43.8154 43.1811 56.2999 28 56.2999C12.8188 56.2999 0.5 43.8154 0.5 28.4C0.5 12.9845 12.8188 0.5 28 0.5C43.1811 0.5 55.5 12.9845 55.5 28.4Z" fill="#707070" stroke="white"/>
+                                    <path d="M31.0119 22.9519L32.3473 24.3064L19.1972 37.6462H17.8619V36.2916L31.0119 22.9519ZM36.2371 14.0881C35.8743 14.0881 35.4969 14.2354 35.2211 14.5151L32.565 17.2096L38.0079 22.731L40.664 20.0365C41.2301 19.4623 41.2301 18.5347 40.664 17.9605L37.2677 14.5151C36.9774 14.2206 36.6145 14.0881 36.2371 14.0881ZM31.0119 18.785L14.959 35.0695V40.591H20.4019L36.4548 24.3064L31.0119 18.785Z" fill="white"/>
+                                </svg>
+                            </label>
+                        </figure>
+
+                        <div class="empty-info">
+                            @if(!empty($doctor) && !empty($doctor->photo))
+                                <p>Current photo uploaded. You can update your photo by clicking the upload icon.</p>
+                            @else
+                                <p>You don't have any photo yet. Please upload one by clicking the upload icon.</p>
+                            @endif
+                        </div>
+
+                        <div class="updateinfo">
+                            <!-- This button submits the form -->
+                            <button type="submit" form="profileImageForm" class="btn-update">
+                                {{ !empty($doctor) ? 'UPDATE IMAGE' : 'UPLOAD IMAGE' }}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
+
+
+@push('after-scripts')
+    <!-- profile-image's creation and update script -->
+    <script>
+        window.onload = function() {
+            const profileImageInput = document.getElementById('profileImage');
+            const uploadedImage = document.getElementById('uploadedImage');
+            const form = document.getElementById('profileImageForm');
+
+            if (profileImageInput && uploadedImage && form) {
+                // Listen for changes to the file input
+                profileImageInput.addEventListener('change', function(event) {
+                    const file = event.target.files[0]; // Get the selected file
+                    if (file) {
+                        const reader = new FileReader(); // Create a new FileReader to read the file
+                        reader.onload = function(e) {
+                            uploadedImage.src = e.target.result; // Set the preview image source to the selected file
+                        }
+                        reader.readAsDataURL(file); // Read the file and trigger the onload event
+                    }
+                });
+            } else {
+                console.error("Required DOM elements for profile image not found.");
+            }
+        };
+    </script>
+@endpush

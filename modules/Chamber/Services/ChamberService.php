@@ -16,9 +16,9 @@ class ChamberService
         $this->repository = new ChamberDBRepository();
     }
 
-    public function getChamberList(): mixed
+    public function getChamberList(array $filterData): mixed
     {
-        $result = $this->repository->getChamberData();
+        $result = $this->repository->getChamberData($filterData);
         if (empty($result)){
             return [];
         }

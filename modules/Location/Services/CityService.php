@@ -18,9 +18,9 @@ class CityService
         $this->repository = new CityDbRepository();
     }
 
-    public function getCityList(): mixed
+    public function getCityList(array $filterData): mixed
     {
-        $result = $this->repository->getCityData();
+        $result = $this->repository->getCityData($filterData);
         if (empty($result)){
             return [];
         }
@@ -77,5 +77,12 @@ class CityService
         return $this->repository->fetchCitiesByProvinceId($provinceId);
     }
 
-
+    public function getAllCityList(): mixed
+    {
+        $result = $this->repository->getAllCities();
+        if (empty($result)){
+            return [];
+        }
+        return $result;
+    }
 }

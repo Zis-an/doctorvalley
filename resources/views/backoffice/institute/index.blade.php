@@ -24,6 +24,7 @@
                     <h2 class="profile-title">INSTITUTE</h2>
                 </div>
 
+
                 <!-- MAGNIFYING GLASS ICON -->
                 <div class="filteroptions">
                     <button type="button" class="btn-search" data-bs-toggle="collapse" data-bs-target="#collapseExample"
@@ -39,25 +40,29 @@
 
             </div>
 
-            <!-- SEARCH THANA FORM -->
-            <div class="blogsearch px-4">
-                <div class="collapse" id="collapseExample">
-                    <div class="searchform">
-                        <button class="btn-search">
-                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M12.9028 11.4444H12.1347L11.8625 11.1819C12.8153 10.0736 13.3889 8.63472 13.3889 7.06944C13.3889 3.57917 10.5597 0.75 7.06944 0.75C3.57917 0.75 0.75 3.57917 0.75 7.06944C0.75 10.5597 3.57917 13.3889 7.06944 13.3889C8.63472 13.3889 10.0736 12.8153 11.1819 11.8625L11.4444 12.1347V12.9028L16.3056 17.7542L17.7542 16.3056L12.9028 11.4444V11.4444ZM7.06944 11.4444C4.64861 11.4444 2.69444 9.49028 2.69444 7.06944C2.69444 4.64861 4.64861 2.69444 7.06944 2.69444C9.49028 2.69444 11.4444 4.64861 11.4444 7.06944C11.4444 9.49028 9.49028 11.4444 7.06944 11.4444Z"
-                                    fill="white"></path>
-                            </svg>
-                        </button>
+            <x-message.alert></x-message.alert>
 
-                        <div class="mysearches">
-                            <input type="search" placeholder="Search Institute..." class="searchfield">
+            <form action="{{ route('backoffice.institute.index') }}" method="GET">
+                <div class="blogsearch px-4">
+                    <div class="collapse" id="collapseExample">
+                        <div class="searchform">
+                            <button type="submit" class="btn-search">
+                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12.9028 11.4444H12.1347L11.8625 11.1819C12.8153 10.0736 13.3889 8.63472 13.3889 7.06944C13.3889 3.57917 10.5597 0.75 7.06944 0.75C3.57917 0.75 0.75 3.57917 0.75 7.06944C0.75 10.5597 3.57917 13.3889 7.06944 13.3889C8.63472 13.3889 10.0736 12.8153 11.1819 11.8625L11.4444 12.1347V12.9028L16.3056 17.7542L17.7542 16.3056L12.9028 11.4444V11.4444ZM7.06944 11.4444C4.64861 11.4444 2.69444 9.49028 2.69444 7.06944C2.69444 4.64861 4.64861 2.69444 7.06944 2.69444C9.49028 2.69444 11.4444 4.64861 11.4444 7.06944C11.4444 9.49028 9.49028 11.4444 7.06944 11.4444Z"
+                                        fill="white"></path>
+                                </svg>
+                            </button>
+
+                            <div class="mysearches">
+                                <input type="search" name="institute" value="{{ request('institute') }}" placeholder="Search Institute..." class="searchfield">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
+
 
             <!-- CREATE INSTITUTE FORM  START-->
             <div class="personalinfo-info">
@@ -115,9 +120,7 @@
                                         {{-- <input type="text" name="institute_address"
                                             value="{{ !empty($institute) ? $institute->institute_address : old('institute_address') }}"
                                             class="form-control" placeholder="Enter institute address" autocomplete="off"> --}}
-                                        <textarea name="institute_address" class="form-control" placeholder="Enter institute address" rows="4" cols="50" autocomplete="off">
-                                            {{ !empty($institute) ? $institute->institute_address : old('institute_address') }}
-                                        </textarea>
+                                        <textarea name="institute_address" class="form-control" placeholder="Enter institute address" rows="4" cols="50" autocomplete="off">{{ !empty($institute) ? $institute->institute_address : old('institute_address') }}</textarea>
                                     </div>
                                 </div>
 
@@ -145,6 +148,7 @@
                                     <tr>
                                         <th scope="col">SL</th>
                                         <th scope="col" class="text-center">Institute Name</th>
+                                        <th scope="col" class="text-center">Address</th>
                                         <th scope="col" class="text-center">Status</th>
                                         <th scope="col">Actions</th>
                                     </tr>
@@ -152,8 +156,9 @@
                                 <tbody>
                                     @foreach ($institutes as $key => $institute)
                                         <tr>
-                                            <th scope="row">{{ $key + 1 }}</th>
+                                            <th scope="row">{{ ($institutes->currentPage() - 1) * $institutes->perPage() + $loop->iteration }}</th>
                                             <td class="text-center">{{ $institute->institute_name }}</td>
+                                            <td class="text-center">{{ $institute->institute_address }}</td>
                                             <td>
                                                 <div class="text-center">
                                                     {{ $institute->status == 1 ? 'Active' : 'Inactive' }}
@@ -225,51 +230,7 @@
                 <!-- PAGINATION STARTS -->
                 <div class="mt-5 d-flex justify-content-center">
                     <nav aria-label="Page navigation example" aria-labelledby="nav">
-                        <ul class="pagination">
-                            <li class="page-item">
-                                <a href="#" class="btn-previous" aria-label="Previous">
-                                    <span aria-hidden="true">
-                                        <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <circle cx="17.5" cy="17.5" r="17.5" fill="white" />
-                                            <path
-                                                d="M22 23.2375L16.4372 17.5L22 11.7625L20.2874 10L13 17.5L20.2874 25L22 23.2375Z"
-                                                fill="black" />
-                                        </svg>
-                                    </span>
-                                </a>
-                            </li>
-                            <ul class="pagination-list">
-                                <li class="page-item active" aria-current="page">
-                                    <a href="#" class="page-link">1</a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link">2</a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link">3</a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link">...</a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link">9</a>
-                                </li>
-                            </ul>
-                            <li class="page-item">
-                                <a href="#" class="btn-next" aria-label="Next">
-                                    <span aria-hidden="true">
-                                        <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <circle cx="17.5" cy="17.5" r="17.5" fill="white" />
-                                            <path
-                                                d="M13 11.7625L18.5628 17.5L13 23.2375L14.7126 25L22 17.5L14.7126 10L13 11.7625Z"
-                                                fill="black" />
-                                        </svg>
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
+                        <x-pagination :items="$institutes" />
                     </nav>
                 </div>
                 <!-- PAGINATION ENDS -->

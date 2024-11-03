@@ -1,10 +1,11 @@
 @extends('layouts.backend')
+
+@push('after-styles')
+    <link rel="stylesheet" href="{{ asset('assets/css/nice-select/nice-select2.css') }}">
+@endpush
+
 @section('content')
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
+
     <!-- MAIN-SECTION START -->
     <main class="myprofile" id="main-section">
         <div class="personalinfo">
@@ -56,139 +57,117 @@
                 </div>
             </div>
 
-            <div class="blogsearch px-4">
-                <div class="collapse" id="collapseExample">
-                    <div class="searchform">
-                        <button class="btn-search">
-                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M12.9028 11.4444H12.1347L11.8625 11.1819C12.8153 10.0736 13.3889 8.63472 13.3889 7.06944C13.3889 3.57917 10.5597 0.75 7.06944 0.75C3.57917 0.75 0.75 3.57917 0.75 7.06944C0.75 10.5597 3.57917 13.3889 7.06944 13.3889C8.63472 13.3889 10.0736 12.8153 11.1819 11.8625L11.4444 12.1347V12.9028L16.3056 17.7542L17.7542 16.3056L12.9028 11.4444V11.4444ZM7.06944 11.4444C4.64861 11.4444 2.69444 9.49028 2.69444 7.06944C2.69444 4.64861 4.64861 2.69444 7.06944 2.69444C9.49028 2.69444 11.4444 4.64861 11.4444 7.06944C11.4444 9.49028 9.49028 11.4444 7.06944 11.4444Z"
-                                    fill="white"></path>
-                            </svg>
-                        </button>
+            <x-message.alert></x-message.alert>
 
-                        <div class="mysearches">
-                            <input type="search" placeholder="What are you looking for?" class="searchfield">
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <form action="{{ route('doctor.index') }}" method="GET">
+                <div class="blogsearch px-4">
+                    <div class="collapse" id="collapseExample">
+                        <div class="searchform">
+                            <button type="submit" class="btn-search">
+                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12.9028 11.4444H12.1347L11.8625 11.1819C12.8153 10.0736 13.3889 8.63472 13.3889 7.06944C13.3889 3.57917 10.5597 0.75 7.06944 0.75C3.57917 0.75 0.75 3.57917 0.75 7.06944C0.75 10.5597 3.57917 13.3889 7.06944 13.3889C8.63472 13.3889 10.0736 12.8153 11.1819 11.8625L11.4444 12.1347V12.9028L16.3056 17.7542L17.7542 16.3056L12.9028 11.4444V11.4444ZM7.06944 11.4444C4.64861 11.4444 2.69444 9.49028 2.69444 7.06944C2.69444 4.64861 4.64861 2.69444 7.06944 2.69444C9.49028 2.69444 11.4444 4.64861 11.4444 7.06944C11.4444 9.49028 9.49028 11.4444 7.06944 11.4444Z"
+                                        fill="white"></path>
+                                </svg>
+                            </button>
 
-            <div class="mobilefilter">
-                <!-- FILTER-OFFCANVAS -->
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileFilter" aria-labelledby="mobileFilter">
-                    <div class="offcanvas-header">
-                        <h5 class="text-white">Filter Doctors</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-x-lg" viewBox="0 0 16 16">
-                                <path
-                                    d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
-                            </svg>
-                        </button>
-                    </div>
-
-                    <div class="offcanvas-body">
-                        <div class="filter d-flex flex-column gap-3">
-                            <div class="inputbox">
-                                <label for="doctorscategory-mobile" class="inputlabel text-white">DOCTOR</label>
-                                <select id="doctorscategory-mobile" placeholder-text="ইউরোলোজি বিশেষজ্ঞ" autocomplete="off">
-                                    <option value="ইউরোলোজি বিশেষজ্ঞ">
-                                        ইউরোলোজি বিশেষজ্ঞ
-                                    </option>
-                                    <option value="ক্যান্সার ও টিউমার বিশেষজ্ঞ">
-                                        ক্যান্সার ও টিউমার বিশেষজ্ঞ
-                                    </option>
-                                    <option value="গাইনী ও প্রসূতি বিশেষজ্ঞ">
-                                        গাইনী ও প্রসূতি বিশেষজ্ঞ
-                                    </option>
-                                    <option value="গাইনী সার্জন">
-                                        গাইনী সার্জন
-                                    </option>
-                                    <option value="গ্যাস্ট্রোলিভার বিষেশজ্ঞ">
-                                        গ্যাস্ট্রোলিভার বিষেশজ্ঞ
-                                    </option>
-                                    <option value="চর্ম ও যৌন রোগ বিশেষজ্ঞ">
-                                        চর্ম ও যৌন রোগ বিশেষজ্ঞ
-                                    </option>
-                                    <option value="নাক-কান-গলা রোগ বিশেষজ্ঞ">
-                                        নাক-কান-গলা রোগ বিশেষজ্ঞ
-                                    </option>
-                                    <option value="নিউরোমেডিসিন বিশেষজ্ঞ">
-                                        নিউরোমেডিসিন বিশেষজ্ঞ
-                                    </option>
-                                    <option value="ফিজিওথেরাপিষ্ট">
-                                        ফিজিওথেরাপিষ্ট
-                                    </option>
-                                    <option value="বক্ষব্যাধি ও হৃদরোগ বিশেষজ্ঞ">
-                                        বক্ষব্যাধি ও হৃদরোগ বিশেষজ্ঞ
-                                    </option>
-                                    <option value="বিশেষজ্ঞ পুষ্টিবিদ">
-                                        বিশেষজ্ঞ পুষ্টিবিদ
-                                    </option>
-                                    <option value="মাথা ও মনোরোগ বিশেষজ্ঞ">
-                                        মাথা ও মনোরোগ বিশেষজ্ঞ
-                                    </option>
-                                    <option value="মেডিসিন বিশেষজ্ঞ">
-                                        মেডিসিন বিশেষজ্ঞ
-                                    </option>
-                                    <option value="ল্যাপারোস্কোপিক সার্জন">
-                                        ল্যাপারোস্কোপিক সার্জন
-                                    </option>
-                                    <option value="শিশুরোগ বিশেষজ্ঞ">
-                                        শিশুরোগ বিশেষজ্ঞ
-                                    </option>
-                                    <option value="হাড়-ভাঙ্গা বিশেষজ্ঞ">
-                                        হাড়-ভাঙ্গা বিশেষজ্ঞ
-                                    </option>
-                                    <option value="হেড-নেক সার্জন">
-                                        হেড-নেক সার্জন
-                                    </option>
-                                </select>
-                            </div>
-
-                            <div class="inputbox">
-                                <label for="division-mobile" class="inputlabel text-white">DIVISION</label>
-                                <select id="division-mobile" placeholder-text="Dhaka" autocomplete="off">
-                                    <option value="Dhaka">Dhaka</option>
-                                    <option value="Mymensingh">Mymensingh</option>
-                                    <option value="Khulna">Khulna</option>
-                                    <option value="Rangpur">Rangpur</option>
-                                    <option value="Barishal">Barishal</option>
-                                    <option value="Chittagong">Chittagong</option>
-                                    <option value="Sylhet">Sylhet</option>
-                                </select>
-                            </div>
-
-                            <div class="inputbox">
-                                <label for="districts-mobile" class="inputlabel text-white">DISTIRCT</label>
-                                <select id="districts-mobile" placeholder-text="Sherpur" autocomplete="off">
-                                    <option value="Sherpur">Sherpur</option>
-                                    <option value="Dhaka">Dhaka</option>
-                                    <option value="Barishal">Barishal</option>
-                                    <option value="Sylhet">Sylhet</option>
-                                    <option value="Khulna">Khulna</option>
-                                    <option value="Chittagong">Chittagong</option>
-                                    <option value="Rangpur">Rangpur</option>
-                                    <option value="Mymensingh">Mymensingh</option>
-                                </select>
-                            </div>
-
-                            <div class="inputbox">
-                                <label for="thanas-mobile" class="inputlabel text-white">THANA</label>
-                                <select id="thanas-mobile" placeholder-text="Sherpur Sadar" autocomplete="off">
-                                    <option value="Sherpur Sadar">Sherpur Sadar</option>
-                                    <option value="Nakla">Nakla</option>
-                                    <option value="Nalitabari">Nalitabari</option>
-                                    <option value="Sribordi">Sribordi</option>
-                                    <option value="Jhenaigati">Jhenaigati</option>
-                                </select>
+                            <div class="mysearches">
+                                <input type="search" name="search_doctor" value="{{ request('search_doctor') }}" placeholder="What are you looking for?" class="searchfield">
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
+
+            <form action="{{ route('doctor.index') }}" method="GET">
+
+                <div class="mobilefilter">
+                    <!-- FILTER-OFFCANVAS -->
+                    <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileFilter" aria-labelledby="mobileFilter">
+                        <div class="offcanvas-header">
+                            <h5 class="text-white">Filter Doctors</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-x-lg" viewBox="0 0 16 16">
+                                    <path
+                                        d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div class="offcanvas-body">
+                            <div class="filter d-flex flex-column gap-3">
+                                <div class="inputbox">
+                                    <label for="specialities" class="inputlabel text-white">DOCTOR</label>
+                                    <select id="specialities" name="speciality_id" class="text-capitalize wide" autocomplete="off">
+                                        <option selected disabled>Select Speciality</option>
+                                        @if(!empty($specialities))
+                                            @foreach($specialities as $speciality)
+                                                <option value="{{$speciality->id}}"
+                                                    {{!empty($_GET['speciality_id']) && $_GET['speciality_id'] == $speciality->id ? 'selected' : '' }}>{{$speciality->speciality_name}}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+
+                                <div class="inputbox">
+                                    <label for="divisions" class="inputlabel text-white">Division</label>
+                                    <select id="divisions" name="province_id" autocomplete="off" class="wide">
+                                        <option class="" selected disabled>Select Division</option>
+                                        @if(!empty($provinces))
+                                            @foreach ($provinces as $province)
+                                                <option value="{{ $province->id }}"
+                                                    {{ !empty($_GET['province_id']) && $_GET['province_id'] == $province->id ? 'selected' : '' }}>{{ $province->province_name }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+
+                                <div class="inputbox">
+                                    <label for="districts" class="inputlabel text-white">District </label>
+                                    <select id="districts" name="city_id" class="wide">
+                                        <option value="" selected disabled>Select District</option>
+                                        @if(!empty($cities))
+                                            @foreach ($cities as $city)
+                                                <option value="{{ $city->id }}"
+                                                    {{ !empty($_GET['city_id']) && $_GET['city_id'] == $city->id ? 'selected' : '' }}>
+                                                    {{ $city->city_name }}
+                                                </option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+
+                                <div class="inputbox">
+                                    <label for="thanas" class="inputlabel text-white">Thana </label>
+                                    <select id="thanas" name="area_id" class="wide">
+                                        <option value="" selected disabled>Select Thana</option>
+                                        @if(!empty($areas))
+                                            @foreach ($areas as $area)
+                                                <option value="{{ $area->id }}"
+                                                    {{ !empty($_GET['area_id']) && $_GET['area_id'] == $area->id ? 'selected' : '' }}>
+                                                    {{ $area->area_name }}
+                                                </option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 col-12 edubtns">
+                                        <button type="submit" class="btn-profile-add">Filter</button>
+                                    </div>
+                                    <div class="col-md-6 col-12 edubtns">
+                                        <a href="{{ route('doctor.index') }}"class="btn-profile-add">Clear</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
 
             <div class="personalinfo-info">
                 <div class="details align-items-start">
@@ -199,11 +178,10 @@
                                     <tr>
                                         <th scope="col">SL</th>
                                         <th scope="col">Name</th>
-                                        <th scope="col">Designation</th>
                                         <th scope="col">BMDC No.</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">Phone</th>
-                                        {{-- <th scope="col">Speciality</th> --}}
+                                        <th scope="col">Priority</th>
                                         <th scope="col">View</th>
                                         <th scope="col">Actions</th>
                                     </tr>
@@ -212,23 +190,16 @@
                                     @if (!empty($doctors))
                                         @foreach ($doctors as $key => $doctor)
                                             <tr>
-                                                <th scope="row">{{ $key + 1 }}</th>
+                                                <th scope="row">{{ ($doctors->currentPage() - 1) * $doctors->perPage() + $loop->iteration }}</th>
                                                 <td>{{ $doctor->name }}</td>
-                                                <td>some</td>
                                                 {{-- <td>{{ $designations[$doctor->id]->designation ?? 'N/A' }}</td> --}}
                                                 <td>{{ $doctor->bmdc }}</td>
                                                 <td>{{ $doctor->email }}</td>
                                                 <td>{{ $doctor->phone }}</td>
-                                                {{-- <td>
-                                                    <div class="specilities">
-                                                        @foreach (json_decode($doctor->speciality, true) as $speciality)
-                                                            <span class="specility">{{ $speciality }}&nbsp;&nbsp;&nbsp;</span>
-                                                        @endforeach
-                                                    </div>
-                                                </td> --}}
+                                                <td>{{ $doctor->priority ?? 'Not Set' }}</td>
                                                 <td>
                                                     <div class="actions">
-                                                        <a href="{{ route('backoffice.doctor.info', $doctor->id) }}"
+                                                        <a href="{{ route('doctor.info', $doctor->id) }}"
                                                             data-bs-toggle="tooltip" data-bs-placement="top"
                                                             data-bs-title="View Doctor" class="btn-view">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16"
@@ -243,7 +214,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="actions">
-                                                        <a href="{{ route('backoffice.doctor.profile.personal.edit', $doctor->id) }}"
+                                                        <a href="{{ route('doctor.profile.personal.edit', $doctor->id) }}"
                                                             class="btn-action">
                                                             <svg data-bs-toggle="tooltip" data-bs-placement="top"
                                                                 data-bs-title="Edit Personal Informations"
@@ -256,7 +227,20 @@
                                                                     d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
                                                             </svg>
                                                         </a>
-                                                        <a href="{{ route('backoffice.doctor.profile.professional.edit', $doctor->id) }}"
+                                                        <a href="{{ route('doctor.profile.educational.edit', $doctor->id) }}"
+                                                           class="btn-action">
+                                                            <svg data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                 data-bs-title="Edit Educational Informations"
+                                                                 xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                 height="16" fill="currentColor"
+                                                                 class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                                <path
+                                                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                                <path fill-rule="evenodd"
+                                                                      d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                                            </svg>
+                                                        </a>
+                                                        <a href="{{ route('doctor.profile.professional.edit', $doctor->id) }}"
                                                             class="btn-action">
                                                             <svg data-bs-toggle="tooltip" data-bs-placement="top"
                                                                 data-bs-title="Edit Professional Informations"
@@ -269,20 +253,7 @@
                                                                     d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
                                                             </svg>
                                                         </a>
-                                                        <a href="{{ route('backoffice.doctor.profile.educational.edit', $doctor->id) }}"
-                                                            class="btn-action">
-                                                            <svg data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                data-bs-title="Edit Educational Informations"
-                                                                xmlns="http://www.w3.org/2000/svg" width="16"
-                                                                height="16" fill="currentColor"
-                                                                class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                                                <path
-                                                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                                                <path fill-rule="evenodd"
-                                                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-                                                            </svg>
-                                                        </a>
-                                                        <a href="{{ route('backoffice.doctor.profile.image.edit', $doctor->id) }}"
+                                                        <a href="{{ route('doctor.profile.image.edit', $doctor->id) }}"
                                                             class="btn-action">
                                                             <svg data-bs-toggle="tooltip" data-bs-placement="top"
                                                                 data-bs-title="Edit Doctor Image"
@@ -297,7 +268,7 @@
                                                         </a>
 
                                                         <button type="button" class="btn-action" data-bs-toggle="modal"
-                                                            {{-- data-bs-target="#confirmModal{{ $chamber->id }}" --}}>
+                                                             data-bs-target="#confirmModal{{ $doctor->id }}" >
                                                             <svg data-bs-toggle="tooltip" data-bs-placement="top"
                                                                 data-bs-title="Delete Doctor"
                                                                 xmlns="http://www.w3.org/2000/svg" width="16"
@@ -312,17 +283,17 @@
                                                     </div>
                                                 </td>
                                                 <!-- DELETE-CONFIRM MODAL STARTS -->
-                                                <div class="modal fade pe-0" {{-- id="confirmModal{{ $chamber->id }}" --}} tabindex="-1"
+                                                <div class="modal fade pe-0"  id="confirmModal{{ $doctor->id }}"  tabindex="-1"
                                                     aria-labelledby="confirmModal" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered">
                                                         <div class="modal-content">
                                                             <div class="modal-body">
                                                                 <h5 class="delete-title">Are you sure you want to delete
-                                                                    {{-- {{ $chamber->chamber_name }} --}}
+                                                                     {{ $doctor->name }}
                                                                     ?</h5>
                                                             </div>
                                                             <div class="modal-footer justify-content-end gap-3">
-                                                                <form {{-- action="{{ route('backoffice.chamber.delete', $chamber->id) }}" --}} method="POST">
+                                                                <form  action="{{ route('doctor.delete', $doctor->id) }}"  method="POST">
                                                                     @csrf
                                                                     @method('DELETE')
                                                                     <button type="submit"
@@ -347,51 +318,8 @@
 
                 <div class="mt-5 d-flex justify-content-center">
                     <nav aria-label="Page navigation example" aria-labelledby="nav">
-                        <ul class="pagination">
-                            <li class="page-item">
-                                <a href="#" class="btn-previous" aria-label="Previous">
-                                    <span aria-hidden="true">
-                                        <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <circle cx="17.5" cy="17.5" r="17.5" fill="white" />
-                                            <path
-                                                d="M22 23.2375L16.4372 17.5L22 11.7625L20.2874 10L13 17.5L20.2874 25L22 23.2375Z"
-                                                fill="black" />
-                                        </svg>
-                                    </span>
-                                </a>
-                            </li>
-                            <ul class="pagination-list">
-                                <li class="page-item active" aria-current="page">
-                                    <a href="#" class="page-link">1</a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link">2</a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link">3</a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link">...</a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link">9</a>
-                                </li>
-                            </ul>
-                            <li class="page-item">
-                                <a href="#" class="btn-next" aria-label="Next">
-                                    <span aria-hidden="true">
-                                        <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <circle cx="17.5" cy="17.5" r="17.5" fill="white" />
-                                            <path
-                                                d="M13 11.7625L18.5628 17.5L13 23.2375L14.7126 25L22 17.5L14.7126 10L13 11.7625Z"
-                                                fill="black" />
-                                        </svg>
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
+                        <x-pagination :items="$doctors" />
+
                     </nav>
                 </div>
             </div>
@@ -399,3 +327,12 @@
     </main>
     <!-- MAIN-SECTION END -->
 @endsection
+
+
+@push('after-scripts')
+    <script src="{{ asset('assets/js/tag-generator/tag-generator.js') }}"></script>
+    <script src="{{ asset('assets/js/showhide/showhide.js') }}"></script>
+    <script src="{{ asset('assets/js/nice-select/nice-select2.js') }}"></script>
+    <script src="{{ asset('assets/js/nice-select/doctorselect.js') }}"></script>
+@endpush
+

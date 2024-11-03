@@ -2,18 +2,22 @@
 
 namespace Modules\Blog\Services;
 
-use Modules\Blog\Models\Blog;
+use BCS\Uploader\V1\Services\UploaderService;
+use Illuminate\Support\Facades\Auth;
 use Modules\Blog\Repositories\BlogDBRepository;
 use Exception;
+use Throwable;
 
 class BlogService
 {
 
     private BlogDBRepository $repository;
+    private UploaderService $uploaderService;
 
     public function __construct()
     {
         $this->repository = new BlogDBRepository();
+        $this->uploaderService = new UploaderService();
     }
 
     public function getBlogList(): mixed
@@ -25,17 +29,23 @@ class BlogService
         return $result;
     }
 
+    /**
+     * @throws Exception
+     */
     public function storeBlog(array $formData): mixed
     {
-        if(!empty($formData['thumb_path'])) {
-            $image = $formData['thumb_path'];
-            $filename = time() . '.'. $image->getClientOriginalName();
-            $path = public_path(). '/blog_images/';
-            $image->move($path, $filename);
-            $formData['thumb_path'] = $filename;
+        // Convert tags array to a comma-separated string
+        if (!empty($formData['tags']) && is_array($formData['tags'])) {
+            $formData['tags'] = implode(',', $formData['tags']);
         }
-        $result = $this->repository->storeBlogData($formData);
-        if (empty($result)){
+
+        if (!empty($formData['thumb_path'])) {
+            $imageData = $this->singleUpload($formData['thumb_path']);
+            $formData['thumb_path'] = $imageData['fullPath'];
+        }
+
+        $result = Auth::user()->blogs()->create($formData);
+        if (empty($result)) {
             throw new Exception('Invalid data format');
         }
         return $result;
@@ -52,17 +62,21 @@ class BlogService
 
     public function updateData( int $id, array $formData): mixed
     {
-        if(!empty($formData['thumb_path'])) {
-            $image = $formData['thumb_path'];
-            $filename = time() . '.'. $image->getClientOriginalName();
-            $path = public_path(). '/test_images/';
-            $image->move($path, $filename);
-            $formData['thumb_path'] = $filename;
+        // Convert tags array to a comma-separated string
+        if (!empty($formData['tags']) && is_array($formData['tags'])) {
+            $formData['tags'] = implode(',', $formData['tags']);
         }
+
+        if (!empty($formData['thumb_path'])) {
+            $imageData = $this->singleUpload($formData['thumb_path']);
+            $formData['thumb_path'] = $imageData['fullPath'];
+        }
+
         $result = $this->repository->update($formData, $id);
-        if (empty($result)){
-            throw new Exception('Invalid Blog update data');
+        if (empty($result)) {
+            throw new Exception('Invalid data format');
         }
+
         return $result;
     }
 
@@ -74,4 +88,49 @@ class BlogService
         }
         return $result;
     }
+
+    private function singleUpload($file): \Throwable|Exception|array
+    {
+        $uploadResponse = $this->uploaderService
+            ->setUploadPath('/blog_images/')
+            ->setFileSystem('public')
+            ->upload($file);
+        if ($uploadResponse instanceof Throwable){
+            throw new Exception($uploadResponse->getMessage());
+        }
+        return $uploadResponse;
+    }
+
+    public function getAllBlogs(): mixed
+    {
+        $result = $this->repository->getAllBlogData();
+        if (empty($result)){
+            return [];
+        }
+        return $result;
+    }
+
+    public function setFeaturedBlog($id)
+    {
+        // Fetch the blog you want to set as featured
+        $blog = $this->repository->getBlogDataById($id);
+
+        // Check if the blog exists
+        if (!$blog) {
+            throw new \Exception('Blog not found');
+        }
+
+        // Call the repository method to handle unsetting any previous featured blog
+        $this->repository->setBlogAsFeatured($id);
+    }
+
+    public function getFeaturedBlog()
+    {
+        $result = $this->repository->getFeaturedBlogData();
+        if(empty($result)){
+            return [];
+        }
+        return $result;
+    }
+
 }

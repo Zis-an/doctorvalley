@@ -9,12 +9,11 @@ use Illuminate\Contracts\View\Factory;
 use Modules\Blog\Services\BlogService;
 use Modules\Blog\Http\Requests\BlogRequest;
 use Illuminate\Contracts\Foundation\Application;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class BlogManagementController extends Controller
 {
-    public function __construct(private BlogService $service)
-    {
-    }
+    public function __construct(private BlogService $service) {}
 
     public function index(): View|Factory|Application
     {
@@ -22,17 +21,15 @@ class BlogManagementController extends Controller
             $blogs = $this->service->getBlogList();
             return view('backoffice.blog.blogList', compact('blogs'));
         }catch (\Throwable $exception){
-            dd($exception->getMessage());
-            abort(500);
+            return redirect()->back()->withErrors($exception->getMessage());
         }
     }
 
     public function create(): View|Factory|Application
     {
-        try{
+        try {
             return view('backoffice.blog.createUpdateBlog');
-        }catch (\Throwable $exception){
-            dd($exception->getMessage());
+        } catch (\Throwable $exception){
             abort(500);
         }
     }
@@ -41,8 +38,10 @@ class BlogManagementController extends Controller
     {
         try {
             $this->service->storeBlog($request->validated());
-            return redirect()->route('backoffice.blog.index')->with('success', 'Blog stored successfully');
+            Alert::success('Success', 'Blog stored successfully');
+            return redirect()->route('blog.index')->with('success', 'Blog stored successfully');
         } catch (\Throwable $throwable){
+            Alert::error('Error', 'Blog invalid data');
             return redirect()->back()->with('error', 'Blog invalid data')->withInput($request->all());
         }
     }
@@ -53,7 +52,8 @@ class BlogManagementController extends Controller
             $blog = $this->service->getBlogById($id);
             return view('backoffice.blog.createUpdateBlog', compact('blog'));
         } catch (\Throwable $throwable){
-            return abort(500);
+            Alert::error('Error', 'Blog invalid data');
+            return redirect()->back()->with('error', 'Blog invalid data');
         }
     }
 
@@ -61,9 +61,10 @@ class BlogManagementController extends Controller
     {
         try {
             $this->service->updateData($id, $request->validated());
-            return redirect()->route('backoffice.blog.index')
-                ->with('success', 'Blog updated successfully');
+            Alert::success('Success', 'Blog updated successfully');
+            return redirect()->route('blog.index')->with('success', 'Blog updated successfully');
         }catch (\Throwable $throwable){
+            Alert::error('Error', 'Blog invalid data');
             return redirect()->back()->with('error', 'Blog invalid data')->withInput($request->all());
         }
     }
@@ -72,10 +73,35 @@ class BlogManagementController extends Controller
     {
         try {
             $this->service->deleteData($id);
-            return redirect()->route('backoffice.blog.index')
-                ->with('success', 'Blog deleted successfully');
+            Alert::success('Success', 'Blog deleted successfully');
+            return redirect()->route('blog.index')->with('success', 'Blog deleted successfully');
         }catch (\Throwable $throwable){
+            Alert::error('Error', 'Invalid Blog information');
             return redirect()->back()->with('error', 'Invalid Blog information');
+        }
+    }
+
+    public function details(int $id): Factory|View|Application
+    {
+        try {
+            $blog = $this->service->getBlogById($id);
+            return view('backoffice.blog.blogDetails', compact('blog'));
+        }catch (\Throwable $throwable){
+            return abort(500);
+        }
+    }
+
+    public function featureBlog($id)
+    {
+        try {
+            // Call the service to set this blog as the featured one
+            $this->service->setFeaturedBlog($id);
+
+            // Return back to the blog list with success message
+            return redirect()->back()->with('success', 'Blog set as featured successfully.');
+        } catch (\Throwable $exception) {
+            // Handle error and return with error message
+            return redirect()->back()->withErrors($exception->getMessage());
         }
     }
 }

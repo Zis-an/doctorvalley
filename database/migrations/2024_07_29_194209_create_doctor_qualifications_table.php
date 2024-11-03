@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string(DoctorQualificationEnum::COURSE_MAJOR);
             $table->string(DoctorQualificationEnum::INSTITUTE_NAME)->nullable();
             $table->date(DoctorQualificationEnum::FROM_DATE);
-            $table->date(DoctorQualificationEnum::TO_DATE);
-            $table->boolean(DoctorQualificationEnum::IS_CURRENT);
+            $table->date(DoctorQualificationEnum::TO_DATE)->nullable();
+            $table->boolean(DoctorQualificationEnum::IS_CURRENT)->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

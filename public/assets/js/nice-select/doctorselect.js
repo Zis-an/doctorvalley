@@ -25,38 +25,26 @@ document.addEventListener('DOMContentLoaded', function () {
         searchable: true,
         placeholder: 'Select Degree'
     });
+    bindNiceSelect("normal-select-2", {
+        searchable: true,
+        placeholder: 'Select Institute'
+    });
 
     bindNiceSelect("selectinstitute", {
         searchable: true,
         placeholder: 'Select Institute'
     });
+
+    bindNiceSelect("province_id", {
+        searchable: true,
+    });
+    bindNiceSelect("city_id", {
+        searchable: true,
+    });
+    bindNiceSelect("area_id", {
+        searchable: true,
+    });
+    bindNiceSelect("specialities", {
+        searchable: true,
+    });
 });
-
-
-
-// Previous codes generating error in the console
-
-// NiceSelect.bind(document.getElementById("divisions"), {
-//     searchable: true,
-//     placeholder: 'Select Division'
-// });
-
-// NiceSelect.bind(document.getElementById("districts"), {
-//     searchable: true,
-//     placeholder: 'Select District'
-// });
-
-// NiceSelect.bind(document.getElementById("thanas"), {
-//     searchable: true,
-//     placeholder: 'Select Thana'
-// });
-
-// NiceSelect.bind(document.getElementById("normal-select-1"), {
-//     searchable: true,
-//     placeholder: 'Select Degree'
-// });
-
-// NiceSelect.bind(document.getElementById("selectinstitute"), {
-//     searchable: true,
-//     placeholder: 'Select Institute'
-// });

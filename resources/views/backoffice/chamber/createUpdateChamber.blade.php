@@ -32,8 +32,25 @@
                     </p>
                 </div>
             </div>
+            <x-message.alert></x-message.alert>
 
-            @include('components.create-chamber.personal-info')
+            <div class="personalinfo-info">
+                <div class="details">
+                    <div class="details-body">
+                        <!-- ADD-PERSONAL-INFORMATION -->
+                        <form action="{{ !empty($chamber) ? route('backoffice.chamber.update', $chamber->id) : route('backoffice.chamber.store')  }}" method="POST">
+                            @if (!empty($chamber))
+                                @method('PUT')
+                            @endif
+                            @csrf
+
+                                @include('components.create-chamber.personal-info')
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
 
 
         </div>
@@ -51,34 +68,12 @@
 
         NiceSelect.bind(document.getElementById("districts"), {
             searchable: true,
-            placeholder: 'Select Division'
+            placeholder: 'Select District'
         });
 
         NiceSelect.bind(document.getElementById("thanas"), {
             searchable: true,
-            placeholder: 'Select Division'
+            placeholder: 'Select Thana'
         });
     </script>
-    {{-- <script>
-        $(document).ready(function() {
-            $('#divisions').on('change', function() {
-                var provinceId = $(this).val();
-
-                $.ajax({
-                    url: '{{ route('getDistricts') }}', // Change this to your route
-                    method: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        province_id: provinceId
-                    },
-                    success: function(response) {
-                        // Handle the response if needed
-                    },
-                    error: function(xhr) {
-                        // Handle errors if needed
-                    }
-                });
-            });
-        });
-    </script> --}}
 @endpush

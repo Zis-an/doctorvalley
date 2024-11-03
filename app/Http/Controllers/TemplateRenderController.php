@@ -12,21 +12,6 @@ class TemplateRenderController extends Controller
         return view('backoffice.dashboard');
     }
 
-    public function backoffice_create_blog()
-    {
-        return view('backoffice.blog.createUpdateBlog');
-    }
-
-    public function backoffice_blog_list()
-    {
-        return view('backoffice.blog.blogList');
-    }
-
-    public function backoffice_feedback()
-    {
-        return view('backoffice.feedback');
-    }
-
     public function backoffice_doctor_request()
     {
         return view('backoffice.doctor.doctor-request');
@@ -109,6 +94,11 @@ class TemplateRenderController extends Controller
     public function doctor_add_post()
     {
         return view('doctor.blogs.add_post');
+    }
+
+    public function doctor_feedback()
+    {
+        return view('doctor.feedback');
     }
 
     // Doctor Ends

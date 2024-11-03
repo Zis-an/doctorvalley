@@ -19,6 +19,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AreaController extends Controller
 {
@@ -30,28 +31,26 @@ class AreaController extends Controller
     {
     }
 
-    public function index(): View|Factory|Application
+    public function index(Request $request): View|Factory|Application
     {
         try{
-            $areas = $this->service->getAreaList();
+            $areas = $this->service->getAreaList($request->all());
             $cities = $this->cityService->getCitiesForSelect();
             // $countries = $this->countryService->getCountriesForSelect();
             // return view('bcscommon::location.area.index', compact('areas', 'countries'));
             return view('backoffice.location.area.index', compact('areas', 'cities'));
         }catch (\Throwable $exception){
-            dd($exception->getMessage());
             abort(500);
         }
     }
 
-    public function create(): View|Factory|Application
+    public function create(Request $request): View|Factory|Application
     {
         try{
-            $areas = $this->service->getAreaList();
+            $areas = $this->service->getAreaList($request->all());
             $countries = $this->countryService->getCountriesForSelect();
             return view('bcscommon::location.area.index', compact('areas', 'countries'));
         }catch (\Throwable $exception){
-            dd($exception->getMessage());
             abort(500);
         }
     }
@@ -61,16 +60,18 @@ class AreaController extends Controller
 
         try {
             $this->service->storeArea($request->validated());
+            Alert::success('Success', 'Area store successfully');
             return redirect()->route('backoffice.area.index')->with('success', 'Area store successfully');
         }catch (\Throwable $throwable){
+            Alert::error('Error', 'Area invalid data');
             return redirect()->back()->with('error', 'Area invalid data')->withInput($request->all());
         }
     }
 
-    public function edit(int $id): Factory|View|Application
+    public function edit(Request $request, int $id): Factory|View|Application
     {
         try {
-            $areas = $this->service->getAreaList();
+            $areas = $this->service->getAreaList($request->all());
             $area = $this->service->getAreaById($id);
 
             $cities = $this->cityService->getCitiesForSelect();
@@ -89,9 +90,11 @@ class AreaController extends Controller
     {
         try {
             $this->service->updateData($id, $request->validated());
+            Alert::success('Success', 'Area updated successfully');
             return redirect()->route('backoffice.area.index')
                 ->with('success', 'Area updated successfully');
         }catch (\Throwable $throwable){
+            Alert::error('Error', 'Area invalid data');
             return redirect()->back()->with('error', 'Area invalid data')->withInput($request->all());
         }
     }
@@ -117,9 +120,11 @@ class AreaController extends Controller
     {
         try {
             $this->service->deleteData($id);
+            Alert::success('Success', 'Area delete successfully');
             return redirect()->route('backoffice.area.index')
                 ->with('success', 'Area delete successfully');
         }catch (\Throwable $throwable){
+            Alert::error('Error', 'Invalid Area information');
             return redirect()->back()->with('error', 'Invalid Area information');
         }
     }

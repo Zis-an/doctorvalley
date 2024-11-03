@@ -19,13 +19,17 @@ class AreaDbRepository
         $this->model=new Area();
     }
 
-    public function getAreaData(): mixed
+    public function getAreaData(array $filters=[]): mixed
     {
-        return $this->model
+        $query =  $this->model
             ->with('city')
             ->whereNull('deleted_at')
-            ->latest()
-            ->get();
+            ->latest();
+
+        $query = $this->getFilterQuery($query, $filters);
+
+        return $query->paginate(10);
+
     }
 
     public function storeAreaData(array $data): mixed
@@ -71,4 +75,24 @@ class AreaDbRepository
             ->whereNull('deleted_at')
             ->get();
     }
+
+    private function getFilterQuery($query , array $filters=[])
+    {
+        if (!empty($filters['area'])) {
+            $query = $query->where(function ($q) use ($filters) {
+                $q->where('area_name', 'like', '%' . $filters['area'] . '%');
+            });
+        }
+
+        return $query;
+    }
+
+    public function getAllAreas()
+    {
+        return  $this->model
+            ->whereNull('deleted_at')
+            ->where('status', 1)
+            ->get();
+    }
+
 }

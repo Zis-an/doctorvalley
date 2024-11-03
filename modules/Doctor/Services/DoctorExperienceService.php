@@ -37,9 +37,10 @@ class DoctorExperienceService
                 'doctor_id' => $formData['doctor_id'],
                 'organization_name' => $formData['organization_name'][$i],
                 'designation' => $formData['designation'][$i],
+                'department' => $formData['department'][$i],
                 'from' => $formData['from'][$i],
-                'to' => $formData['to'][$i],
-                'current' => $formData['current'][$i],
+                'to' => $formData['to'][$i] ?? null,
+                'current' => $formData['current'][$i] ?? 0,
                 'location' => $formData['location'][$i],
             ];
         }
@@ -71,32 +72,40 @@ class DoctorExperienceService
         return $result;
     }
 
-    public function updateExperience(int $id, array $formData): mixed
+
+    public function updateExperience(int $doctorId, array $formData): mixed
     {
-        // Delete all existing records for the given doctor_id
-        // $this->repository->deleteByDoctorId($id);
+        // Retrieve all existing experience IDs from the database for the given doctor
+        $existingExperienceIds = $this->repository->getExperienceIdsByDoctorId($doctorId);
 
         $numEntries = count($formData['organization_name']);
-        $experiences = [];
+        $newExperienceIds = [];
+
+        // Loop through form data and handle both update and create scenarios
         for ($i = 0; $i < $numEntries; $i++) {
-            $experiences[] = [
+            $experienceId = $formData['experience_id'][$i] ?? null;  // Check if it's an existing record
+
+            $experienceData = [
                 'doctor_id' => $formData['doctor_id'],
                 'organization_name' => $formData['organization_name'][$i],
                 'designation' => $formData['designation'][$i],
+                'department' => $formData['department'][$i],
                 'from' => $formData['from'][$i],
-                'to' => $formData['to'][$i],
+                'to' => $formData['to'][$i] ?? null,
                 'current' => $formData['current'][$i],
                 'location' => $formData['location'][$i],
             ];
-        }
-        // Store each row in the database
-        foreach ($experiences as $experience) {
-            $result = $this->repository->updateDoctorExperienceData($experience, $experience['doctor_id']);
-            if (empty($result)) {
-                throw new Exception('Invalid data format');
+
+            if ($experienceId && in_array($experienceId, $existingExperienceIds)) {
+                // Update existing experience
+                $this->repository->updateDoctorExperienceData($experienceData, $experienceId);
+            } else {
+                // Create new experience
+                $newExperience = $this->repository->storeDoctorExperienceData($experienceData);
             }
         }
-        return $result;
+
+        return true;
     }
 
     public function deleteData(int $id): mixed

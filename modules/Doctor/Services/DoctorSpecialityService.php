@@ -8,7 +8,7 @@
 namespace Modules\Doctor\Services;
 
 use Exception;
-use Modules\Institute\Repositories\DoctorSpecialityDbRepository;
+use Modules\Doctor\Repositories\DoctorSpecialityDbRepository;
 
 class DoctorSpecialityService
 {
@@ -39,6 +39,14 @@ class DoctorSpecialityService
     public function getDoctorSpecialityById(int $id): object
     {
         $result = $this->repository->getDoctorSpecialityDataById($id);
+        if (empty($result)){
+            throw new Exception('Doctor Speciality Data not found');
+        }
+        return $result;
+    }
+    public function getDoctorSpecialitiesByDoctorId(int $id): object
+    {
+        $result = $this->repository->getDoctorSpecialitiesByDoctorId($id);
         if (empty($result)){
             throw new Exception('Doctor Speciality Data not found');
         }

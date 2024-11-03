@@ -18,13 +18,15 @@ class ProvinceDbRepository
     {
         $this->model = new Province();
     }
-    public function getProvinceData(): mixed
+    public function getProvinceData(array $filters=[]): mixed
     {
-        return $this->model
+        $query =  $this->model
             ->with('country')
             ->whereNull('deleted_at')
-            ->latest()
-            ->get();
+            ->latest();
+        $query = $this->getFilterQuery($query, $filters);
+
+        return $query->paginate(10);
     }
 
     public function storeProvinceData( array $data): mixed
@@ -81,6 +83,17 @@ class ProvinceDbRepository
             ->select(ProvinceEnum::ID, ProvinceEnum::PROVINCE_NAME)
             ->get()
             ->toArray();
+    }
+
+    private function getFilterQuery($query , array $filters=[])
+    {
+        if (!empty($filters['province'])) {
+            $query = $query->where(function ($q) use ($filters) {
+                $q->where('province_name', 'like', '%' . $filters['province'] . '%');
+            });
+        }
+
+        return $query;
     }
 
 

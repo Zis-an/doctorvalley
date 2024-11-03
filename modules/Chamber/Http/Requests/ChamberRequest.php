@@ -18,6 +18,7 @@ class ChamberRequest extends FormRequest
      */
     public function rules()
     {
+
         return [
             'chamber_name'=>['required', 'string'],
             'reg_no'=>['required'],
@@ -46,7 +47,7 @@ class ChamberRequest extends FormRequest
             'chamber_name.required' => 'Chamber Name is required',
             'chamber_name.string' => 'Chamber Name must be in Characters',
 
-            'reg_no.required' => 'Registraion Number is required',
+            'reg_no.required' => 'Registration Number is required',
 
             'email.required' => 'Email is required',
 

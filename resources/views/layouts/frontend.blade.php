@@ -4,8 +4,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@yield('title') || DoctorVally</title>
 
+  <title>@yield('title') || DoctorVally</title>
+@yield('seo_meta')
   <!-- FAVICON-ICON -->
   <link rel="shortcut icon" href="{{ asset('assets/images/logo/favicon.ico') }}" type="image/x-icon">
 
@@ -20,6 +21,12 @@
 
   <!-- DOCTORVALY-CSS -->
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+
+    @stack('before-styles')
+
+    @vite(['resources/css/backend.css', 'resources/css/app.css'])
+
+    @stack('after-styles')
 
 </head>
 <body class="frontbody">
@@ -64,6 +71,18 @@
 
   <!-- HOME-SLIDER -->
   <script src="{{ asset('assets/js/home-slider/homeslider.js') }}"></script>
+
+  {{-- Sweet Alert --}}
+  @include('sweetalert::alert', ['cdn' => 'https://cdn.jsdelivr.net/npm/sweetalert2@9'])
+
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+  @stack('before-scripts')
+
+  <!-- App js -->
+  @vite(['resources/js/backend.js', 'resources/js/app.js'])
+
+  @stack('after-scripts')
 
 </body>
 

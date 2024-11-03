@@ -31,11 +31,11 @@
                 </li>
 
                 <li class="mobilelist-item">
-                  <a href="{{ route('frontend.doctors') }}" class="mobilelist-link">Doctors</a>
+                  <a href="{{ route('doctors') }}" class="mobilelist-link">Doctors</a>
                 </li>
 
                 <li class="mobilelist-item">
-                  <a href="{{ route('frontend.blogs') }}" class="mobilelist-link">Blogs</a>
+                  <a href="{{ route('blogs') }}" class="mobilelist-link">Blogs</a>
                 </li>
 
                 <li class="mobilelist-item">
@@ -86,11 +86,11 @@
             </li>
 
             <li class="desktoplist-item">
-              <a href="{{ route('frontend.doctors') }}" class="desktoplist-link">Doctors</a>
+              <a href="{{ route('doctors') }}" class="desktoplist-link">Doctors</a>
             </li>
 
             <li class="desktoplist-item">
-              <a href="{{ route('frontend.blogs') }}" class="desktoplist-link">Blogs</a>
+              <a href="{{ route('blogs') }}" class="desktoplist-link">Blogs</a>
             </li>
 
             <li class="desktoplist-item">

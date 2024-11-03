@@ -7,6 +7,9 @@
                     @method('PUT')
                 @endif
                 @csrf
+
+{{--                <input type="hidden" name="role_id" value="1">--}}
+
                 <div class="row g-3">
                     <div class="col-md-6 col-12">
                         <div class="inputbox">
@@ -52,7 +55,7 @@
                             <label for="phonenumber" class="inputlabel">
                                 Phone Number <span>*</span>
                             </label>
-                            <input type="tel" name="phone" pattern="[0-9]{3}-[0-9]{8}" id="phonenumber" value="{{ !empty($chamberAdmin) ? $chamberAdmin->phone : old('phone') }}"
+                            <input type="tel" name="phone" id="phonenumber" value="{{ !empty($chamberAdmin) ? $chamberAdmin->phone : old('phone') }}"
                                 class="form-control" placeholder="01965088417" autocomplete="off">
                                 @if($errors->has('phone'))
                                 <p class="error-message">{{ $errors->first('phone') }}</p>
@@ -63,12 +66,16 @@
                     @php
 
                     @endphp
-                    <div class="col-md-6 col-12">
+
+                    @if( auth('chamber')->check())
+                    <input type="hidden" name="chamber_id" value="{{ auth('chamber')->user()->chamber_id }}">
+                    @else
+                    <div class=" {{ empty($chamberAdmin) ? 'col-md-6' : 'col-12' }} ">
                         <div class="inputbox">
-                            <label for="chamber" class="inputlabel">
+                            <label for="specialities" class="inputlabel">
                                 Chamber <span>*</span>
                             </label>
-                            <select id="chamber" name="chamber_id" class="form-select" placeholder-text="Select Chamber"
+                            <select id="specialities" name="chamber_id" class="form-select wide"
                                 autocomplete="off">
                                 @foreach ($chambers as $chamber)
                                     <option value="{{ $chamber->id }}" {{ !empty($chamberAdmin) ? ($chamber->id == $chamberAdmin->chamber_id ? 'selected' : '') : '' }} class="select-dropdown__list-item">{{ $chamber->chamber_name }}</option>
@@ -82,9 +89,10 @@
                             @endif
                         </div>
                     </div>
+                    @endif
 
                     @if (empty($chamberAdmin))
-                        <div class="col-md-6 col-12">
+                        <div class="{{ auth('chamber')->check() ? 'col-12' : 'col-md-6' }}">
                             <div class="inputbox">
                                 <label for="address" class="inputlabel">Password</label>
                                 <input type="password" name="password" id="password" value="" class="form-control" autocomplete="off">
@@ -95,7 +103,7 @@
                         </div>
                     @endif
 
-                    <div class="col-md-6 col-12">
+                    <div class="col-12">
                         <div class="inputbox">
                             <label for="status" class="inputlabel">
                                 Status <span>*</span>
@@ -112,18 +120,18 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6 col-12">
-                        <div class="inputbox">
-                            <label for="username" class="inputlabel">
-                                Role <span>*</span>
-                            </label>
-                            <input type="text" name="role_id" id="role" value="{{ !empty($chamberAdmin) ? $chamberAdmin->role_id : '' }}" class="form-control" placeholder="admin"
-                                autocomplete="off">
-                                @if($errors->has('role_id'))
-                                <p class="error-message">{{ $errors->first('role_id') }}</p>
-                            @endif
-                        </div>
-                    </div>
+{{--                    <div class="col-md-6 col-12">--}}
+{{--                        <div class="inputbox">--}}
+{{--                            <label for="username" class="inputlabel">--}}
+{{--                                Role <span>*</span>--}}
+{{--                            </label>--}}
+{{--                            <input type="text" name="role_id" id="role" value="{{ !empty($chamberAdmin) ? $chamberAdmin->role_id : '' }}" class="form-control" placeholder="admin"--}}
+{{--                                autocomplete="off">--}}
+{{--                                @if($errors->has('role_id'))--}}
+{{--                                <p class="error-message">{{ $errors->first('role_id') }}</p>--}}
+{{--                            @endif--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
                     <div class="col-12">
                         <div class="edubtns">

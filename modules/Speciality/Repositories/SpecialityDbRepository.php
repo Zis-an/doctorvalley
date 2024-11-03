@@ -19,12 +19,16 @@ class SpecialityDbRepository
         $this->model=new Speciality();
     }
 
-    public function getSpecialityData(): mixed
+    public function getSpecialityData(array $filters=[]): mixed
     {
-        return $this->model
-        ->whereNull('deleted_at')
-        ->latest()
-        ->get();
+        $query =  $this->model
+            ->whereNull('deleted_at')
+            ->where('status', 1)
+            ->latest();
+
+        $query = $this->getFilterQuery($query, $filters);
+
+        return $query->paginate(10);
     }
 
     public function storeSpecialityData(array $data): mixed
@@ -51,5 +55,28 @@ class SpecialityDbRepository
         return $this->model
             ->where(SpecialityEnum::ID, $id)
             ->delete();
+    }
+
+
+    private function getFilterQuery($query , array $filters=[])
+    {
+
+        // Filter by chamber admin name or phone or email
+        if (!empty($filters['speciality'])) {
+            $query = $query->where(function ($q) use ($filters) {
+                $q->where('speciality_name', 'like', '%' . $filters['speciality'] . '%');
+            });
+        }
+
+
+        return $query;
+    }
+
+    public function getAllSpecialities()
+    {
+        return  $this->model
+            ->whereNull('deleted_at')
+            ->where('status', 1)
+            ->get();
     }
 }

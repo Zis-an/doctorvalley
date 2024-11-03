@@ -38,14 +38,10 @@ class DoctorQualificationService
                 'degree_id' => $formData['degree_id'][$i],
                 'institute_id' => $formData['institute_id'][$i],
                 'from' => $formData['from'][$i],
-                'to' => $formData['to'][$i],
-                'current' => $formData['current'][$i],
-                'major' => $formData['major'][$i],
+                'to' => $formData['to'][$i] ?? null,
+                'current' => $formData['current'][$i] ?? 0,
+                'major' => $formData['major'][$i] ?? null,
             ];
-
-            if (!empty($formData['institute_name'][$i])) {
-                $qualification['institute_name'] = $formData['institute_name'][$i];
-            }
 
             $qualifications[] = $qualification;
         }
@@ -77,41 +73,32 @@ class DoctorQualificationService
         return $result;
     }
 
-    public function updateQualification(int $id, array $formData): mixed
+    public function updateQualification(int $doctorId, array $formData): mixed
     {
-        // $result = $this->repository->update($formData, $id);
-        // if (empty($result)) {
-        //     throw new Exception('Invalid Doctor Qualification update data');
-        // }
-        // return $result;
+        $existingEducationIds = $this->repository->getQualiticationIdsByDoctorId($doctorId);
 
         $numEntries = count($formData['degree_id']);
-        $qualifications = [];
         for ($i = 0; $i < $numEntries; $i++) {
-            $qualification = [
+            $educationId = $formData['education_id'][$i] ?? null;
+
+            $educationData = [
                 'doctor_id' => $formData['doctor_id'],
                 'degree_id' => $formData['degree_id'][$i],
                 'institute_id' => $formData['institute_id'][$i],
+                'major' => $formData['major'][$i] ?? null,
                 'from' => $formData['from'][$i],
-                'to' => $formData['to'][$i],
+                'to' => $formData['to'][$i] ?? null,
                 'current' => $formData['current'][$i],
-                'major' => $formData['major'][$i],
             ];
 
-            if (!empty($formData['institute_name'][$i])) {
-                $qualification['institute_name'] = $formData['institute_name'][$i];
+            if ($educationId && in_array($educationId, $existingEducationIds)) {
+                $this->repository->updateDoctorQualificationData($educationData, $educationId);
+            } else {
+                $this->repository->storeDoctorQualificationData($educationData);
             }
+        }
 
-            $qualifications[] = $qualification;
-        }
-        // Store each row in the database
-        foreach ($qualifications as $qualification) {
-            $result = $this->repository->updateDoctorQualificationData($qualification, $qualification['doctor_id']);
-            if (empty($result)) {
-                throw new Exception('Invalid data format');
-            }
-        }
-        return $result;
+        return true;
     }
 
     public function deleteData(int $id): mixed

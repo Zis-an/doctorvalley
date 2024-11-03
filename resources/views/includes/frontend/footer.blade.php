@@ -19,19 +19,19 @@
                 <div class="footerinfo-body">
                   <ul class="footerlist">
                     <li class="footerlist-item">
-                      <a href="{{ route('frontend.doctors') }}" class="footerlist-link">
+                      <a href="{{ route('doctors') }}" class="footerlist-link">
                         Doctors
                       </a>
                     </li>
 
                     <li class="footerlist-item">
-                      <a href="#" class="footerlist-link">
+                      <a href="{{ route('hospitals') }}" class="footerlist-link">
                         Hospital
                       </a>
                     </li>
 
                     <li class="footerlist-item">
-                      <a href="{{ route('frontend.blogs') }}" class="footerlist-link">
+                      <a href="{{ route('blogs') }}" class="footerlist-link">
                         Blog
                       </a>
                     </li>
@@ -49,13 +49,13 @@
                 <div class="footerinfo-body">
                   <ul class="footerlist">
                     <li class="footerlist-item">
-                      <a href="#" class="footerlist-link">
+                      <a href="{{ route('terms') }}" class="footerlist-link">
                         Terms of use
                       </a>
                     </li>
 
                     <li class="footerlist-item">
-                      <a href="#" class="footerlist-link">
+                      <a href="{{ route('privacy') }}" class="footerlist-link">
                         Privacy Policy
                       </a>
                     </li>

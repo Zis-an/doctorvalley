@@ -8,12 +8,14 @@
 namespace Modules\Institute\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Modules\Institute\Http\Requests\InstituteRequest;
 use Modules\Institute\Services\InstituteService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class InstituteController extends Controller
 {
@@ -23,24 +25,22 @@ class InstituteController extends Controller
 
     }
 
-    public function index(): View|Factory|Application
+    public function index(Request $request): View|Factory|Application
     {
         try{
-            $institutes = $this->service->getInstituteList();
+            $institutes = $this->service->getInstituteList($request->all());
             return view('backoffice.institute.index', compact('institutes'));
         }catch (\Throwable $exception){
-            dd($exception->getMessage());
             abort(500);
         }
     }
 
-    public function create(): View|Factory|Application
+    public function create(Request $request): View|Factory|Application
     {
         try{
-            $institutes = $this->service->getInstituteList();
+            $institutes = $this->service->getInstituteList($request->all());
             return view('backoffice.institute.index', compact('institutes'));
         }catch (\Throwable $exception){
-            dd($exception->getMessage());
             abort(500);
         }
     }
@@ -49,16 +49,18 @@ class InstituteController extends Controller
     {
         try {
             $this->service->storeInstitute($request->validated());
+            Alert::success('Success', 'Institute store successfully');
             return redirect()->route('backoffice.institute.index')->with('success', 'Institute store successfully');
         }catch (\Throwable $throwable){
+            Alert::error('Error', 'Institute invalid data');
             return redirect()->back()->with('error', 'Institute invalid data')->withInput($request->all());
         }
     }
 
-    public function edit(int $id): Factory|View|Application
+    public function edit(Request $request, int $id): Factory|View|Application
     {
         try {
-            $institutes = $this->service->getInstituteList();
+            $institutes = $this->service->getInstituteList($request->all());
             $institute = $this->service->getInstituteById($id);
 
             return view('backoffice.institute.index',
@@ -73,9 +75,11 @@ class InstituteController extends Controller
     {
         try {
             $this->service->updateData($id, $request->validated());
+            Alert::success('Success', 'Institute updated successfully');
             return redirect()->route('backoffice.institute.index')
                 ->with('success', 'Institute updated successfully');
         }catch (\Throwable $throwable){
+            Alert::error('Error', 'Institute invalid data');
             return redirect()->back()->with('error', 'Institute invalid data')->withInput($request->all());
         }
     }
@@ -84,9 +88,11 @@ class InstituteController extends Controller
     {
         try {
             $this->service->deleteData($id);
+            Alert::success('Success', 'Institute delete successfully');
             return redirect()->route('backoffice.institute.index')
                 ->with('success', 'Institute delete successfully');
         }catch (\Throwable $throwable){
+            Alert::error('Error', 'Invalid Institute information');
             return redirect()->back()->with('error', 'Invalid Institute information');
         }
     }

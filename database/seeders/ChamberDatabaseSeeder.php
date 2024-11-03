@@ -60,7 +60,7 @@ class ChamberDatabaseSeeder extends Seeder
             ],[
                 ChamberAdminEnum::CHAMBER_ADMIN_NAME=>'Chamber Admin',
                 ChamberAdminEnum::CHAMBER_ADMIN_PASSWORD=>Hash::make('password'),
-                ChamberAdminEnum::CHAMBER_ADMIN_ROLE=> 1,
+//                ChamberAdminEnum::CHAMBER_ADMIN_ROLE=> 1,
                 ChamberAdminEnum::CHAMBER_ADMIN_STATUS=> config('global.status.active'),
             ]);
         }

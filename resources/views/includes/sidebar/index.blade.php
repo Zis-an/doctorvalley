@@ -1,17 +1,22 @@
 <!-- SIDEBAR-MENU START -->
 <aside class="sidebar">
-    @if(auth('doctor')->check() || auth('chamber')->check())
+    @if(!empty(auth('chamber')->user()) || !empty(auth('admin')->user()) || !empty(auth('doctor')->user()))
         <div class="sidebar-header">
-            <a href="{{ route('profile') }}" class="userlink">
+{{--            <a href="{{ !empty(auth('doctor')->user()) ? route('doctor.profile') : '#' }}" class="userlink">--}}
+            <a href="#" class="userlink">
               <span class="user-avatar">
                   @if(auth('doctor')->check())
-                      <img src="{{ asset($doctor->photo) }}" alt="user-avatar">
+                      <img src="{{ asset('storage/' . auth()->user()->photo) }}" alt="user-avatar">
                   @endif
               </span>
 
                 <span class="userlink-info">
-                  <span class="name">{{ auth()->user()->name }}</span>
-                  <span class="mail">{{ auth()->user()?->email }}</span>
+                  <span class="name">{{ auth('chamber')->user()->name ?? auth('admin')->user()->name ?? auth('doctor')->user()->name }}</span>
+                  <span class="mail">{{ auth('chamber')->user()?->email ?? auth('admin')->user()?->email ?? auth('doctor')->user()?->email }}</span>
+                  @if(auth('chamber')->check())
+                    <br/>
+                    <span class="name">{{ auth('chamber')->user()->chamber->chamber_name ?? 'No Chamber Name' }}</span>
+                  @endif
               </span>
             </a>
         </div>

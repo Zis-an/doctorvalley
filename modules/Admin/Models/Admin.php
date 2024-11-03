@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Modules\Admin\Enums\AdminEnum;
+use Modules\Blog\Models\Blog;
 
 class Admin extends Authenticatable
 {
@@ -43,4 +44,9 @@ class Admin extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function blogs()
+    {
+        return $this->morphMany(Blog::class, 'authorable');
+    }
 }

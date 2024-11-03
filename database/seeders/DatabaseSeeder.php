@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
+            CountryDatabaseSeeder::class,
             AdminDatabaseSeeder::class,
             ChamberDatabaseSeeder::class,
             DoctorDatabaseSeeder::class,

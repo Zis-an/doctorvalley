@@ -18,9 +18,9 @@ class AreaService
         $this->repository = new AreaDbRepository();
     }
 
-    public function getAreaList(): mixed
+    public function getAreaList(array $filterData): mixed
     {
-        $result = $this->repository->getAreaData();
+        $result = $this->repository->getAreaData($filterData);
         if (empty($result)){
             return [];
         }
@@ -72,6 +72,15 @@ class AreaService
         $result = $this->repository->fetchAreasForSelect();
         if (empty($result)){
             throw new Exception('Invalid Area info');
+        }
+        return $result;
+    }
+
+    public function getAllAreaList(): mixed
+    {
+        $result = $this->repository->getAllAreas();
+        if (empty($result)){
+            return [];
         }
         return $result;
     }

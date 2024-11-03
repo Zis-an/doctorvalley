@@ -10,7 +10,7 @@
                     <div class="card-welcome">
                         <div class="card-detail">
                             <h1 class="cardtitle">
-                                Good Morning, <span>{{ $doctor->name }}</span>
+                                Good Morning, <span>{{ auth()->user()->name }}</span>
                             </h1>
 
                             <div class="textbox">
@@ -25,7 +25,7 @@
                         </div>
 
                         <figure class="card-thumbnail">
-                            <img src="{{ asset($doctor->photo) }}" alt="card-thumbnail">
+                            <img src="{{ asset(auth()->user()->photo) }}" alt="card-thumbnail">
                         </figure>
                     </div>
 
@@ -75,17 +75,17 @@
                         </div>
 
                         <div class="schedule-today-body">
-                            <div class="card-schedule active">
-                                <span class="schedule-time">04:00PM - 10:00PM</span>
-                                <span class="hospitalname">Abedin Hospital</span>
-                                <span class="location">Sherpur Sadar, Sherpur</span>
-                            </div>
-
-                            <div class="card-schedule">
-                                <span class="schedule-time">07:00PM - 10:00PM</span>
-                                <span class="hospitalname">Zaman Health Complex</span>
-                                <span class="location">Sherpur Sadar, Sherpur</span>
-                            </div>
+                            @forelse ($todaySchedules as $schedule)
+                                <div class="card-schedule active">
+                                    <span class="schedule-time">{{ \Carbon\Carbon::parse($schedule->start_from)->format('h:iA') }} - {{ \Carbon\Carbon::parse($schedule->end_from)->format('h:iA') }}</span>
+                                    <span class="hospitalname">{{ $schedule->chamber->chamber_name ?? 'Chamber Not Provided' }}</span>
+                                    <span class="location">{{ $schedule->chamber->address ?? 'Location Not Provided' }}</span>
+                                </div>
+                            @empty
+                                <div class="card-schedule">
+                                    <span class="text-muted">No schedules for today</span>
+                                </div>
+                            @endforelse
                         </div>
                     </div>
 

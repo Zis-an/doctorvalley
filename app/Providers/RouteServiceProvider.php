@@ -63,6 +63,9 @@ class RouteServiceProvider extends ServiceProvider
         ->group(base_path('modules/Course/Routes/web.php'));
 
         Route::middleware('web')
+            ->group(base_path('modules/Degree/Routes/web.php'));
+
+        Route::middleware('web')
         ->group(base_path('modules/Speciality/Routes/web.php'));
 
         Route::middleware('web')
@@ -70,5 +73,8 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::middleware('web')
         ->group(base_path('modules/ChamberAdmin/Routes/web.php'));
+
+        Route::middleware('web')
+            ->group(base_path('modules/Feedback/Routes/web.php'));
     }
 }

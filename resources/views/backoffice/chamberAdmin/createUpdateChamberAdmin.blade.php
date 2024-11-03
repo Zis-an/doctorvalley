@@ -1,4 +1,9 @@
 @extends('layouts.backend')
+
+@push('after-styles')
+    <link rel="stylesheet" href="{{ asset('assets/css/nice-select/nice-select2.css') }}">
+@endpush
+
 @section('content')
     <!-- MY-PROFILE SECTION START -->
     <main class="myprofile" id="main-section">
@@ -21,7 +26,7 @@
                 </figure>
 
                 <div class="detail">
-                    <h2 class="profile-title">CHAMBER INFORMATION</h2>
+                    <h2 class="profile-title">CHAMBER ADMIN INFORMATION</h2>
                     <p class="profiletext">
                         Update your personal information here.
                         This will help us to show your profile with proper information.
@@ -29,9 +34,19 @@
                 </div>
             </div>
 
+            <x-message.alert></x-message.alert>
+
+
             @include('components.create-chamber-admin.chamber-admin')
 
         </div>
     </main>
     <!-- MY-PROFILE SECTION END -->
 @endsection
+
+@push('after-scripts')
+    <script src="{{ asset('assets/js/tag-generator/tag-generator.js') }}"></script>
+    <script src="{{ asset('assets/js/showhide/showhide.js') }}"></script>
+    <script src="{{ asset('assets/js/nice-select/nice-select2.js') }}"></script>
+    <script src="{{ asset('assets/js/nice-select/doctorselect.js') }}"></script>
+@endpush

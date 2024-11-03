@@ -5,6 +5,7 @@ namespace Modules\Doctor\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Doctor\Enums\DoctorSpecialityEnum;
+use Modules\Speciality\Models\Speciality;
 
 class DoctorSpeciality extends Model
 {
@@ -22,5 +23,10 @@ class DoctorSpeciality extends Model
     public function doctor()
     {
         return $this->belongsTo(Doctor::class);
+    }
+
+    public function speciality()
+    {
+        return $this->belongsTo(Speciality::class, 'speciality_id');
     }
 }

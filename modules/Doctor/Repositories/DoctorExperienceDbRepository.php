@@ -51,11 +51,12 @@ class DoctorExperienceDbRepository
             ->get();
     }
 
-    public function updateDoctorExperienceData(array $data, int $id): mixed
+
+    public function updateDoctorExperienceData(array $data, int $experienceId): mixed
     {
         return $this->model
-            ->where(DoctorExperienceEnum::DOCTOR_ID, $id)
-            ->update($data);
+            ->where('id', $experienceId)  // Make sure to update by experience_id
+            ->update($data);  // Perform the update with provided data
     }
 
     public function deleteById(int $id): mixed
@@ -66,9 +67,23 @@ class DoctorExperienceDbRepository
     }
 
     public function deleteByDoctorId(int $doctorId): mixed
-{
-    return $this->model
-        ->where(DoctorExperienceEnum::DOCTOR_ID, $doctorId)
-        ->delete();
-}
+    {
+        return $this->model
+            ->where(DoctorExperienceEnum::DOCTOR_ID, $doctorId)
+            ->delete();
+    }
+
+
+    public function getExperienceIdsByDoctorId(int $doctorId): array
+    {
+        return $this->model->where('doctor_id', $doctorId)->pluck('id')->toArray();
+    }
+
+
+
+
+
+
+
+
 }

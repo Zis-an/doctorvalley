@@ -35,7 +35,7 @@ class DoctorQualificationDbRepository
     public function getDoctorQualificationDataById(int $id): object|null
     {
         return DB::table(DoctorQualificationEnum::DB_TABLE)
-            ->where(DoctorQualificationEnum::ID, $id)
+            ->where(DoctorQualificationEnum::DOCTOR_ID, $id)
             ->first();
     }
 
@@ -49,7 +49,7 @@ class DoctorQualificationDbRepository
     public function updateDoctorQualificationData(array $data, int $id): mixed
     {
         return $this->model
-            ->where(DoctorQualificationEnum::DOCTOR_ID, $id)
+            ->where(DoctorQualificationEnum::ID, $id)
             ->update($data);
     }
 
@@ -58,5 +58,9 @@ class DoctorQualificationDbRepository
         return $this->model
             ->where(DoctorQualificationEnum::ID, $id)
             ->delete();
+    }
+    public function getQualiticationIdsByDoctorId(int $doctorId): array
+    {
+        return $this->model->where('doctor_id', $doctorId)->pluck('id')->toArray();
     }
 }

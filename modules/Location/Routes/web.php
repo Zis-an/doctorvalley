@@ -51,3 +51,11 @@ Route::group(['as'=>'backoffice.country.', 'prefix'=>'/country', 'middleware'=>[
     Route::put('/{country_id}/update', [CountryController::class, 'update'])->name('update');
     Route::delete('/{country_id}', [CountryController::class, 'destroy'])->name('delete');
 });
+
+Route::group(['as'=>'backoffice.city.', 'prefix'=>'/city', 'middleware'=>['auth:chamber,admin']], function (){
+    Route::get('/{province_id}/by-province', [CityController::class, 'getCityByProvinceId'])->name('byProvince');;
+});
+
+Route::group(['as'=>'backoffice.area.', 'prefix'=>'/area', 'middleware'=>['auth:chamber,admin']], function (){
+    Route::get('/{area_id}/by-city', [AreaController::class, 'getAreaByCityId'])->name('byCity');
+});

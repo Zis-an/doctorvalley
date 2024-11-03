@@ -20,10 +20,17 @@ class BlogRequest extends FormRequest
     public function rules()
     {
         return [
-            'blog_title'=>['required'],
-            'thumb_path'=>['required'],
-            'description'=>['required'],
-            'status'=>['required'],
+            'blog_title' => ['required'],
+            'thumb_path' => ['nullable'],
+            'description' => ['required'],
+            'tags' => ['nullable'],
+            'authorable_id' => ['nullable'],
+            'authorable_class' => ['nullable'],
+            'total_view' => ['nullable'],
+            'total_share' => ['nullable'],
+            'meta_keys' => ['nullable'],
+            'meta_description' => ['nullable'],
+            'status' => ['required'],
         ];
     }
 
@@ -36,11 +43,7 @@ class BlogRequest extends FormRequest
     {
         return [
             'blog_title.required' => 'Blog Title is required',
-
-            'thumb_path.required' => 'Image is required',
-
             'description.required' => 'Description is required',
-
             'status.required' => 'Status is required',
         ];
     }

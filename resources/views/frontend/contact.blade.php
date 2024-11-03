@@ -11,19 +11,21 @@
           </div>
 
           <div class="contact-body">
-            <form class="contactform">
+            <form action="{{ route('feedback') }}" method="POST" class="contactform">
+                @csrf
+                <input type="hidden" name="type" value="frontend">
               <div class="row g-4">
                 <div class="col-lg-6 col-12">
                   <div class="inputbox">
                     <label for="fullname" class="inputlabel">Enter Full Name</label>
-                    <input id="fullname" type="text" placeholder="Enter Full Name" class="inputfield">
+                    <input id="fullname" name="name" type="text" placeholder="Enter Full Name" class="inputfield">
                   </div>
                 </div>
 
                 <div class="col-lg-6 col-12">
                   <div class="inputbox">
                     <label for="emailaddress" class="inputlabel">Enter Email Address</label>
-                    <input id="emailaddress" type="email" placeholder="Enter Email Address" class="inputfield">
+                    <input id="emailaddress" name="email" type="email" placeholder="Enter Email Address" class="inputfield">
                   </div>
                 </div>
               </div>
@@ -32,14 +34,14 @@
                 <div class="col-lg-6 col-12">
                   <div class="inputbox">
                     <label for="phonenumber" class="inputlabel">Enter Phone Number</label>
-                    <input id="phonenumber" type="tel" pattern="[0-9]{3}-[0-9]{8}" placeholder="Enter Phone Number" class="inputfield">
+                    <input id="phonenumber" name="phone" type="tel" placeholder="Enter Phone Number" class="inputfield">
                   </div>
                 </div>
 
                 <div class="col-lg-6 col-12">
                   <div class="inputbox">
                     <label for="subject" class="inputlabel">Enter Subject</label>
-                    <input id="subject" type="text" placeholder="Enter Subject" class="inputfield">
+                    <input id="subject" name="subject" type="text" placeholder="Enter Subject" class="inputfield">
                   </div>
                 </div>
               </div>
@@ -48,13 +50,13 @@
                 <div class="col-12">
                   <div class="inputbox">
                     <label for="message" class="inputlabel">Enter Your Message</label>
-                    <textarea id="message" class="inputfield" rows="8" placeholder="Enter your message"></textarea>
+                    <textarea id="message" name="feedback" class="inputfield" rows="8" placeholder="Enter your message"></textarea>
                   </div>
                 </div>
               </div>
 
               <div class="formsubmit">
-                <button class="btn-send" type="button">
+                <button class="btn-send" type="submit">
                   <span class="btn-text">Send</span>
                 </button>
               </div>

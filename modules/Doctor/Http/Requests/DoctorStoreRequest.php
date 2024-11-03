@@ -30,7 +30,8 @@ class DoctorStoreRequest extends FormRequest
             'username'=>['required'],
             'bmdc'=>['required'],
             'gender'=>['required'],
-            // 'speciality'=>['required'],
+            'speciality_id' => ['required', 'array'],
+            'speciality_id.*' => ['required'],
             'country_id'=>['required'],
             'province_id'=>'required|exists:provinces,id',
             'city_id'=>'required|exists:cities,id',
@@ -38,9 +39,12 @@ class DoctorStoreRequest extends FormRequest
             'address'=>['required'],
             'bio'=>['required'],
             'links'=>['nullable'],
-            'password'=>['required'],
+            // Password validation
+            'password' => ['nullable', 'min:8', 'max:25', 'confirmed'],
+            'password_confirmation' => ['nullable', 'min:8', 'max:25'],
             'photo'=>['nullable'],
-            'status'=>['required']
+            'status'=>['required'],
+            'priority'=>['nullable']
         ];
     }
 
@@ -60,7 +64,7 @@ class DoctorStoreRequest extends FormRequest
 
             'gender.required' => 'Gender is required',
 
-            // 'specality.required' => 'Speciality is required',
+            'speciality_id.*.required' => 'Select at least one Speciality',
 
             'country_id.required' => 'Country is required',
 
@@ -76,7 +80,10 @@ class DoctorStoreRequest extends FormRequest
 
             // 'links.required' => 'Social Links are required',
 
-            'password.required' => 'Password is required',
+            // Password validation messages
+            'password.confirmed' => 'Password and Confirm Password must match',
+            'password.min' => 'Password must be at least 8 characters',
+            'password.max' => 'Password must not be longer than 25 characters',
 
             // 'photo.required' => 'Photo is required',
 

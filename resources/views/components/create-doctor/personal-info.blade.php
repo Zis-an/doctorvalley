@@ -1,4 +1,5 @@
 @extends('backoffice.doctor.createUpdateDoctor')
+
 @section('tab-content')
     <div class="tab-pane fade show active" id="personalinformation-tab-pane" role="tabpanel"
         aria-labelledby="personalinformation-tab" tabindex="0">
@@ -34,7 +35,7 @@
                     <div class="details-body">
                         <!-- ADD-PERSONAL-INFORMATION -->
                         <form
-                            action="{{ !empty($doctor) ? route('backoffice.doctor.update.personal', $doctor->id) : route('backoffice.doctor.store.personal') }}"
+                            action="{{ !empty($doctor) ? route('doctor.update.personal', $doctor->id) : route('doctor.store.personal') }}"
                             method="POST" class="educationinfoform" id="personalinfoform">
                             @if (!empty($doctor))
                                 @method('PUT')
@@ -150,7 +151,6 @@
 
                                             <div class="gender-single">
                                                 <input type="radio" id="others" value="others" name="gender"
-                                                    value="others"
                                                     {{ !empty($doctor) ? ($doctor->gender == 'others' ? 'checked' : '') : '' }}
                                                     hidden>
                                                 @if ($errors->has('gender'))
@@ -172,32 +172,58 @@
                                     </div>
                                 </div>
 
-                                <!-- Speciality -->
-                                {{-- <div class="col-12">
+{{--                                <!-- Speciality -->--}}
+{{--                                --}}{{-- <div class="col-12">--}}
+{{--                                    <div class="inputbox">--}}
+{{--                                        <label for="speciality" class="inputlabel">--}}
+{{--                                            Speciality <span>*</span>--}}
+{{--                                        </label>--}}
+{{--                                        <input type="text" class="form-control" id="speciality" name="speciality[]"--}}
+{{--                                            autocomplete="off">--}}
+{{--                                            @if ($errors->has('speciality'))--}}
+{{--                                            <p class="error-message">{{ $errors->first('speciality') }}</p>--}}
+{{--                                        @endif--}}
+{{--                                    </div>--}}
+{{--                                </div> --}}
+
+                                <div class="col-12">
                                     <div class="inputbox">
                                         <label for="speciality" class="inputlabel">
                                             Speciality <span>*</span>
                                         </label>
-                                        <input type="text" class="form-control" id="speciality" name="speciality[]"
-                                            autocomplete="off">
-                                            @if ($errors->has('speciality'))
-                                            <p class="error-message">{{ $errors->first('speciality') }}</p>
+                                        <select class="js-example-basic-multiple wide" name="speciality_id[]" multiple="multiple" required>
+
+                                            @if(!empty($specialities))
+                                                @foreach ($specialities as $speciality)
+                                                <option value="{{ $speciality->id }}"
+                                                    {{ in_array($speciality->id, old('speciality_id', isset($doctorSpecialities) ? $doctorSpecialities->pluck('speciality_id')->toArray() : [])) ? 'selected' : '' }}>
+                                                    {{ $speciality->speciality_name }}
+                                                </option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                        {{-- Error message for any speciality_id --}}
+                                        @if ($errors->has('speciality_id'))
+                                            <p class="error-message">{{ $errors->first('speciality_id.*') }}</p>
                                         @endif
                                     </div>
-                                </div> --}}
+                                </div>
+
 
                                 <!-- Province -->
                                 <div class="col-md-6 col-12">
                                     <div class="inputbox">
                                         <label for="divisions" class="inputlabel">Division <span>*</span></label>
                                         <select id="divisions" name="province_id" class="wide">
-                                            <option value="">Select Division</option>
+                                            <option class="" selected disabled>Select Division</option>
+                                            @if(!empty($provinces))
                                             @foreach ($provinces as $province)
                                                 <option value="{{ $province->id }}"
                                                     {{ !empty($doctor) ? ($doctor->province_id == $province->id ? 'selected' : '') : (old('province_id') == $province->id ? 'selected' : '') }}>
                                                     {{ $province->province_name }}
                                                 </option>
                                             @endforeach
+                                            @endif
                                         </select>
                                         @if ($errors->has('province_id'))
                                             <p class="error-message">{{ $errors->first('province_id') }}</p>
@@ -210,13 +236,15 @@
                                     <div class="inputbox">
                                         <label for="districts" class="inputlabel">District <span>*</span></label>
                                         <select id="districts" name="city_id" class="wide">
-                                            <option value="">Select District</option>
+                                            <option value="" disabled>Select District</option>
+                                            @if(!empty($cities))
                                             @foreach ($cities as $city)
                                                 <option value="{{ $city->id }}"
                                                     {{ !empty($doctor) ? ($doctor->city_id == $city->id ? 'selected' : '') : (old('city_id') == $city->id ? 'selected' : '') }}>
                                                     {{ $city->city_name }}
                                                 </option>
                                             @endforeach
+                                            @endif
                                         </select>
                                         @if ($errors->has('city_id'))
                                             <p class="error-message">{{ $errors->first('city_id') }}</p>
@@ -229,13 +257,15 @@
                                     <div class="inputbox">
                                         <label for="thanas" class="inputlabel">Thana <span>*</span></label>
                                         <select id="thanas" name="area_id" class="wide">
-                                            <option value="">Select Thana</option>
+                                            <option value="" disabled>Select Thana</option>
+                                            @if(!empty($areas))
                                             @foreach ($areas as $area)
                                                 <option value="{{ $area->id }}"
                                                     {{ !empty($doctor) ? ($doctor->area_id == $area->id ? 'selected' : '') : (old('area_id') == $area->id ? 'selected' : '') }}>
                                                     {{ $area->area_name }}
                                                 </option>
                                             @endforeach
+                                            @endif
                                         </select>
                                         @if ($errors->has('area_id'))
                                             <p class="error-message">{{ $errors->first('area_id') }}</p>
@@ -246,7 +276,7 @@
                                 <div class="col-md-6 col-12">
                                     <div class="inputbox">
                                         <label for="address" class="inputlabel">
-                                            Address
+                                            Address <span>*</span>
                                         </label>
                                         <input type="text" id="address" name="address"
                                             value="{{ !empty($doctor) ? $doctor->address : old('address') }}" class="form-control"
@@ -258,11 +288,13 @@
                                 </div>
 
 
-                                <div class="col-md-6 col-12">
+                                @if(empty($doctor))
+                                {{--<div class="col-md-4 col-12">
                                     <div class="inputbox">
                                         <label for="password" class="inputlabel">
-                                            Password
+                                            Password <span>*</span>
                                         </label>
+
                                         <input type="password" id="password" value="{{ !empty($doctor) ? $doctor->password : old('password') }}" name="password" class="form-control">
                                         @if ($errors->has('password'))
                                             <p class="error-message">{{ $errors->first('password') }}</p>
@@ -270,8 +302,53 @@
                                     </div>
                                 </div>
 
+                                <div class="col-md-4 col-12">
+                                    <div class="inputbox">
+                                        <label for="password_confirmation" class="inputlabel">
+                                            Confirm Password <span>*</span>
+                                        </label>
+                                        <input type="password" id="password_confirmation" value="" name="password_confirmation" class="form-control">
+                                        @if ($errors->has('password_confirmation'))
+                                            <p class="error-message">{{ $errors->first('password_confirmation') }}</p>
+                                        @endif
+                                    </div>
+                                </div>--}}
 
-                                <div class="col-md-6 col-12">
+                                    <div class="col-md-4 col-12">
+                                        <div class="inputbox">
+                                            <label for="password" class="inputlabel">
+                                                Password
+                                            </label>
+                                            <div class="position-relative">
+                                                <input type="password" id="password" value="{{ !empty($doctor) ? $doctor->password : old('password') }}" name="password" class="form-control pe-5">
+                                                <span class="position-absolute top-50 translate-middle-y" style="right: 10px; cursor: pointer;">
+                                                    <i class="fa fa-eye-slash toggle-password" data-target="#password" id="togglePasswordIcon"></i>
+                                                </span>
+                                            </div>
+                                            @if ($errors->has('password'))
+                                                <p class="error-message">{{ $errors->first('password') }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-12">
+                                        <div class="inputbox">
+                                            <label for="password_confirmation" class="inputlabel">
+                                                Confirm Password
+                                            </label>
+                                            <div class="position-relative">
+                                                <input type="password" id="password_confirmation" value="" name="password_confirmation" class="form-control pe-5">
+                                                <span class="position-absolute top-50 translate-middle-y" style="right: 10px; cursor: pointer;">
+                                                    <i class="fa fa-eye-slash toggle-password" data-target="#password_confirmation" id="togglePasswordConfirmIcon"></i>
+                                                </span>
+                                            </div>
+                                            @if ($errors->has('password_confirmation'))
+                                                <p class="error-message">{{ $errors->first('password_confirmation') }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-12">
                                     <div class="inputbox">
                                         <label for="username" class="inputlabel">
                                             Username
@@ -283,11 +360,12 @@
                                         @endif
                                     </div>
                                 </div>
+                                @endif
 
                                 <div class="col-12">
                                     <div class="inputbox">
                                         <label for="bio" class="inputlabel">
-                                            Bio
+                                            Bio <span>*</span>
                                         </label>
                                         <textarea id="bio" name="bio" class="form-control"
                                             placeholder="He is Marvel Universe doctor. who has the ability to do magic." rows="4" autocomplete="off">{{ !empty($doctor) ? $doctor->bio : old('bio') }}</textarea>
@@ -407,7 +485,7 @@
                                             Status <span>*</span>
                                         </label>
                                         <select id="selectstatus" name="status" class="form-control" autocomplete="off">
-                                            <option value="" disabled {{ empty($doctor) ? 'selected' : '' }}>Select Status</option>
+                                            <option value="" disabled>Select Status</option>
                                             <option value="1" {{ !empty($doctor) && $doctor->status == 1 ? 'selected' : '' }}>Active</option>
                                             <option value="2" {{ !empty($doctor) && $doctor->status == 2 ? 'selected' : '' }}>Inactive</option>
                                         </select>
@@ -430,3 +508,38 @@
         </div>
     </div>
 @endsection
+
+@push('after-scripts')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.js-example-basic-multiple').select2({
+                tags: true
+            });
+        });
+    </script>
+
+    <script>
+        document.querySelectorAll('.toggle-password').forEach(icon => {
+            icon.addEventListener('click', function () {
+                const input = document.querySelector(this.getAttribute('data-target'));
+                const currentIcon = this;
+
+                if (input.getAttribute('type') === 'password') {
+                    input.setAttribute('type', 'text');
+                    currentIcon.classList.remove('fa-eye-slash');
+                    currentIcon.classList.add('fa-eye');
+                } else {
+                    input.setAttribute('type', 'password');
+                    currentIcon.classList.remove('fa-eye');
+                    currentIcon.classList.add('fa-eye-slash');
+                }
+            });
+        });
+
+
+
+    </script>
+
+@endpush

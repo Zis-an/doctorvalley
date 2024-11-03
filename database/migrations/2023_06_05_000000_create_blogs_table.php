@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Modules\Blog\Enums\BlogEnum;
 
 return new class extends Migration
 {
@@ -13,16 +14,23 @@ return new class extends Migration
     {
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
-            $table->text('blog_title');
-            $table->text('thumb_path');
-            $table->longText('description');
-            $table->longText('blog_tags')->nullable();
-            // $table->morphs('authorable');
-            $table->unsignedBigInteger('view')->nullable();
-            $table->unsignedBigInteger('share')->nullable();
-            $table->longText('meta_keys')->nullable();
-            $table->longText('meta_description')->nullable();
-            $table->boolean('status')->default(config('global.status.inactive'));
+            $table->string(BlogEnum::BLOG_TITLE);
+            $table->string(BlogEnum::BLOG_THUMB)->nullable();
+            $table->text(BlogEnum::BLOG_DESC)->nullable();
+
+            $table->string(BlogEnum::BLOG_TAGS)->nullable();
+
+            $table->morphs('authorable');
+
+            $table->unsignedBigInteger(BlogEnum::BLOG_TOTAL_VIEW)->nullable();
+            $table->unsignedBigInteger(BlogEnum::BLOG_TOTAL_SHARE)->nullable();
+
+            $table->text(BlogEnum::BLOG_META_KEYS)->nullable();
+            $table->longText(BlogEnum::BLOG_META_DESC)->nullable();
+
+            $table->boolean(BlogEnum::FEATURED_BLOG)->nullable()->default(false);
+
+            $table->boolean(BlogEnum::BLOG_STATUS)->default(config('global.status.inactive'));
             $table->timestamps();
             $table->softDeletes();
         });

@@ -15,12 +15,22 @@ class ChamberAdminDBRepository
         $this->model = new ChamberAdmin();
     }
 
-    public function getChamberAdminData(): mixed
+    public function getChamberAdminData(array $filters=[]): mixed
     {
-        return $this->model
-        ->whereNull('deleted_at')
-        ->latest()
-        ->get();
+        $query = $this->model
+            ->with('chamber')
+            ->whereNull('deleted_at')
+            ->latest();
+
+        // Check if the user is accessing from the chamber panel
+        if (auth('chamber')->check()) {
+            $chamberId = auth('chamber')->user()->chamber_id;
+            $query->where('chamber_id', $chamberId);
+        }
+
+        $query = $this->getFilterQuery($query, $filters);
+
+        return $query->paginate(10);
     }
 
     public function storeChamberAdminData(array $data): mixed
@@ -48,4 +58,39 @@ class ChamberAdminDBRepository
             ->where(ChamberAdminEnum::ID, $id)
             ->delete();
     }
+
+    public function getChamberAdminByIdAndChamberId(int $id, int $chamberId): mixed
+    {
+        return $this->model
+            ->where(ChamberAdminEnum::ID, $id)
+            ->where(ChamberAdminEnum::CHAMBER_ID, $chamberId)
+            ->first();
+    }
+
+    public function updateChamberAdminPassword(array $data): mixed
+    {
+        return $this->model
+            ->where(ChamberAdminEnum::ID, $data['id'])
+            ->where(ChamberAdminEnum::CHAMBER_ID, $data['chamber_id'])
+            ->update($data);
+    }
+
+
+    private function getFilterQuery($query , array $filters=[])
+    {
+
+        // Filter by chamber admin name or phone or email
+        if (!empty($filters['chamber_admin'])) {
+            $query = $query->where(function ($q) use ($filters) {
+                $q->where('name', 'like', '%' . $filters['chamber_admin'] . '%')
+                    ->orWhere('phone', 'like', '%' . $filters['chamber_admin'] . '%')
+                    ->orWhere('email', 'like', '%' . $filters['chamber_admin'] . '%');
+            });
+        }
+
+
+        return $query;
+    }
+
+
 }

@@ -19,13 +19,16 @@ class CityDbRepository
         $this->model = new City();
     }
 
-    public function getCityData(): mixed
+    public function getCityData(array $filters=[]): mixed
     {
-        return $this->model
+        $query = $this->model
             ->with('province')
             ->whereNull('deleted_at')
-            ->latest()
-            ->get();
+            ->latest();
+
+        $query = $this->getFilterQuery($query, $filters);
+
+        return $query->paginate(10);
     }
 
     public function storeCityData( array $data): mixed
@@ -72,5 +75,24 @@ class CityDbRepository
             ->select(CityEnum::ID, CityEnum::CITY_NAME)
             ->get()
             ->toArray();
+    }
+
+    private function getFilterQuery($query , array $filters=[])
+    {
+        if (!empty($filters['city'])) {
+            $query = $query->where(function ($q) use ($filters) {
+                $q->where('city_name', 'like', '%' . $filters['city'] . '%');
+            });
+        }
+
+        return $query;
+    }
+
+    public function getAllCities()
+    {
+        return  $this->model
+            ->whereNull('deleted_at')
+            ->where('status', 1)
+            ->get();
     }
 }

@@ -552,7 +552,7 @@ table tr td {
     align-items: center;
     justify-content: center;
     font-family: "Nunito", sans-serif;
-    font-size: 0.75rem;
+    font-size: 0.65rem;
     padding: 0.3125rem;
     text-align: center;
     max-width: 99%;
@@ -569,7 +569,7 @@ table tr td {
 
 @media screen and (min-width: 48rem) {
     .speciality {
-        font-size: 0.875rem;
+        font-size: 0.765rem;
     }
 }
 
@@ -2391,8 +2391,8 @@ button:not([disabled]):hover,
 }
 
 .carddoctor-header .thumbnail {
-    width: 5.625rem;
-    height: 5.625rem;
+    width: 4.625rem;
+    height: 4.625rem;
     border-radius: 100%;
     display: flex;
     align-items: center;
@@ -2416,6 +2416,7 @@ button:not([disabled]):hover,
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
+    min-height: 130px;
 }
 
 .carddoctor-body .name {
@@ -2692,6 +2693,7 @@ button:not([disabled]):hover,
     flex-direction: column;
     gap: 0.5rem;
     padding-inline: 0.625rem;
+    min-height: 134px;
 }
 
 .doctoday-detail .name {
@@ -2712,7 +2714,7 @@ button:not([disabled]):hover,
 }
 
 .doctoday-detail .speciality {
-    font-size: 0.625rem;
+    font-size: 0.515rem;
 }
 
 .doctoday-detail .text {

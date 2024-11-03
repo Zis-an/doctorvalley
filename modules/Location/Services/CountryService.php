@@ -23,9 +23,9 @@ class CountryService
     /**
      * @return array|mixed
      */
-    public function getCountryList(): mixed
+    public function getCountryList(array $filterData): mixed
     {
-        $result = $this->repository->getCountryData();
+        $result = $this->repository->getCountryData($filterData);
         if (empty($result)){
             return [];
         }

@@ -4,7 +4,9 @@
     <main class="mainsection" id="main-section">
         <div class="row g-4">
             <div class="col-12">
-                <form class="feedbackform needs-validation" novalidate>
+                <form action="{{ route('feedback.store') }}" method="POST" class="feedbackform needs-validation" novalidate>
+                    @csrf
+                    <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                     <div class="feedbackform-header">
                         <h2 class="feedback-title">
                             Feel free to drop us your <span>feedback</span>
@@ -22,7 +24,7 @@
                             <label for="feedbacktype" class="inputlabel">
                                 Feedback type <span>*</span>
                             </label>
-                            <input type="text" id="feedbacktype" class="form-control" placeholder="Dhaka Medical College"
+                            <input type="text" name="type" id="feedbacktype" class="form-control" placeholder="Dhaka Medical College"
                                 autocomplete="off">
                             <div class="invalid-feedback">
                                 Must give Feedback type
@@ -33,7 +35,7 @@
                             <label for="describefeed" class="inputlabel">
                                 Describe Your Feedback <span>*</span>
                             </label>
-                            <textarea id="describefeed" class="form-control" placeholder="Enter your message" rows="5"></textarea>
+                            <textarea id="describefeed" name="feedback" class="form-control" placeholder="Enter your message" rows="5"></textarea>
                             <div class="invalid-feedback">
                                 Must give Feedback descriptions
                             </div>

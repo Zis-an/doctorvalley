@@ -12,77 +12,71 @@
 
                         <div class="dashtodaydoctors-body">
                             <div class="row g-3">
-                                <div class="col-md-4">
-                                    <div class="doctoday">
-                                        <figure class="thumb">
-                                            <img src="../assets/images/avatar/avatar.svg" alt="doc-thumb">
-                                        </figure>
+                                @if(!empty($todayDoctors))
+                                    @foreach($todayDoctors as $doctor)
+                                        <div class="col-md-4">
+                                            <div class="doctoday">
+                                                <figure class="thumb">
+                                                    <img src="{{ !empty($doctor->doctor->photo) ? asset($doctor->doctor->photo) :  '../assets/images/avatar/avatar.svg' }}" alt="doc-thumb">
+                                                </figure>
 
-                                        <div class="doctoday-detail">
-                                            <h5 class="name">Doctor Stephen Strange</h5>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <span class="speciality">Neurobiologist</span>
-                                                <span class="speciality">Medicinologist</span>
+                                                <div class="doctoday-detail">
+                                                    <h5 class="name text-capitalize">{{ $doctor->doctor->name ?? '' }}</h5>
+                                                    <p class="text text-capitalize">
+                                                        @if(!empty($doctor->doctor->experiences))
+                                                            @foreach($doctor->doctor->experiences as $key => $experience)
+                                                                @if($experience->current == 1)
+                                                                    {{ $experience->designation ?? '' }}@if($key != count($doctor->doctor->experiences) - 1), @endif
+                                                                @endif
+                                                            @endforeach
+                                                        @endif
+                                                    </p>
+                                                    <div class="d-flex align-items-center gap-2 text-capitalize">
+                                                        @if(!empty($doctor->doctor->specialities))
+                                                            @foreach($doctor->doctor->specialities->take(2) as $speciality)
+                                                                <span class="speciality">{{ $speciality->speciality_name }}</span>
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
+
+                                                        <p class="text text-capitalize">
+                                                            @if(!empty($doctor->doctor->qualification))
+                                                                @foreach($doctor->doctor->qualification as $key => $qualification)
+                                                                    {{ $qualification->degree_id ?? '' }}@if($key != count($doctor->doctor->qualification) - 1), @endif
+                                                                @endforeach
+                                                            @endif
+                                                        </p>
+
+                                                    <p class="text text-capitalize">
+                                                        @if(!empty($doctor->doctor->experiences))
+                                                            @foreach($doctor->doctor->experiences as $key => $experience)
+                                                                @if($experience->current == 1)
+                                                                    {{ $experience->organization_name ?? '' }}@if($key != count($doctor->doctor->experiences) - 1), @endif
+                                                                @endif
+                                                            @endforeach
+                                                        @endif
+                                                    </p>
+                                                </div>
+
+                                                <div class="doctoday-footer mt-2">
+                                                    @php
+                                                        $startTime = \Carbon\Carbon::parse($doctor->start_from)->format('g:i a');
+                                                        $endTime = \Carbon\Carbon::parse($doctor->end_from)->format('g:i a');
+                                                    @endphp
+
+                                                    <p class="text">{{ $startTime }}  - {{ $endTime }} </p>
+                                                </div>
                                             </div>
-                                            <p class="text">MBBS (BCS) MPFC (Dhaka)</p>
-                                            <p class="text">Bangladesh Ghuskhor Medical College</p>
                                         </div>
+                                    @endforeach
 
-                                        <div class="doctoday-footer">
-                                            <p class="text">4pm - 6am</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="doctoday">
-                                        <figure class="thumb">
-                                            <img src="../assets/images/avatar/avatar.svg" alt="doc-thumb">
-                                        </figure>
-
-                                        <div class="doctoday-detail">
-                                            <h5 class="name">Doctor Stephen Strange</h5>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <span class="speciality">Neurobiologist</span>
-                                                <span class="speciality">Medicinologist</span>
-                                            </div>
-                                            <p class="text">MBBS (BCS) MPFC (Dhaka)</p>
-                                            <p class="text">Bangladesh Ghuskhor Medical College</p>
-                                        </div>
-
-                                        <div class="doctoday-footer">
-                                            <p class="text">4pm - 6am</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="doctoday">
-                                        <figure class="thumb">
-                                            <img src="../assets/images/avatar/avatar.svg" alt="doc-thumb">
-                                        </figure>
-
-                                        <div class="doctoday-detail">
-                                            <h5 class="name">Doctor Stephen Strange</h5>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <span class="speciality">Neurobiologist</span>
-                                                <span class="speciality">Medicinologist</span>
-                                            </div>
-                                            <p class="text">MBBS (BCS) MPFC (Dhaka)</p>
-                                            <p class="text">Bangladesh Ghuskhor Medical College</p>
-                                        </div>
-
-                                        <div class="doctoday-footer">
-                                            <p class="text">4pm - 6am</p>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>
 
                     <div class="viewschedule">
-                        <a href="{{ route('chamber.schedule') }}" class="link">Weekly Schedule</a>
+                        <a href="{{ route('chamber.weekly-schedules') }}" class="link">Weekly Schedule</a>
                     </div>
 
                     <!-- PROFILE-IMPRESSION-CHART -->
@@ -167,82 +161,17 @@
                         <h5 class="ctgtitle">Doctors Category</h5>
 
                         <ul class="sidebarlist">
-                            <li class="sidebarlist-item">
-                                <a href="#" class="sidebarlist-link">
-                                    <span class="categorytitle">ইউরোলোজি বিশেষজ্ঞ</span>
-                                    <span class="categorycounter">(2)</span>
-                                </a>
-                            </li>
 
-                            <li class="sidebarlist-item">
-                                <a href="#" class="sidebarlist-link">
-                                    <span class="categorytitle">ক্যান্সার ও টিউমার বিশেষজ্ঞ</span>
-                                    <span class="categorycounter">(3)</span>
-                                </a>
-                            </li>
-
-                            <li class="sidebarlist-item">
-                                <a href="#" class="sidebarlist-link">
-                                    <span class="categorytitle">গাইনী ও প্রসূতি বিশেষজ্ঞ</span>
-                                    <span class="categorycounter">(6)</span>
-                                </a>
-                            </li>
-
-                            <li class="sidebarlist-item">
-                                <a href="#" class="sidebarlist-link">
-                                    <span class="categorytitle">গাইনী সার্জন</span>
-                                    <span class="categorycounter">(5)</span>
-                                </a>
-                            </li>
-
-                            <li class="sidebarlist-item">
-                                <a href="#" class="sidebarlist-link">
-                                    <span class="categorytitle">গ্যাস্ট্রোলিভার বিষেশজ্ঞ</span>
-                                    <span class="categorycounter">(5)</span>
-                                </a>
-                            </li>
-
-                            <li class="sidebarlist-item">
-                                <a href="#" class="sidebarlist-link">
-                                    <span class="categorytitle">চর্ম ও যৌন রোগ বিশেষজ্ঞ</span>
-                                    <span class="categorycounter">(6)</span>
-                                </a>
-                            </li>
-
-                            <li class="sidebarlist-item">
-                                <a href="#" class="sidebarlist-link">
-                                    <span class="categorytitle">ডায়াবেটিস বিশেষজ্ঞ</span>
-                                    <span class="categorycounter">(7)</span>
-                                </a>
-                            </li>
-
-                            <li class="sidebarlist-item">
-                                <a href="#" class="sidebarlist-link">
-                                    <span class="categorytitle">নাক-কান-গলা রোগ বিশেষজ্ঞ</span>
-                                    <span class="categorycounter">(7)</span>
-                                </a>
-                            </li>
-
-                            <li class="sidebarlist-item">
-                                <a href="#" class="sidebarlist-link">
-                                    <span class="categorytitle">নিউরোমেডিসিন বিশেষজ্ঞ</span>
-                                    <span class="categorycounter">(4)</span>
-                                </a>
-                            </li>
-
-                            <li class="sidebarlist-item">
-                                <a href="#" class="sidebarlist-link">
-                                    <span class="categorytitle">ফিজিওথেরাপিষ্ট</span>
-                                    <span class="categorycounter">(1)</span>
-                                </a>
-                            </li>
-
-                            <li class="sidebarlist-item">
-                                <a href="#" class="sidebarlist-link">
-                                    <span class="categorytitle">বক্ষব্যাধি ও হৃদরোগ বিশেষজ্ঞ</span>
-                                    <span class="categorycounter">(7)</span>
-                                </a>
-                            </li>
+                            @if(!empty($chamberDoctorsCountBySpeciality))
+                                @foreach($chamberDoctorsCountBySpeciality as $speciality)
+                                    <li class="sidebarlist-item">
+                                        <a href="#" class="sidebarlist-link">
+                                            <span class="categorytitle text-capitalize">{{ $speciality->speciality_name }}</span>
+                                            <span class="categorycounter">({{ $speciality->doctors_count }})</span>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            @endif
                         </ul>
                     </div>
                 </div>

@@ -19,12 +19,15 @@ class InstituteDbRepository
         $this->model=new Institute();
     }
 
-    public function getInstituteData(): mixed
+    public function getInstituteData(array $filters=[]): mixed
     {
-        return $this->model
-        ->whereNull('deleted_at')
-        ->latest()
-        ->get();
+        $query = $this->model
+            ->whereNull('deleted_at')
+            ->latest();
+
+        $query = $this->getFilterQuery($query, $filters);
+
+        return $query->paginate(10);
     }
 
     public function storeInstituteData(array $data): mixed
@@ -52,4 +55,19 @@ class InstituteDbRepository
             ->where(InstituteEnum::ID, $id)
             ->delete();
     }
+
+
+    private function getFilterQuery($query , array $filters=[])
+    {
+        if (!empty($filters['institute'])) {
+            $query = $query->where(function ($q) use ($filters) {
+                $q->where('institute_name', 'like', '%' . $filters['institute'] . '%')
+                    ->orWhere('institute_address', 'like', '%' . $filters['institute'] . '%');
+            });
+        }
+
+        return $query;
+    }
+
+
 }

@@ -5,7 +5,7 @@
 * Company Name: Brainchild Software <brainchildsoft@gmail.com>
 */
 
-namespace Modules\Institute\Repositories;
+namespace Modules\Doctor\Repositories;
 
 use Illuminate\Support\Facades\DB;
 use Modules\Doctor\Models\DoctorSpeciality;
@@ -22,9 +22,10 @@ class DoctorSpecialityDbRepository
     public function getDoctorSpecialityData(): mixed
     {
         return $this->model
-        ->whereNull('deleted_at')
-        ->latest()
-        ->get();
+            ->with('speciality') // Eager load the speciality relationship
+            ->whereNull('deleted_at')
+            ->latest()
+            ->get();
     }
 
     public function storeDoctorSpecialityData(array $data): mixed
@@ -37,6 +38,12 @@ class DoctorSpecialityDbRepository
         return DB::table(DoctorSpecialityEnum::DB_TABLE)
             ->where(DoctorSpecialityEnum::ID, $id)
             ->first();
+    }
+    public function getDoctorSpecialitiesByDoctorId(int $id): object|null
+    {
+        return DB::table(DoctorSpecialityEnum::DB_TABLE)
+            ->where(DoctorSpecialityEnum::DOCTOR_ID, $id)
+            ->get();
     }
 
     public function update(array $data, int $id): mixed
@@ -51,5 +58,14 @@ class DoctorSpecialityDbRepository
         return $this->model
             ->where(DoctorSpecialityEnum::ID, $id)
             ->delete();
+    }
+
+    public function storeOrUpdateDoctorSpeciality(array $data): mixed
+    {
+        return $this->model->updateOrCreate(
+            ['doctor_id' => $data['doctor_id'], 'speciality_id' => $data['speciality_id']],
+            ['doctor_id' => $data['doctor_id'], 'speciality_id' => $data['speciality_id']]
+        );
+
     }
 }

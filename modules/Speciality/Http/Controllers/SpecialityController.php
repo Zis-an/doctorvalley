@@ -16,6 +16,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class SpecialityController extends Controller
 {
@@ -25,24 +26,22 @@ class SpecialityController extends Controller
 
     }
 
-    public function index(): View|Factory|Application
+    public function index(Request $request): View|Factory|Application
     {
         try{
-            $specialities = $this->service->getSpecialityList();
+            $specialities = $this->service->getSpecialityList($request->all());
             return view('backoffice.speciality.index', compact('specialities'));
         }catch (\Throwable $exception){
-            dd($exception->getMessage());
             abort(500);
         }
     }
 
-    public function create(): View|Factory|Application
+    public function create(Request $request): View|Factory|Application
     {
         try{
-            $specialities = $this->service->getSpecialityList();
+            $specialities = $this->service->getSpecialityList($request->all());
             return view('backoffice.speciality.index', compact('specialities'));
         }catch (\Throwable $exception){
-            dd($exception->getMessage());
             abort(500);
         }
     }
@@ -51,16 +50,18 @@ class SpecialityController extends Controller
     {
         try {
             $this->service->storeSpeciality($request->validated());
+            Alert::success('Success', 'Speciality store successfully');
             return redirect()->route('backoffice.speciality.index')->with('success', 'Speciality store successfully');
         }catch (\Throwable $throwable){
+            Alert::error('Error', 'Speciality invalid data');
             return redirect()->back()->with('error', 'Speciality invalid data')->withInput($request->all());
         }
     }
 
-    public function edit(int $id): Factory|View|Application
+    public function edit(Request $request, int $id): Factory|View|Application
     {
         try {
-            $specialities = $this->service->getSpecialityList();
+            $specialities = $this->service->getSpecialityList($request->all());
             $speciality = $this->service->getSpecialityById($id);
 
             return view('backoffice.speciality.index',
@@ -75,9 +76,11 @@ class SpecialityController extends Controller
     {
         try {
             $this->service->updateData($id, $request->validated());
+            Alert::success('Success', 'Speciality updated successfully');
             return redirect()->route('backoffice.speciality.index')
                 ->with('success', 'Speciality updated successfully');
         }catch (\Throwable $throwable){
+            Alert::error('Error', 'Speciality invalid data');
             return redirect()->back()->with('error', 'Speciality invalid data')->withInput($request->all());
         }
     }
@@ -86,9 +89,11 @@ class SpecialityController extends Controller
     {
         try {
             $this->service->deleteData($id);
+            Alert::success('Success', 'Speciality delete successfully');
             return redirect()->route('backoffice.speciality.index')
                 ->with('success', 'Speciality delete successfully');
         }catch (\Throwable $throwable){
+            Alert::error('Error', 'Speciality invalid data');
             return redirect()->back()->with('error', 'Invalid Speciality information');
         }
     }

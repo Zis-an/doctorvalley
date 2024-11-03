@@ -10,6 +10,7 @@ final class DoctorExperienceEnum
     public const DOCTOR_ID = 'doctor_id';
     public const DOCTOR_ORG_NAME = 'organization_name';
     public const DOCTOR_DESIGNATION = 'designation';
+    public const DOCTOR_DEPARTMENT = 'department';
     public const DOCTOR_ORG_ADDRESS = 'location';
     public const FROM_DATE = 'from';
     public const TO_DATE = 'to';
@@ -19,6 +20,7 @@ final class DoctorExperienceEnum
         self::DOCTOR_ID,
         self::DOCTOR_ORG_NAME,
         self::DOCTOR_DESIGNATION,
+        self::DOCTOR_DEPARTMENT,
         self::DOCTOR_ORG_ADDRESS,
         self::FROM_DATE,
         self::TO_DATE,

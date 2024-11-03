@@ -1,13 +1,22 @@
 @extends('layouts.frontend')
+
+@section('seo_meta')
+    <meta property="og:title" content="{{ $blog->blog_title }}" />
+    <meta property="og:description" content="{{ strip_tags($blog->description) }}" />
+    <meta property="og:image" content="{{ asset($blog->thumb_path) }}" />
+    <meta property="og:url" content="{{ request()->fullUrl() }}" />
+@endsection
+
 @section('content')
   <!-- MAIN-SECTION START -->
+
   <main class="main">
     <section class="blogdetails">
       <div class="container">
         <div class="blogdetails-content">
           <!-- BLOG-DETAILS THUMBNAIL START -->
           <div class="blogdetails-thumbnail">
-            <img src="{{ asset('assets/images/blogs/blog-7.jpg') }}" alt="blog-thumbnail">
+            <img src="{{ asset('storage/' . $blog->thumb_path) }}" alt="blog-thumbnail">
           </div>
           <!-- BLOG-DETAILS THUMBNAIL END -->
 
@@ -19,7 +28,7 @@
                   <div class="blogdescriptions-header">
                     <!-- BLOG TITLE START -->
                     <div class="titlebox">
-                      <h1 class="title">Get our newsletter with the latest articles, data, and events. Delivered to your inbox weekly.</h1>
+                      <h1 class="title">{{ $blog->blog_title }}</h1>
                     </div>
                     <!-- BLOG TITLE END -->
 
@@ -27,9 +36,11 @@
                     <div class="authorinfo-shareinfo">
                       <!-- AUTHOR-INFO START -->
                       <div class="authorinfo">
-                        <h5 class="authorname">By Rakibul Islam Rocky, Co-founder &amp; CEO Doctorvaly</h5>
+                        <h5 class="authorname">By {{ $blog->authorable->name }}
+{{--                            , Co-founder &amp; CEO Doctorvaly--}}
+                        </h5>
 
-                        <p class="date">Friday June 2, 2023</p>
+                          <p class="date">{{ \Carbon\Carbon::parse($blog->created_at)->format('l F j, Y') }}</p>
                       </div>
                       <!-- AUTHOR-INFO END -->
 
@@ -39,20 +50,26 @@
 
                         <!-- SHARE SOCIAL LIST START -->
                         <ul class="sociallist">
-                          <li class="sociallist-item">
-                            <a href="#" target="_blank" class="sociallist-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Share on Facebook">
-                              <span class="icon">
-                                <svg id="fbicon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 17 17" style="enable-background:new 0 0 17 17;" xml:space="preserve">
-                                  <path d="M6.4,10.3c-0.8,0-1.6,0-2.3,0c-0.5,0-0.5,0-0.5-0.5c0-0.9,0-1.9,0.1-2.8c0-0.3,0.1-0.4,0.4-0.4c0.7,0,1.4,0,2,0 c0.3,0,0.3-0.1,0.3-0.3c0-0.8,0-1.6,0-2.3c0.1-1.7,1-3.1,2.5-3.6c1-0.3,2.1-0.5,3.1-0.4c0.3,0,0.6,0.1,0.8,0.1 c0.2,0,0.3,0.1,0.3,0.3c0,0.9-0.1,1.8-0.1,2.8c0,0.2-0.1,0.3-0.3,0.3c-0.6,0-1.2,0-1.9,0c-0.6,0-0.9,0.4-0.9,0.9c0,0.6,0,1.2,0,1.8 c0,0.1,0,0.2,0,0.4c0.4,0,0.7,0,1,0c0.6,0,1.1,0,1.7,0c0.3,0,0.4,0.1,0.3,0.4C13.1,8,12.9,9,12.8,10c0,0.2-0.1,0.3-0.4,0.3 c-0.7,0-1.5,0-2.2,0c0,0.1,0,0.2,0,0.3c0,2,0,3.9-0.1,5.9c0,0.4,0,0.5-0.5,0.5c-0.9,0-1.8,0-2.7,0c-0.4,0-0.4,0-0.4-0.4 c0-2-0.1-3.9-0.1-5.9C6.4,10.6,6.4,10.5,6.4,10.3z M4.2,7.1c0,0.9,0,1.9,0,2.8c0.1,0,0.2,0,0.3,0c0.7,0,1.3,0,2,0 c0.5,0,0.5,0,0.5,0.5c0,2,0,3.9,0.1,5.9c0,0.1,0,0.2,0,0.3c0.9,0,1.8,0,2.7,0c0-0.1,0-0.2,0-0.3c0-2,0-3.9,0.1-5.9 c0-0.4,0.1-0.4,0.4-0.4c0.6,0,1.3,0,1.9,0c0.1,0,0.2,0,0.3,0c0.1-0.9,0.3-1.8,0.4-2.8c-0.9,0-1.8,0-2.7,0C9.8,7.1,9.7,7,9.7,6.7 c0-0.7,0-1.5,0-2.2c0-0.6,0.3-1,0.9-1.2c0.3-0.1,0.6-0.1,0.9-0.1c0.4,0,0.8,0,1.3,0c0-0.9,0-1.7,0-2.6c0,0-0.1,0-0.1,0 c-1-0.1-2-0.1-2.9,0.1c-0.2,0-0.2,0-0.3-0.1C9.4,0.6,9.3,0.7,9.2,0.8C7.8,1.3,7.1,2.4,7,3.8c-0.1,1-0.1,1.9-0.1,2.9 c0,0.3-0.1,0.4-0.4,0.4C5.8,7.1,5,7.1,4.2,7.1z" />
-                                </svg>
-                              </span>
+{{--                          <li class="sociallist-item">--}}
+{{--                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank" class="sociallist-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Share on Facebook">--}}
+{{--                              <span class="icon">--}}
+{{--                                <svg id="fbicon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 17 17" style="enable-background:new 0 0 17 17;" xml:space="preserve">--}}
+{{--                                  <path d="M6.4,10.3c-0.8,0-1.6,0-2.3,0c-0.5,0-0.5,0-0.5-0.5c0-0.9,0-1.9,0.1-2.8c0-0.3,0.1-0.4,0.4-0.4c0.7,0,1.4,0,2,0 c0.3,0,0.3-0.1,0.3-0.3c0-0.8,0-1.6,0-2.3c0.1-1.7,1-3.1,2.5-3.6c1-0.3,2.1-0.5,3.1-0.4c0.3,0,0.6,0.1,0.8,0.1 c0.2,0,0.3,0.1,0.3,0.3c0,0.9-0.1,1.8-0.1,2.8c0,0.2-0.1,0.3-0.3,0.3c-0.6,0-1.2,0-1.9,0c-0.6,0-0.9,0.4-0.9,0.9c0,0.6,0,1.2,0,1.8 c0,0.1,0,0.2,0,0.4c0.4,0,0.7,0,1,0c0.6,0,1.1,0,1.7,0c0.3,0,0.4,0.1,0.3,0.4C13.1,8,12.9,9,12.8,10c0,0.2-0.1,0.3-0.4,0.3 c-0.7,0-1.5,0-2.2,0c0,0.1,0,0.2,0,0.3c0,2,0,3.9-0.1,5.9c0,0.4,0,0.5-0.5,0.5c-0.9,0-1.8,0-2.7,0c-0.4,0-0.4,0-0.4-0.4 c0-2-0.1-3.9-0.1-5.9C6.4,10.6,6.4,10.5,6.4,10.3z M4.2,7.1c0,0.9,0,1.9,0,2.8c0.1,0,0.2,0,0.3,0c0.7,0,1.3,0,2,0 c0.5,0,0.5,0,0.5,0.5c0,2,0,3.9,0.1,5.9c0,0.1,0,0.2,0,0.3c0.9,0,1.8,0,2.7,0c0-0.1,0-0.2,0-0.3c0-2,0-3.9,0.1-5.9 c0-0.4,0.1-0.4,0.4-0.4c0.6,0,1.3,0,1.9,0c0.1,0,0.2,0,0.3,0c0.1-0.9,0.3-1.8,0.4-2.8c-0.9,0-1.8,0-2.7,0C9.8,7.1,9.7,7,9.7,6.7 c0-0.7,0-1.5,0-2.2c0-0.6,0.3-1,0.9-1.2c0.3-0.1,0.6-0.1,0.9-0.1c0.4,0,0.8,0,1.3,0c0-0.9,0-1.7,0-2.6c0,0-0.1,0-0.1,0 c-1-0.1-2-0.1-2.9,0.1c-0.2,0-0.2,0-0.3-0.1C9.4,0.6,9.3,0.7,9.2,0.8C7.8,1.3,7.1,2.4,7,3.8c-0.1,1-0.1,1.9-0.1,2.9 c0,0.3-0.1,0.4-0.4,0.4C5.8,7.1,5,7.1,4.2,7.1z" />--}}
+{{--                                </svg>--}}
+{{--                              </span>--}}
 
-                              <span class="text">Facebook</span>
-                            </a>
-                          </li>
+{{--                              <span class="text">Facebook</span>--}}
+{{--                            </a>--}}
+{{--                          </li>--}}
+                            <li class="sociallist-item">
+                                <a href="javascript:void(0);" onclick="shareOnFacebook()" class="sociallist-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Share on Facebook">
+                                    <span class="icon"></span>
+                                    <span class="text">Facebook</span>
+                                </a>
+                            </li>
 
                           <li class="sociallist-item">
-                            <a href="#" target="_blank" class="sociallist-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Share on Twitter">
+                            <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}&text={{ urlencode($blog->blog_title) }}" target="_blank" class="sociallist-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Share on Twitter">
                               <span class="icon">
                                 <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                   <g clip-path="url(#twitticon)">
@@ -116,91 +133,13 @@
                   <div class="divider"></div>
 
                   <div class="blogdescriptions-body">
-                    <div class="detail">
-                      <div class="description">
-                        <p class="descriptiontext">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim malesuada lectus non
-                          penatibus aliquam iaculis mauris at. Vulputate ac pellentesque nec elementum ut eu massa
-                          tortor
-                          duis. Tempus, nisl nisi, egestas risus arcu scelerisque risus. Eget pulvinar eu nibh mauris
-                          libero facilisis integer lorem. Egestas tellus euismod orci, elementum. At lobortis hac tempor
-                          justo enim nec est ut. Condimentum purus sit in arcu gravida viverra felis volutpat.
-                          Elementum,
-                          urna, sollicitudin sed elementum purus. Eleifend id at velit, ultricies magna suspendisse
-                          pretium massa enim. Dictumst nulla scelerisque tortor arcu gravida diam. Diam quisque nunc,
-                          egestas velit dui proin enim ut.
-                        </p>
-
-                        <p class="descriptiontext">
-                          Nullam turpis morbi nam vitae fringilla libero quam eget leo. Volutpat accumsan vehicula quis
-                          magna sed facilisi tellus fermentum. Feugiat ut ac vestibulum pellentesque. Erat vehicula
-                          convallis semper non eu in ac tellus purus. Consectetur nec et id pretium quisque lobortis ut
-                          placerat cursus. Molestie eu vestibulum ut maecenas in turpis orci dictum diam. Adipiscing et
-                          ut
-                          hac vel. Ante at nunc, curabitur congue. Fermentum aliquet ipsum volutpat, tincidunt laoreet
-                          vel. Sed placerat donec dui enim velit. Lectus et scelerisque viverra ac lacus metus id quis
-                          quam. Eu semper mattis sit quam eget pellentesque. Enim cum platea rhoncus posuere ut egestas.
-                        </p>
-                      </div>
-                    </div>
 
                     <div class="detail">
-                      <h2 class="detail-title">Cursus et, viverra cum amet</h2>
+                      <h2 class="detail-title">{{ $blog->blog_title }}</h2>
 
                       <div class="description">
                         <p class="descriptiontext">
-                          risus aenean. Nunc pulvinar odio dictum faucibus suspendisse. Non aliquet a ut urna neque amet
-                          placerat nulla tellus. Tortor, urna ultrices id dui. Feugiat enim tristique integer ut
-                          facilisis
-                          mattis nisi, blandit purus. Convallis nibh nisi, risus nulla est. Pellentesque est, et
-                          suspendisse odio donec nec vitae sit. Cursus in nec, sit vulputate eleifend interdum eleifend
-                          convallis at. Pellentesque quis tempus elit tristique. Nisi, condimentum scelerisque dignissim
-                          justo ullamcorper mauris libero.
-                        </p>
-
-                        <p class="descriptiontext">
-                          Et, egestas amet lectus viverra. Bibendum accumsan in tellus nec dictum.Lorem ipsum dolor sit
-                          amet, consectetur adipiscing elit. Dignissim malesuada lectus non penatibus aliquam iaculis
-                          mauris at. Vulputate ac pellentesque nec elementum ut eu massa tortor duis. Tempus, nisl nisi,
-                          egestas risus arcu scelerisque risus. Eget pulvinar eu nibh mauris libero facilisis integer
-                          lorem. Egestas tellus euismod orci, elementum. At lobortis hac tempor justo enim nec est ut.
-                          Condimentum purus sit in arcu gravida viverra felis volutpat. Elementum, urna, sollicitudin
-                          sed
-                          elementum purus. Eleifend id at velit, ultricies magna suspendisse pretium massa enim.
-                          Dictumst
-                          nulla scelerisque tortor arcu gravida diam. Diam quisque nunc, egestas velit dui proin enim
-                          ut.
-                        </p>
-                      </div>
-                    </div>
-
-                    <div class="detail">
-                      <h2 class="detail-title">Cursus et, viverra cum amet</h2>
-
-                      <div class="description">
-                        <p class="descriptiontext">
-                          Nullam turpis morbi nam vitae fringilla libero quam eget leo. Volutpat accumsan vehicula quis
-                          magna sed facilisi tellus fermentum. Feugiat ut ac vestibulum pellentesque. Erat vehicula
-                          convallis semper non eu in ac tellus purus. Consectetur nec et id pretium quisque lobortis ut
-                          placerat cursus. Molestie eu vestibulum ut maecenas in turpis orci dictum diam. Adipiscing et
-                          ut
-                          hac vel. Ante at nunc, curabitur congue. Fermentum aliquet ipsum volutpat, tincidunt laoreet
-                          vel. Sed placerat donec dui enim velit. Lectus et scelerisque viverra ac lacus metus id quis
-                          quam. Eu semper mattis sit quam eget pellentesque. Enim cum platea rhoncus posuere ut egestas.
-                        </p>
-
-                        <p class="descriptiontext">
-                          Cursus et, viverra cum amet risus aenean. Nunc pulvinar odio dictum faucibus suspendisse. Non
-                          aliquet a ut urna neque amet placerat nulla tellus. Tortor, urna ultrices id dui. Feugiat enim
-                          tristique integer ut facilisis mattis nisi, blandit purus. Convallis nibh nisi, risus nulla
-                          est.
-                          Pellentesque est, et suspendisse odio donec nec vitae sit. Cursus in nec, sit vulputate
-                          eleifend
-                          interdum eleifend convallis at. Pellentesque quis tempus elit tristique. Nisi, condimentum
-                          scelerisque dignissim justo ullamcorper mauris libero.
-                        </p>
-                        <p class="descriptiontext">
-                          Et, egestas amet lectus viverra. Bibendum accumsan in tellus nec dictum.
+                            {{ strip_tags($blog->description) }}
                         </p>
                       </div>
                     </div>
@@ -216,3 +155,17 @@
   </main>
   <!-- MAIN-SECTION END -->
 @endsection
+@push('after-scripts')
+    <script>
+        function shareOnFacebook() {
+            const blogTitle = "{{ addslashes($blog->blog_title) }}"; // Escape quotes
+            const blogDescription = "{{ addslashes(strip_tags($blog->description)) }}"; // Escape quotes and strip HTML
+            const thumbPath = "{{ asset($blog->thumb_path) }}"; // Full URL of the thumbnail
+            const blogUrl = "{{ request()->fullUrl() }}"; // Current URL
+
+            const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(blogUrl)}&quote=${encodeURIComponent(blogTitle + ' - ' + blogDescription)}&picture=${encodeURIComponent(thumbPath)}`;
+
+            window.open(facebookShareUrl, '_blank');
+        }
+    </script>
+@endpush

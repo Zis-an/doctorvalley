@@ -1,4 +1,15 @@
 @extends('layouts.backend')
+@push('after-styles')
+    <style>
+        .fc-event {
+            min-height: 80px; /* Increased height */
+            padding: 10px; /* Added padding for better spacing */
+            box-sizing: border-box; /* Ensure padding is included in the height */
+            /*background-color: #f9f9f9; !* Optional: Add a background color *!*/
+            border: 1px solid #ddd; /* Optional: Add a border for better visibility */
+        }
+    </style>
+@endpush
 @section('content')
     <!-- MAIN-SECTION START -->
     <main class="mainsection" id="main-section">
@@ -51,6 +62,28 @@
                                     <tbody id="calendar-body" class="table-calendar-body"></tbody>
                                 </table>
                             </div>
+{{--                            <div class="table-responsive">--}}
+{{--                                <table class="table-calendar" id="calendar" data-lang="en" aria-describedby="table">--}}
+{{--                                    <thead id="thead-month" class="table-calendar-header">--}}
+{{--                                    <tr>--}}
+{{--                                        <th>Schedule Day</th>--}}
+{{--                                        <th>Start Time</th>--}}
+{{--                                        <th>End Time</th>--}}
+{{--                                        <th>Note</th>--}}
+{{--                                    </tr>--}}
+{{--                                    </thead>--}}
+{{--                                    <tbody id="calendar-body" class="table-calendar-body">--}}
+{{--                                    @foreach ($schedule as $item)--}}
+{{--                                        <tr>--}}
+{{--                                            <td>{{ ucfirst($item->schedule_day) }}</td>--}}
+{{--                                            <td>{{ $item->start_from }}</td>--}}
+{{--                                            <td>{{ $item->end_from }}</td>--}}
+{{--                                            <td>{{ $item->note ?? 'N/A' }}</td>--}}
+{{--                                        </tr>--}}
+{{--                                    @endforeach--}}
+{{--                                    </tbody>--}}
+{{--                                </table>--}}
+{{--                            </div>--}}
                         </div>
                     </div>
                 </div>
@@ -62,10 +95,86 @@
 @endsection
 
 @push('after-scripts')
-
-<script src="../../assets/js/calendar.js"></script>
+<script src="{{ asset('assets/js/calendar.js') }}"></script>
 <!-- FULL-CALENDAR-JS -->
-<script src="../../assets/js/fullcalendar/index.global.min.js"></script>
-<script src="../../assets/js/fullcalendar/schedule.js"></script>
+<script src="{{ asset('assets/js/fullcalendar/index.global.min.js') }}"></script>
+<script src="{{ asset('assets/js/fullcalendar/schedule.js') }}"></script>
+<script>
+    var scheduleData = @json($schedule);
+    console.log(scheduleData);
 
+    function getDateForDay(dayName) {
+        const today = new Date();
+        const dayMapping = {
+            'sunday': 0,
+            'monday': 1,
+            'tuesday': 2,
+            'wednesday': 3,
+            'thursday': 4,
+            'friday': 5,
+            'saturday': 6
+        };
+        const dayIndex = dayMapping[dayName.toLowerCase()];
+        const diff = dayIndex - today.getDay();
+        today.setDate(today.getDate() + diff);
+        return today.toISOString().split('T')[0];
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('schedule-calendar');
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'timeGridWeek',
+            // events: scheduleData.map(function(item) {
+            //     // console.log(item);
+            //     return {
+            //         // title: item.note || 'No Note',
+            //         title: `${item.note || 'No Note'}${item.chamber ? item.chamber.chamber_name : 'No name provided'}`,
+            //         start: `${getDateForDay(item.schedule_day)}T${item.start_from}`,
+            //         end: `${getDateForDay(item.schedule_day)}T${item.end_from}`
+            //     };
+            // }),
+            events: scheduleData.map(function(item) {
+                console.log(item);
+                const startTime = formatTime(item.start_from);
+                const endTime = formatTime(item.end_from);
+
+                return {
+                    title: '', // Leave title empty to use eventContent instead
+                    extendedProps: {
+                        chamberName: item.chamber ? item.chamber.chamber_name : 'No name provided',
+                        note: item.note || 'No Note',
+                        startTime: startTime,
+                        endTime: endTime
+                    },
+                    start: `${getDateForDay(item.schedule_day)}T${item.start_from}`,
+                    end: `${getDateForDay(item.schedule_day)}T${item.end_from}`
+                };
+            }),
+
+            eventContent: function(info) {
+                return {
+                    html: `<div style="width: 100%; height: 100%; ">
+                   <strong>${info.event.extendedProps.note || 'No Note'}</strong>
+                   <br/>
+                   <span style="font-weight: normal;">${info.event.extendedProps.chamberName}</span>
+                   <br/>
+                   <small style="">${info.event.extendedProps.startTime} - ${info.event.extendedProps.endTime}</small>
+               </div>`
+                };
+            }
+        });
+
+
+        // Function to format time
+        function formatTime(timeString) {
+            const [hours, minutes] = timeString.split(':');
+            const period = hours >= 12 ? 'PM' : 'AM';
+            const formattedHours = hours % 12 || 12; // Convert to 12-hour format
+            return `${formattedHours}:${minutes} ${period}`;
+        }
+
+        calendar.render();
+    });
+</script>
 @endpush

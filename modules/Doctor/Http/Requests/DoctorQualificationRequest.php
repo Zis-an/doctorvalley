@@ -25,12 +25,13 @@ class DoctorQualificationRequest extends FormRequest
     {
         return [
             'doctor_id'=>['required'],
+            'education_id.*'=>['nullable'],
             'degree_id.*'=>['required'],
             'institute_id.*'=>['required'],
-            'major.*'=>['required'],
+            'major.*'=>['nullable'],
             'institute_name.*'=>['nullable'],
             'from.*'=>['required'],
-            'to.*'=>['required'],
+            'to.*'=>['nullable'],
             'current.*'=>['nullable', 'boolean']
         ];
     }
@@ -50,7 +51,7 @@ class DoctorQualificationRequest extends FormRequest
 
             'from.*.required' => 'Date is required',
 
-            'to.*.required' => 'Date is required',
+//            'to.*.required' => 'Date is required',
 
             // 'current.required' => 'Current is required'
         ];

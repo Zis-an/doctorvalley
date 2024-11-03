@@ -16,7 +16,7 @@
     </li>
 
     <li class="sidelist-item">
-        <a href="{{ route('doctor.schedule') }}" class="sidelist-link" data-bs-toggle="tooltip" data-bs-placement="right"
+        <a href="{{ route('doctor.schedule', auth()->user()->id) }}" class="sidelist-link" data-bs-toggle="tooltip" data-bs-placement="right"
            data-bs-title="Schedule">
             <span class="icon">
                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
@@ -31,7 +31,7 @@
     </li>
 
     <li class="sidelist-item">
-        <a href="{{ route('doctor.blog') }}" class="sidelist-link" data-bs-toggle="tooltip" data-bs-placement="right"
+        <a href="{{ route('blog.create') }}" class="sidelist-link" data-bs-toggle="tooltip" data-bs-placement="right"
            data-bs-title="Blogs">
                     <span class="icon">
                         <svg width="19" height="18" viewBox="0 0 19 18" fill="none"
@@ -41,9 +41,40 @@
                                 fill="#F04130" />
                         </svg>
                     </span>
-            <span class="text">Blogs</span>
+            <span class="text">Create Blog</span>
         </a>
     </li>
+
+    <li class="sidelist-item">
+        <a href="{{ route('blog.index') }}" class="sidelist-link" data-bs-toggle="tooltip" data-bs-placement="right"
+           data-bs-title="Blogs">
+                    <span class="icon">
+                        <svg width="19" height="18" viewBox="0 0 19 18" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M0.560059 2.25C0.560059 1.00898 1.45693 0 2.56006 0H7.56006V4.5C7.56006 5.12227 8.00693 5.625 8.56006 5.625H12.5601V10.0441L9.84756 13.0957C9.52568 13.4578 9.30068 13.9078 9.19131 14.4035L8.60693 17.0367C8.53506 17.3602 8.55068 17.6977 8.64756 18.0035H2.56006C1.45693 18.0035 0.560059 16.9945 0.560059 15.7535V2.25ZM12.5601 4.5H8.56006V0L12.5601 4.5ZM17.7413 8.28633L18.1913 8.79258C18.6788 9.34102 18.6788 10.2305 18.1913 10.7824L17.2726 11.816L15.0538 9.31992L15.9726 8.28633C16.4601 7.73789 17.2507 7.73789 17.7413 8.28633V8.28633ZM10.3069 14.6602L14.3444 10.118L16.5632 12.6141L12.5257 17.1527C12.3976 17.2969 12.2382 17.3988 12.0601 17.448L10.1819 17.9754C10.0101 18.0246 9.83193 17.9684 9.70693 17.8277C9.58193 17.6871 9.53193 17.4867 9.57568 17.2934L10.0444 15.1805C10.0882 14.9836 10.1788 14.8008 10.3069 14.6566V14.6602Z"
+                                fill="#F04130" />
+                        </svg>
+                    </span>
+            <span class="text">Blog List</span>
+        </a>
+    </li>
+
+    <li class="sidelist-item">
+        <a href="{{ route('feedback.index') }}" class="sidelist-link" data-bs-toggle="tooltip" data-bs-placement="right"
+           data-bs-title="Blogs">
+                    <span class="icon">
+                        <svg width="19" height="18" viewBox="0 0 19 18" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M0.560059 2.25C0.560059 1.00898 1.45693 0 2.56006 0H7.56006V4.5C7.56006 5.12227 8.00693 5.625 8.56006 5.625H12.5601V10.0441L9.84756 13.0957C9.52568 13.4578 9.30068 13.9078 9.19131 14.4035L8.60693 17.0367C8.53506 17.3602 8.55068 17.6977 8.64756 18.0035H2.56006C1.45693 18.0035 0.560059 16.9945 0.560059 15.7535V2.25ZM12.5601 4.5H8.56006V0L12.5601 4.5ZM17.7413 8.28633L18.1913 8.79258C18.6788 9.34102 18.6788 10.2305 18.1913 10.7824L17.2726 11.816L15.0538 9.31992L15.9726 8.28633C16.4601 7.73789 17.2507 7.73789 17.7413 8.28633V8.28633ZM10.3069 14.6602L14.3444 10.118L16.5632 12.6141L12.5257 17.1527C12.3976 17.2969 12.2382 17.3988 12.0601 17.448L10.1819 17.9754C10.0101 18.0246 9.83193 17.9684 9.70693 17.8277C9.58193 17.6871 9.53193 17.4867 9.57568 17.2934L10.0444 15.1805C10.0882 14.9836 10.1788 14.8008 10.3069 14.6566V14.6602Z"
+                                fill="#F04130" />
+                        </svg>
+                    </span>
+            <span class="text">Feedbacks</span>
+        </a>
+    </li>
+
     @if(!empty($showExtraMenu))
         <li class="sidelist-item">
             <a href="{{ route('logout') }}" class="sidelist-link"
@@ -66,7 +97,7 @@
 <!-- USERINFO-LIST -->
 <ul class="userlist">
     <li class="userlist-item">
-        <a href="{{ route('doctor.feedback') }}" class="userlist-link" data-bs-toggle="tooltip" data-bs-placement="right"
+        <a href="{{ route('feedback.create') }}" class="userlist-link" data-bs-toggle="tooltip" data-bs-placement="right"
            data-bs-title="Your Feedback">
                     <span class="icon">
                         <svg width="20" height="18" viewBox="0 0 20 18" fill="none"

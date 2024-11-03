@@ -6,6 +6,7 @@ use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\Request;
 use Modules\Location\Services\AreaService;
 use Modules\Location\Services\CityService;
 use Modules\Chamber\Services\ChamberService;
@@ -13,6 +14,7 @@ use Modules\Location\Services\ProvinceService;
 use Illuminate\Contracts\Foundation\Application;
 use Modules\Chamber\Enums\ChamberEnum;
 use Modules\Chamber\Http\Requests\ChamberRequest;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ChamberManagementController extends Controller
 {
@@ -30,17 +32,16 @@ class ChamberManagementController extends Controller
     {
     }
 
-    public function index(): View|Factory|Application
+    public function index(Request $request): View|Factory|Application
     {
         try{
-            $chambers = $this->service->getChamberList();
+            $chambers = $this->service->getChamberList($request->all());
             $chamber_types = ChamberEnum::CHAMBER_TYPE_ARRAY;
             $provinces = $this->provinceService->getProvincesForSelect();
             $cities = $this->cityService->getCitiesForSelect();
             $areas = $this->areaService->getAreasForSelect();
             return view('backoffice.chamber.chamberList', compact('chambers', 'chamber_types', 'provinces', 'cities', 'areas'));
         }catch (\Throwable $exception){
-            dd($exception->getMessage());
             abort(500);
         }
     }
@@ -54,7 +55,6 @@ class ChamberManagementController extends Controller
             $chamber_types = ChamberEnum::CHAMBER_TYPE_ARRAY;
             return view('backoffice.chamber.createUpdateChamber', compact('provinces', 'cities', 'areas', 'chamber_types'));
         }catch (\Throwable $exception){
-            dd($exception->getMessage());
             abort(500);
         }
     }
@@ -63,8 +63,10 @@ class ChamberManagementController extends Controller
     {
         try {
             $this->service->storeChamber($request->validated());
+            Alert::success('Success', 'Chamber stored successfully');
             return redirect()->route('backoffice.chamber.index')->with('success', 'Chamber stored successfully');
         } catch (\Throwable $throwable){
+            Alert::success('Error!', 'Chamber invalid data');
             return redirect()->back()->with('error', 'Chamber invalid data')->withInput($request->all());
         }
     }
@@ -87,9 +89,11 @@ class ChamberManagementController extends Controller
     {
         try {
             $this->service->updateData($id, $request->validated());
+            Alert::success('Success', 'Chamber Updated successfully');
             return redirect()->route('backoffice.chamber.index')
                 ->with('success', 'Chamber updated successfully');
         }catch (\Throwable $throwable){
+            Alert::success('Error!', 'Chamber invalid data');
             return redirect()->back()->with('error', 'Chamber invalid data')->withInput($request->all());
         }
     }
@@ -98,9 +102,11 @@ class ChamberManagementController extends Controller
     {
         try {
             $this->service->deleteData($id);
+            Alert::success('Success', 'Chamber deleted successfully');
             return redirect()->route('backoffice.chamber.index')
                 ->with('success', 'Chamber deleted successfully');
         }catch (\Throwable $throwable){
+            Alert::success('Error!', 'Invalid Chamber information');
             return redirect()->back()->with('error', 'Invalid Chamber information');
         }
     }

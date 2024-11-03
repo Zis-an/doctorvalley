@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string(ChamberAdminEnum::USER_NAME)->unique();
             $table->string(ChamberAdminEnum::CHAMBER_ADMIN_EMAIL)->unique();
             $table->string(ChamberAdminEnum::CHAMBER_ADMIN_PHONE);
-            $table->unsignedBigInteger(ChamberAdminEnum::CHAMBER_ADMIN_ROLE);
+//            $table->unsignedBigInteger(ChamberAdminEnum::CHAMBER_ADMIN_ROLE);
             $table->string(ChamberAdminEnum::CHAMBER_ADMIN_PASSWORD);
             $table->boolean(ChamberAdminEnum::CHAMBER_ADMIN_STATUS)->default(config('global.status.inactive'));
             $table->rememberToken()->nullable();

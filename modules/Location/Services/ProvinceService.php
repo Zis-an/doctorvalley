@@ -18,9 +18,9 @@ class ProvinceService
     {
         $this->repository = new ProvinceDbRepository();
     }
-    public function getProvinceList(): mixed
+    public function getProvinceList(array $filterData): mixed
     {
-        $result = $this->repository->getProvinceData();
+        $result = $this->repository->getProvinceData($filterData);
         if (empty($result)){
             return [];
         }

@@ -8,6 +8,7 @@
 namespace Modules\Location\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Modules\Location\Http\Requests\CityRequest;
 use Modules\Location\Services\CityService;
 use Modules\Location\Services\CountryService;
@@ -16,6 +17,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use RealRashid\SweetAlert\Facades\Alert;
 
 
 class CityController extends Controller
@@ -27,28 +29,23 @@ class CityController extends Controller
     {
     }
 
-    public function index(): View|Factory|Application
+    public function index(Request $request): View|Factory|Application
     {
         try{
-            $cities = $this->service->getCityList();
+            $cities = $this->service->getCityList($request->all());
             $provinces = $this->provinceService->getProvincesForSelect();
-            // $countries = $this->countryService->getCountriesForSelect();
-            // return view('bcscommon::location.city.index', compact('cities', 'countries'));
             return view('backoffice.location.city.index', compact('cities', 'provinces'));
         }catch (\Throwable $exception){
-            dd($exception->getMessage());
             abort(500);
         }
     }
 
-    public function create(): View|Factory|Application
+    public function create(Request $request): View|Factory|Application
     {
         try{
-            $cities = $this->service->getCityList();
-            $countries = $this->countryService->getCountriesForSelect();
-            return view('bcscommon::location.city.index', compact('cities', 'countries'));
+            $cities = $this->service->getCityList($request->all());
+            return view('backoffice.location.city.index', compact('cities'));
         }catch (\Throwable $exception){
-            dd($exception->getMessage());
             abort(500);
         }
     }
@@ -58,16 +55,18 @@ class CityController extends Controller
 
         try {
             $this->service->storeCity($request->validated());
+            Alert::success('Success', 'City store successfully');
             return redirect()->route('backoffice.city.index')->with('success', 'City store successfully');
         }catch (\Throwable $throwable){
+            Alert::error('Error', 'City invalid data');
             return redirect()->back()->with('error', 'City invalid data')->withInput($request->all());
         }
     }
 
-    public function edit(int $id): Factory|View|Application
+    public function edit(Request $request, int $id): Factory|View|Application
     {
         try {
-            $cities = $this->service->getCityList();
+            $cities = $this->service->getCityList($request->all());
             $city = $this->service->getCityById($id);
             $provinces = $this->provinceService->getProvincesForSelect();
 
@@ -83,9 +82,11 @@ class CityController extends Controller
     {
         try {
             $this->service->updateData($id, $request->validated());
+            Alert::success('Success', 'City updated successfully');
             return redirect()->route('backoffice.city.index')
                 ->with('success', 'City updated successfully');
         }catch (\Throwable $throwable){
+            Alert::error('Error', 'City invalid data');
             return redirect()->back()->with('error', 'City invalid data')->withInput($request->all());
         }
     }
@@ -94,9 +95,11 @@ class CityController extends Controller
     {
         try {
             $this->service->deleteData($id);
+            Alert::success('Success', 'City delete successfully');
             return redirect()->route('backofice.city.index')
                 ->with('success', 'City delete successfully');
         }catch (\Throwable $throwable){
+            Alert::error('Error', 'Invalid City information');
             return redirect()->back()->with('error', 'Invalid City information');
         }
     }

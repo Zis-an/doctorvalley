@@ -12,8 +12,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('chambers', function (Blueprint $table) {
-            $table->id();
+        Schema::create(ChamberEnum::DB_TABLE, function (Blueprint $table) {
+            $table->id(ChamberEnum::ID);
             $table->string(ChamberEnum::CHAMBER_NAME);
             $table->string(ChamberEnum::REG_NO);
             $table->string(ChamberEnum::CHAMBER_EMAIL)->unique();

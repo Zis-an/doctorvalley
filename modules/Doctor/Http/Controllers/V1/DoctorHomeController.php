@@ -3,6 +3,9 @@
 namespace Modules\Doctor\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use Modules\Chamber\Models\Chamber;
+use Modules\Chamber\Services\ScheduleService;
 use Modules\Doctor\Services\DoctorExperienceService;
 use Modules\Doctor\Services\DoctorQualificationService;
 use Modules\Doctor\Services\DoctorService;
@@ -18,47 +21,56 @@ class DoctorHomeController extends Controller
                                 private CityService $cityService,
                                 private AreaService $areaService,
                                 private DoctorExperienceService $experienceService,
-                                private DoctorQualificationService $qualificationService)
+                                private DoctorQualificationService $qualificationService,
+                                private ScheduleService $scheduleService)
     {
         $this->middleware('auth:doctor');
     }
 
     public function index()
     {
-        $doctor = auth('doctor')->user();
-        return view('doctor.dashboard', compact('doctor'));
+        // Retrieve the logged-in doctor with schedules
+        $doctor = $this->service->getDoctorById(auth()->user()->id);
+
+        // Get today's day name, e.g., "tuesday"
+        $today = strtolower(Carbon::now()->format('l'));
+
+        // Filter schedules for today
+        $todaySchedules = $doctor->schedules->filter(function ($schedule) use ($today) {
+            return strtolower($schedule->schedule_day) === $today;
+        });
+
+        // Load chamber information for each schedule
+        foreach ($todaySchedules as $schedule) {
+            if ($schedule->chamber_id) {
+                $schedule->chamber = Chamber::find($schedule->chamber_id);
+            }
+        }
+
+        return view('doctor.dashboard', compact('doctor', 'todaySchedules'));
     }
 
-    public function profile()
-    {
-        $doctor = auth('doctor')->user();
-        $id = $doctor->id;
-        $experiences = $this->experienceService->getDoctorExperienceByDoctorId($id);
-        $qualifications = $this->qualificationService->getDoctorQualificationByDoctorId($id);
-        return view('doctor.profile', compact('doctor', 'experiences', 'qualifications'));
-    }
+//    public function profile()
+//    {
+//        $doctor = auth('doctor')->user();
+//        $id = $doctor->id;
+//        $experiences = $this->experienceService->getDoctorExperienceByDoctorId($id);
+//        $qualifications = $this->qualificationService->getDoctorQualificationByDoctorId($id);
+//        return view('doctor.profile', compact('doctor', 'experiences', 'qualifications'));
+//    }
 
     public function notification()
     {
-        $doctor = auth('doctor')->user();
-        return view('doctor.notifications', compact('doctor'));
+        return view('doctor.notifications');
     }
 
-    public function blog()
+    public function schedule($id)
     {
-        $doctor = auth('doctor')->user();
-        return view('doctor.blogs.index', compact('doctor'));
-    }
-
-    public function schedule()
-    {
-        $doctor = auth('doctor')->user();
-        return view('doctor.schedule', compact('doctor'));
-    }
-
-    public function feedback()
-    {
-        $doctor = auth('doctor')->user();
-        return view('doctor.feedback', compact('doctor'));
+        try {
+            $schedule = $this->scheduleService->getScheduleByDoctorId($id);
+            return view ('doctor.schedule', compact('schedule'));
+        } catch (\Throwable $th) {
+            return redirect()->route('doctor.schedule')->with('error', 'Unable to fetch the schedule. Please try again later.');
+        }
     }
 }

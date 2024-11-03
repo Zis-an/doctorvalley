@@ -1,4 +1,7 @@
   @extends('layouts.backend')
+  @push('after-styles')
+      <link rel="stylesheet" href="{{ asset('assets/css/nice-select/nice-select2.css') }}">
+  @endpush
   @section('content')
       <!-- MY-PROFILE SECTION START -->
       <main class="myprofile" id="main-section">
@@ -28,8 +31,24 @@
                       </p>
                   </div>
               </div>
+              <x-message.alert></x-message.alert>
 
-              @include('components.create-chamber.personal-info')
+              <div class="personalinfo-info">
+                  <div class="details">
+                      <div class="details-body">
+                          <!-- ADD-PERSONAL-INFORMATION -->
+                          <form action="{{ !empty($chamber) ? route('chamber.profile.update', $chamber->id) : route('backoffice.chamber.store') }}" method="POST" class="educationinfoform" id="personalinfoform">
+                              @if (!empty($chamber))
+                                  @method('PUT')
+                              @endif
+                              @csrf
+
+                              @include('components.create-chamber.personal-info')
+                          </form>
+                      </div>
+                  </div>
+              </div>
+
 
           </div>
       </main>
@@ -41,4 +60,89 @@
       <script src="{{ asset('assets/js/showhide/showhide.js') }}"></script>
       <!-- APEXCHARTS-JS -->
       <script src="{{ asset('assets/js/apexcharts/apexcharts.min.js') }}"></script>
+
+      <script src="{{ asset('assets/js/nice-select/nice-select2.js') }}"></script>
+      <script src="{{ asset('assets/js/nice-select/doctorselect.js') }}"></script>
+
+      <script type="text/javascript">
+          $(document).ready(function () {
+              function fetchCities(province_id, selected_city_id = null) {
+                  let citySelect = $('select[name="city_id"]');
+                  citySelect.empty().append('<option value="" disabled selected>-- Select City --</option>');
+
+                  if (province_id) {
+                      let url = "{{ route('backoffice.city.byProvince', ':id') }}".replace(':id', province_id);
+                      $.ajax({
+                          url: url,
+                          type: "GET",
+                          dataType: "json",
+                          success: function (response) {
+                              if (response.statusCode === 200) {
+                                  $.each(response.data, function (key, value) {
+                                      let selected = selected_city_id == value.id ? 'selected' : '';
+                                      citySelect.append('<option value="' + value.id + '" ' + selected + '>' + value.city_name + '</option>');
+                                  });
+                              }
+                          },
+                          error: function () {
+                              console.log('Failed to fetch cities. Please try again.');
+                          }
+                      });
+                  }
+              }
+
+              function fetchAreas(city_id, selected_area_id = null) {
+                  let areaSelect = $('select[name="area_id"]');
+                  areaSelect.empty().append('<option value="" disabled selected>-- Select Area --</option>');
+
+                  if (city_id) {
+                      let url = "{{ route('backoffice.area.byCity', ':id') }}".replace(':id', city_id);
+                      $.ajax({
+                          url: url,
+                          type: "GET",
+                          dataType: "json",
+                          success: function (response) {
+                              if (response.statusCode === 200) {
+                                  $.each(response.data, function (key, value) {
+                                      let selected = selected_area_id == value.id ? 'selected' : '';
+                                      areaSelect.append('<option value="' + value.id + '" ' + selected + '>' + value.area_name + '</option>');
+                                  });
+                              }
+                          },
+                          error: function () {
+                              console.log('Failed to fetch areas. Please try again.');
+                          }
+                      });
+                  }
+              }
+
+              // Initial load: fetch cities and areas if chamber data exists
+              let initialProvinceId = $('select[name="province_id"]').val();
+              let initialCityId = $('select[name="city_id"]').val();
+              let initialAreaId = $('select[name="area_id"]').val();
+
+              if (initialProvinceId) {
+                  fetchCities(initialProvinceId, initialCityId);
+              }
+
+              if (initialCityId) {
+                  fetchAreas(initialCityId, initialAreaId);
+              }
+
+              // Event listener for province dropdown change
+              $('select[name="province_id"]').on('change', function () {
+                  let province_id = $(this).val();
+                  fetchCities(province_id);
+                  $('select[name="area_id"]').empty().append('<option value="" disabled selected>-- Select Area --</option>');
+              });
+
+              // Event listener for city dropdown change
+              $('select[name="city_id"]').on('change', function () {
+                  let city_id = $(this).val();
+                  fetchAreas(city_id);
+              });
+
+          });
+      </script>
+
   @endpush

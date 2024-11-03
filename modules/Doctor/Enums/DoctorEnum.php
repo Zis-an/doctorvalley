@@ -13,7 +13,6 @@ final class DoctorEnum
     public const DOCTOR_USER_NAME = 'username';
     public const DOCTOR_BMDC = 'bmdc';
     public const DOCTOR_GENDER = 'gender';
-    // public const DOCTOR_SPECIALITY = 'speciality';
     public const DOCTOR_PHOTO = 'photo';
     public const DOCTOR_PASSWORD = 'password';
     public const DOCTOR_STATUS = 'status';
@@ -24,6 +23,8 @@ final class DoctorEnum
     public const DOCTOR_ADDRESS = 'address';
     public const DOCTOR_BIO = 'bio';
     public const SOCIAL_LINKS = 'links';
+    public const DOCTOR_PRIORITY = 'priority';
+
     public const FIELDS = [
         self::ID,
         self::DOCTOR_NAME,
@@ -42,6 +43,10 @@ final class DoctorEnum
         self::AREA_ID,
         self::DOCTOR_ADDRESS,
         self::DOCTOR_BIO,
-        self::SOCIAL_LINKS
+        self::SOCIAL_LINKS,
+        self::DOCTOR_PRIORITY,
     ];
+
+    const GENDER_MALE = 'male';
+    const GENDER_FEMALE = 'female';
 }

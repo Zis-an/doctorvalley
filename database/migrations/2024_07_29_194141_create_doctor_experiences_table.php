@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string(DoctorExperienceEnum::DOCTOR_DESIGNATION);
             $table->longText(DoctorExperienceEnum::DOCTOR_ORG_ADDRESS);
             $table->date(DoctorExperienceEnum::FROM_DATE);
-            $table->date(DoctorExperienceEnum::TO_DATE);
+            $table->date(DoctorExperienceEnum::TO_DATE)->nullable();
             $table->boolean(DoctorExperienceEnum::IS_CURRENT)->default(0);
             $table->timestamps();
             $table->softDeletes();

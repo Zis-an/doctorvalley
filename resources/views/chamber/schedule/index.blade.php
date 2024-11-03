@@ -12,166 +12,58 @@
                     <div class="scheduletable-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" aria-describedby="table">
-                                <tr>
-                                    <th scope="row">Sunday</th>
-                                    <td class="px-0">
-                                        <div class="docschedules">
-                                            <div class="detail">
-                                                <h5 class="name">Doctor Stephen Strange</h5>
-                                                <span class="time">4:00am - 5:00pm</span>
+                                @foreach($scheduleDays as $dayKey => $day)
+                                    <tr>
+                                        <th scope="row">{{ ucfirst($day) }}</th>
+                                        <td class="px-0">
+                                            <div class="docschedules">
+                                                @if(isset($weeklySchedules[$dayKey]))
+                                                    @foreach($weeklySchedules[$dayKey] as $schedule)
+                                                        <div class="detail">
+                                                            @if ($schedule->doctor)
+                                                                <h5 class="name text-capitalize">{{ $schedule->doctor->name }}</h5>
+                                                                <span class="time">
+                                    {{ \Carbon\Carbon::parse($schedule->start_from)->format('g:i A') }} -
+                                    {{ \Carbon\Carbon::parse($schedule->end_from)->format('g:i A') }}
+                                </span>
+                                                            @else
+                                                                <h5 class="name">Doctor Not Found</h5>
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div class="detail">
+                                                        <h5 class="name">No doctors scheduled</h5>
+                                                    </div>
+                                                @endif
                                             </div>
+                                        </td>
 
-                                            <div class="detail">
-                                                <h5 class="name">Doctor Stephen Strange</h5>
-                                                <span class="time">4:00am - 5:00pm</span>
+                                        <td class="px-0">
+                                            <div class="docschedules">
+                                                @if(isset($weeklySchedules[$dayKey]))
+                                                    @foreach($weeklySchedules[$dayKey] as $schedule)
+                                                        <div class="detail">
+                                                            @if ($schedule->doctor)
+                                                                <div class="specialities d-flex gap-2">
+                                                                    @foreach($schedule->doctor->specialities as $speciality)
+                                                                        <span class="speciality text-capitalize">{{ $speciality->speciality_name }}</span>
+                                                                    @endforeach
+                                                                </div>
+                                                            @else
+                                                                <h5 class="name">No speciality found</h5>
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div class="detail">
+                                                        <h5 class="name">No speciality found</h5>
+                                                    </div>
+                                                @endif
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="specilities d-flex align-items-center gap-2 flex-wrap">
-                                            <span class="speciality">Neurobiologist</span>
-                                            <span class="speciality">Medicinologist</span>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">Monday</th>
-                                    <td class="px-0">
-                                        <div class="docschedules">
-                                            <div class="detail">
-                                                <h5 class="name">Doctor Stephen Strange</h5>
-                                                <span class="time">4:00am - 5:00pm</span>
-                                            </div>
-
-                                            <div class="detail">
-                                                <h5 class="name">Doctor Stephen Strange</h5>
-                                                <span class="time">4:00am - 5:00pm</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="specilities d-flex align-items-center gap-2 flex-wrap">
-                                            <span class="speciality">Neurobiologist</span>
-                                            <span class="speciality">Medicinologist</span>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">Tuesday</th>
-                                    <td class="px-0">
-                                        <div class="docschedules">
-                                            <div class="detail">
-                                                <h5 class="name">Doctor Stephen Strange</h5>
-                                                <span class="time">4:00am - 5:00pm</span>
-                                            </div>
-
-                                            <div class="detail">
-                                                <h5 class="name">Doctor Stephen Strange</h5>
-                                                <span class="time">4:00am - 5:00pm</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="specilities d-flex align-items-center gap-2 flex-wrap">
-                                            <span class="speciality">Neurobiologist</span>
-                                            <span class="speciality">Medicinologist</span>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">Wednesday</th>
-                                    <td class="px-0">
-                                        <div class="docschedules">
-                                            <div class="detail">
-                                                <h5 class="name">Doctor Stephen Strange</h5>
-                                                <span class="time">4:00am - 5:00pm</span>
-                                            </div>
-
-                                            <div class="detail">
-                                                <h5 class="name">Doctor Stephen Strange</h5>
-                                                <span class="time">4:00am - 5:00pm</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="specilities d-flex align-items-center gap-2 flex-wrap">
-                                            <span class="speciality">Neurobiologist</span>
-                                            <span class="speciality">Medicinologist</span>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">Thursday</th>
-                                    <td class="px-0">
-                                        <div class="docschedules">
-                                            <div class="detail">
-                                                <h5 class="name">Doctor Stephen Strange</h5>
-                                                <span class="time">4:00am - 5:00pm</span>
-                                            </div>
-
-                                            <div class="detail">
-                                                <h5 class="name">Doctor Stephen Strange</h5>
-                                                <span class="time">4:00am - 5:00pm</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="specilities d-flex align-items-center gap-2 flex-wrap">
-                                            <span class="speciality">Neurobiologist</span>
-                                            <span class="speciality">Medicinologist</span>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">Friday</th>
-                                    <td class="px-0">
-                                        <div class="docschedules">
-                                            <div class="detail">
-                                                <h5 class="name">Doctor Stephen Strange</h5>
-                                                <span class="time">4:00am - 5:00pm</span>
-                                            </div>
-
-                                            <div class="detail">
-                                                <h5 class="name">Doctor Stephen Strange</h5>
-                                                <span class="time">4:00am - 5:00pm</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="specilities d-flex align-items-center gap-2 flex-wrap">
-                                            <span class="speciality">Neurobiologist</span>
-                                            <span class="speciality">Medicinologist</span>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">Saturday</th>
-                                    <td class="px-0">
-                                        <div class="docschedules">
-                                            <div class="detail">
-                                                <h5 class="name">Doctor Stephen Strange</h5>
-                                                <span class="time">4:00am - 5:00pm</span>
-                                            </div>
-
-                                            <div class="detail">
-                                                <h5 class="name">Doctor Stephen Strange</h5>
-                                                <span class="time">4:00am - 5:00pm</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="specilities d-flex align-items-center gap-2 flex-wrap">
-                                            <span class="speciality">Neurobiologist</span>
-                                            <span class="speciality">Medicinologist</span>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </table>
                         </div>
                     </div>

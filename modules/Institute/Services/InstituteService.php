@@ -18,9 +18,9 @@ class InstituteService
         $this->repository = new InstituteDbRepository();
     }
 
-    public function getInstituteList(): mixed
+    public function getInstituteList(array $filterData): mixed
     {
-        $result = $this->repository->getInstituteData();
+        $result = $this->repository->getInstituteData($filterData);
         if (empty($result)){
             return [];
         }

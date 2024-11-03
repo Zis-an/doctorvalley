@@ -18,9 +18,9 @@ class CourseService
         $this->repository = new CourseDbRepository();
     }
 
-    public function getCourseList(): mixed
+    public function getCourseList(array $filterData): mixed
     {
-        $result = $this->repository->getCourseData();
+        $result = $this->repository->getCourseData($filterData);
         if (empty($result)){
             return [];
         }

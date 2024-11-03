@@ -43,7 +43,7 @@
     @include('includes.sidebar.index')
 
     @include('includes.navbar')
-
+{{--    <x-message.alert></x-message.alert>--}}
     @yield('content')
 
     @include('includes.footer')

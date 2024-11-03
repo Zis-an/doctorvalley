@@ -23,11 +23,15 @@ class CountryDbRepository
     /**
      * @return mixed
      */
-    public function getCountryData(): mixed
+    public function getCountryData(array $filters=[]): mixed
     {
-        return $this->model
-        ->whereNull('deleted_at')
-        ->latest()->get();
+        $query = $this->model
+            ->whereNull('deleted_at')
+            ->latest();
+
+        $query = $this->getFilterQuery($query, $filters);
+
+        return $query->paginate(10);
     }
 
     /**
@@ -89,4 +93,17 @@ class CountryDbRepository
             ->whereIn(CountryEnum::ID, $ids)
             ->get();
     }
+
+    private function getFilterQuery($query , array $filters=[])
+    {
+        if (!empty($filters['country'])) {
+            $query = $query->where(function ($q) use ($filters) {
+                $q->where('country_name', 'like', '%' . $filters['country'] . '%')
+                    ->orWhere('capital', 'like', '%' . $filters['country'] . '%');
+            });
+        }
+
+        return $query;
+    }
+
 }
