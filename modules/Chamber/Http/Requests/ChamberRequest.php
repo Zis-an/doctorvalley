@@ -29,7 +29,7 @@ class ChamberRequest extends FormRequest
             'area_id'=>['required'],
             'address'=>['required'],
             'chamber_type'=>['required'],
-            'description'=>['required'],
+            'description'=>['nullable'],
             'links' => ['array'],
             'links.*' => ['nullable'],
             'status'=>['required'],
@@ -62,8 +62,6 @@ class ChamberRequest extends FormRequest
             'address.required' => 'Address is required',
 
             'chamber_type.required' => 'Chamber Type is required',
-
-            'description.required' => 'Description is required',
 
             'status.required' => 'Status is required',
         ];

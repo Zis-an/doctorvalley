@@ -24,14 +24,9 @@
 
                     </div>
 
-
-
-
                     <div class="col-2 ms-auto">
                         <a href="{{ route('doctor.create') }}" class="speciality p-2">Add new doctor</a>
                     </div>
-
-
 
                     <div class="chambersection-body">
                         <ul class="nav nav-tabs" id="doctorsTab" role="tablist">
@@ -102,7 +97,6 @@
 
                                 <div class="row g-4">
 
-
                                     @if(!empty($doctors))
                                         @foreach($doctors as $doctor)
                                             <div class="col-lg-3 col-md-4 col-sm-6 col-12">
@@ -115,7 +109,7 @@
                                                         </div>
 
                                                         <figure class="thumbnail">
-                                                            <img src="{{ !empty($doctor->photo) ? asset($doctor->photo) :  '../assets/images/avatar/avatar.svg' }}" alt="doctor-thumbnail">
+                                                            <img src="{{ !empty($doctor->photo) ? asset('storage/' . $doctor->photo) :  '../assets/images/avatar/avatar.svg' }}" alt="doctor-thumbnail">
                                                         </figure>
                                                     </div>
 

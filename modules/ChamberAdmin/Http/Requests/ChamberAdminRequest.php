@@ -21,7 +21,7 @@ class ChamberAdminRequest extends FormRequest
         $rules = [
             'name' => ['required', 'string'],
             'username' => ['required'],
-            'email' => 'required|email:rfc,dns',
+            'email' => 'required',
             'phone' => ['required'],
             'chamber_id' => ['required'],
             'status' => ['required'],

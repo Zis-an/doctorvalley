@@ -8,6 +8,7 @@
 namespace Modules\Doctor\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -49,9 +50,10 @@ class DoctorManagementController extends Controller
 
     }
 
-    public function index(Request $request): View | Factory | Application
+    public function index(Request $request)
     {
         try {
+            throw new Exception("dbajbsd");
             $doctors = $this->service->getDoctorList($request->all());
             $specialities = $this->specialityService->getSpecialityList($request->all());
             $provinces = $this->provinceService->getProvinceList($request->all());
@@ -63,12 +65,14 @@ class DoctorManagementController extends Controller
             }
             return view('backoffice.doctor.doctorList', compact('doctors', 'designations','specialities', 'provinces', 'cities', 'areas'));
         } catch (\Throwable $exception) {
-            dd($exception);
-            abort(500);
+            return $this->redirectWithExceptionLog(
+                exception: $exception,
+                logContext: 'DOCTOR_LIST_ERROR'
+            );
         }
     }
 
-    public function personalInfo(Request $request): View | Factory | Application
+    public function personalInfo(Request $request)
     {
         try {
             $provinces = $this->provinceService->getProvinceList($request->all());
@@ -77,11 +81,14 @@ class DoctorManagementController extends Controller
             $specialities = $this->specialityService->getSpecialityList($request->all());
             return view('components.create-doctor.personal-info', compact('provinces', 'cities', 'areas', 'specialities'));
         } catch (\Throwable $exception) {
-            abort(500);
+            return $this->redirectWithExceptionLog(
+                exception: $exception,
+                logContext: 'DOCTOR_PERSONAL_PROFILE_ERROR'
+            );
         }
     }
 
-    public function professionalInfo(): View | Factory | Application | RedirectResponse
+    public function professionalInfo()
     {
         try {
             // Retrieve doctor_id from session
@@ -96,11 +103,14 @@ class DoctorManagementController extends Controller
             // Load the professional information form
             return view('components.create-doctor.professional-info', compact('doctor_id'));
         } catch (\Throwable $exception) {
-            abort(500);
+            return $this->redirectWithExceptionLog(
+                exception: $exception,
+                logContext: 'DOCTOR_PROFESSIONAL_PROFILE_ERROR'
+            );
         }
     }
 
-    public function educationalInfo(Request $request): View | Factory | Application | RedirectResponse
+    public function educationalInfo(Request $request)
     {
         try {
             $degrees = $this->degreeService->getActiveDegreeList();
@@ -116,7 +126,10 @@ class DoctorManagementController extends Controller
 
             return view('components.create-doctor.educational-info', compact('degrees', 'institutes', 'doctor_id'));
         } catch (\Throwable $exception) {
-            abort(500);
+            return $this->redirectWithExceptionLog(
+                exception: $exception,
+                logContext: 'DOCTOR_PROFESSIONAL_PROFILE_ERROR'
+            );
         }
     }
 
@@ -136,7 +149,10 @@ class DoctorManagementController extends Controller
 
             return view('components.create-doctor.profile-image', compact('doctor_id'));
         } catch (\Throwable $exception) {
-            abort(500);
+            return $this->redirectWithExceptionLog(
+                exception: $exception,
+                logContext: 'DOCTOR_PROFILE_IMAGE_ERROR'
+            );
         }
     }
 
@@ -202,7 +218,10 @@ class DoctorManagementController extends Controller
 
         } catch (\Throwable $throwable) {
             Alert::error('Error', 'Doctor invalid data');
-            return redirect()->back()->with('error', 'Doctor invalid data')->withInput($request->all());
+            return $this->redirectWithExceptionLog(
+                exception: $throwable,
+                logContext: 'DOCTOR_PROFILE_IMAGE_ERROR'
+            );
         }
     }
 
@@ -303,8 +322,11 @@ class DoctorManagementController extends Controller
             return redirect()->route('doctor.index')
                 ->with('success', 'Doctor image updated successfully');
         } catch (\Throwable $throwable) {
-            Alert::error('Error', 'Doctor Image invalid data');
-            return redirect()->back()->with('error', 'Doctor Image invalid data')->withInput($request->all());
+            Alert::error('Error', 'Doctor invalid data');
+            return $this->redirectWithExceptionLog(
+                exception: $throwable,
+                logContext: 'DOCTOR_PROFILE_IMAGE_ERROR'
+            );
         }
     }
 

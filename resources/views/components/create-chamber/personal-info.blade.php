@@ -43,7 +43,7 @@
                             <label for="phonenumber" class="inputlabel">
                                 Phone Number <span>*</span>
                             </label>
-                            <input type="tel" name="phone_no" pattern="01[3-9][0-9]{8}" id="phonenumber" value="{{ !empty($chamber) ? $chamber->phone_no : old('phone_no') }}"
+                            <input type="tel" name="phone_no" id="phonenumber" value="{{ !empty($chamber) ? $chamber->phone_no : old('phone_no') }}"
                                    class="form-control" placeholder="01965088417" autocomplete="off">
                             @if($errors->has('phone_no'))
                                 <p class="error-message">{{ $errors->first('phone_no') }}</p>
@@ -151,7 +151,6 @@
                             </label>
                             <textarea id="description" name="description" class="form-control" placeholder="Enter description about your pharma" rows="4"
                                       autocomplete="off">{{ !empty($chamber) ? $chamber->description : old('description') }}</textarea>
-                            {{-- <p class="error-message d-none">This field is required</p> --}}
                         </div>
                     </div>
 

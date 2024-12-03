@@ -102,7 +102,7 @@
 
                                 <div class="col-12">
                                     <div class="d-flex flex-column align-items-center justify-content-center gap-3">
-                                        <button type="submit" class="btn-submit">Sign In</button>
+                                        <button type="submit" class="btn-submit">Sign Up</button>
                                     </div>
                                 </div>
                             </div>

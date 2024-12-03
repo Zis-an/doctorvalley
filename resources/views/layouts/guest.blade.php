@@ -18,6 +18,9 @@
     <!-- DOCTORVALY CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 
+    <!-- FONTAWESOME-CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/css/all.min.css') }}">
+
     @stack('before-styles')
 
     @vite(['resources/css/backend.css', 'resources/css/app.css'])

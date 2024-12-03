@@ -32,7 +32,10 @@ class SpecialityController extends Controller
             $specialities = $this->service->getSpecialityList($request->all());
             return view('backoffice.speciality.index', compact('specialities'));
         }catch (\Throwable $exception){
-            abort(500);
+            return $this->redirectWithExceptionLog(
+                exception: $exception,
+                logContext: 'SPECIALITY_LIST_FETCH_ERROR'
+            );
         }
     }
 
@@ -42,7 +45,10 @@ class SpecialityController extends Controller
             $specialities = $this->service->getSpecialityList($request->all());
             return view('backoffice.speciality.index', compact('specialities'));
         }catch (\Throwable $exception){
-            abort(500);
+            return $this->redirectWithExceptionLog(
+                exception: $exception,
+                logContext: 'SPECIALITY_CREATE_ERROR'
+            );
         }
     }
 
@@ -54,7 +60,10 @@ class SpecialityController extends Controller
             return redirect()->route('backoffice.speciality.index')->with('success', 'Speciality store successfully');
         }catch (\Throwable $throwable){
             Alert::error('Error', 'Speciality invalid data');
-            return redirect()->back()->with('error', 'Speciality invalid data')->withInput($request->all());
+            return $this->redirectWithExceptionLog(
+                exception: $throwable,
+                logContext: 'SPECIALITY_STORE_ERROR'
+            );
         }
     }
 
@@ -68,7 +77,10 @@ class SpecialityController extends Controller
                 compact('specialities','speciality')
             );
         }catch (\Throwable $throwable){
-            return abort(500);
+            return $this->redirectWithExceptionLog(
+                exception: $throwable,
+                logContext: 'SPECIALITY_EDIT_ERROR'
+            );
         }
     }
 
@@ -81,7 +93,10 @@ class SpecialityController extends Controller
                 ->with('success', 'Speciality updated successfully');
         }catch (\Throwable $throwable){
             Alert::error('Error', 'Speciality invalid data');
-            return redirect()->back()->with('error', 'Speciality invalid data')->withInput($request->all());
+            return $this->redirectWithExceptionLog(
+                exception: $throwable,
+                logContext: 'SPECIALITY_UPDATE_ERROR'
+            );
         }
     }
 
@@ -94,7 +109,10 @@ class SpecialityController extends Controller
                 ->with('success', 'Speciality delete successfully');
         }catch (\Throwable $throwable){
             Alert::error('Error', 'Speciality invalid data');
-            return redirect()->back()->with('error', 'Invalid Speciality information');
+            return $this->redirectWithExceptionLog(
+                exception: $throwable,
+                logContext: 'SPECIALITY_DELETE_ERROR'
+            );
         }
     }
 

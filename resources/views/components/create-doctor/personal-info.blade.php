@@ -1,5 +1,4 @@
 @extends('backoffice.doctor.createUpdateDoctor')
-
 @section('tab-content')
     <div class="tab-pane fade show active" id="personalinformation-tab-pane" role="tabpanel"
         aria-labelledby="personalinformation-tab" tabindex="0">
@@ -90,8 +89,7 @@
 
                                 <div class="col-md-6 col-12">
                                     <div class="inputbox">
-                                        <label for="phonenumber" class="inputlabel">
-                                            Phone Number <span>*</span>
+                                        <label for="phonenumber" class="inputlabel">Phone Number <span>*</span>
                                         </label>
                                         <input type="tel" id="phonenumber"
                                             value="{{ !empty($doctor) ? $doctor->phone : old('phone') }}" name="phone"
@@ -171,20 +169,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-{{--                                <!-- Speciality -->--}}
-{{--                                --}}{{-- <div class="col-12">--}}
-{{--                                    <div class="inputbox">--}}
-{{--                                        <label for="speciality" class="inputlabel">--}}
-{{--                                            Speciality <span>*</span>--}}
-{{--                                        </label>--}}
-{{--                                        <input type="text" class="form-control" id="speciality" name="speciality[]"--}}
-{{--                                            autocomplete="off">--}}
-{{--                                            @if ($errors->has('speciality'))--}}
-{{--                                            <p class="error-message">{{ $errors->first('speciality') }}</p>--}}
-{{--                                        @endif--}}
-{{--                                    </div>--}}
-{{--                                </div> --}}
 
                                 <div class="col-12">
                                     <div class="inputbox">
@@ -289,36 +273,9 @@
 
 
                                 @if(empty($doctor))
-                                {{--<div class="col-md-4 col-12">
-                                    <div class="inputbox">
-                                        <label for="password" class="inputlabel">
-                                            Password <span>*</span>
-                                        </label>
-
-                                        <input type="password" id="password" value="{{ !empty($doctor) ? $doctor->password : old('password') }}" name="password" class="form-control">
-                                        @if ($errors->has('password'))
-                                            <p class="error-message">{{ $errors->first('password') }}</p>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4 col-12">
-                                    <div class="inputbox">
-                                        <label for="password_confirmation" class="inputlabel">
-                                            Confirm Password <span>*</span>
-                                        </label>
-                                        <input type="password" id="password_confirmation" value="" name="password_confirmation" class="form-control">
-                                        @if ($errors->has('password_confirmation'))
-                                            <p class="error-message">{{ $errors->first('password_confirmation') }}</p>
-                                        @endif
-                                    </div>
-                                </div>--}}
-
                                     <div class="col-md-4 col-12">
                                         <div class="inputbox">
-                                            <label for="password" class="inputlabel">
-                                                Password
-                                            </label>
+                                            <label for="password" class="inputlabel">Password</label>
                                             <div class="position-relative">
                                                 <input type="password" id="password" value="{{ !empty($doctor) ? $doctor->password : old('password') }}" name="password" class="form-control pe-5">
                                                 <span class="position-absolute top-50 translate-middle-y" style="right: 10px; cursor: pointer;">
@@ -374,54 +331,6 @@
                                         @endif
                                     </div>
                                 </div>
-
-                                {{-- <div class="col-md-6 col-12">
-                                    <div class="socialbox">
-                                        <span class="icon">
-                                            <i class="fa-brands fa-facebook-f"></i>
-                                        </span>
-                                        <div class="detail">
-                                            <input type="text" name="links[]"
-                                                placeholder="https://facebook.com/ratulalmamun" autocomplete="off">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-12">
-                                    <div class="socialbox">
-                                        <span class="icon">
-                                            <i class="fa-brands fa-twitter"></i>
-                                        </span>
-                                        <div class="detail">
-                                            <input type="text" name="links[]"
-                                                placeholder="https://twitter.com/ratulalmamun" autocomplete="off">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-12">
-                                    <div class="socialbox">
-                                        <span class="icon">
-                                            <i class="fa-brands fa-youtube"></i>
-                                        </span>
-                                        <div class="detail">
-                                            <input type="text" name="links[]"
-                                                placeholder="https://youtube.com/ratulalmamun" autocomplete="off">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-12">
-                                    <div class="socialbox">
-                                        <span class="icon">
-                                            <i class="fa-brands fa-linkedin-in"></i>
-                                        </span>
-                                        <div class="detail">
-                                            <input type="text" name="links[]"
-                                                placeholder="https://linkedin.com/ratulalmamun" autocomplete="off">
-                                        </div>
-                                    </div>
-                                </div> --}}
 
                                 @php
                                     $links = !empty($doctor) ? json_decode($doctor->links, true) : [];
@@ -537,9 +446,6 @@
                 }
             });
         });
-
-
-
     </script>
 
 @endpush

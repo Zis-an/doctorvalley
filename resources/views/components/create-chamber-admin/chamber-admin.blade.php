@@ -7,9 +7,6 @@
                     @method('PUT')
                 @endif
                 @csrf
-
-{{--                <input type="hidden" name="role_id" value="1">--}}
-
                 <div class="row g-3">
                     <div class="col-md-6 col-12">
                         <div class="inputbox">
@@ -64,9 +61,7 @@
                     </div>
 
                     @php
-
                     @endphp
-
                     @if( auth('chamber')->check())
                     <input type="hidden" name="chamber_id" value="{{ auth('chamber')->user()->chamber_id }}">
                     @else
@@ -95,8 +90,13 @@
                         <div class="{{ auth('chamber')->check() ? 'col-12' : 'col-md-6' }}">
                             <div class="inputbox">
                                 <label for="address" class="inputlabel">Password</label>
-                                <input type="password" name="password" id="password" value="" class="form-control" autocomplete="off">
-                                    @if($errors->has('password'))
+                                <div class="position-relative">
+                                    <input type="password" name="password" id="password" value="" class="form-control" autocomplete="off">
+                                    <span class="position-absolute top-50 translate-middle-y" style="right: 10px; cursor: pointer;">
+                                        <i class="fa fa-eye-slash toggle-password" data-target="#password" id="togglePasswordIcon"></i>
+                                    </span>
+                                </div>
+                                @if($errors->has('password'))
                                     <p class="error-message">{{ $errors->first('password') }}</p>
                                 @endif
                             </div>
@@ -144,3 +144,24 @@
         </div>
     </div>
 </div>
+
+@push('after-scripts')
+    <script>
+        document.querySelectorAll('.toggle-password').forEach(icon => {
+            icon.addEventListener('click', function () {
+                const input = document.querySelector(this.getAttribute('data-target'));
+                const currentIcon = this;
+
+                if (input.getAttribute('type') === 'password') {
+                    input.setAttribute('type', 'text');
+                    currentIcon.classList.remove('fa-eye-slash');
+                    currentIcon.classList.add('fa-eye');
+                } else {
+                    input.setAttribute('type', 'password');
+                    currentIcon.classList.remove('fa-eye');
+                    currentIcon.classList.add('fa-eye-slash');
+                }
+            });
+        });
+    </script>
+@endpush

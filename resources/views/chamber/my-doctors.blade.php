@@ -24,7 +24,7 @@
                                     <div class="mydoctor">
                                         <div class="mydoctor-detail">
                                             <figure class="thumb">
-                                                <img src="{{ !empty($doctor->photo) ? asset($doctor->photo) :  '../assets/images/avatar/profile.svg' }}" alt="doctor-thumb">
+                                                <img src="{{ !empty($doctor->photo) ? asset('storage/' . $doctor->photo) :  '../assets/images/avatar/profile.svg' }}" alt="doctor-thumb">
                                             </figure>
 
                                             <div class="detail">

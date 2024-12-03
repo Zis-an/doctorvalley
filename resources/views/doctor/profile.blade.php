@@ -38,7 +38,7 @@
                 <div class="info-body">
                     <figure class="profileimg">
                         @if (!empty(auth()->user()->photo))
-                            <img src="{{ asset(auth()->user()->photo) }}" alt="profile-image">
+                            <img src="{{ asset('storage/' . auth()->user()->photo) }}" alt="profile-image">
                         @else
                             <img src="{{ asset('assets/images/avatar/profile.svg') }}" alt="profile-image">
                         @endif
