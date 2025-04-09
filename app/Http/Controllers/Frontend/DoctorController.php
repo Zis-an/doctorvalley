@@ -59,6 +59,10 @@ class DoctorController extends Controller
             $query->where('area_id', $request->areas);
         }
 
+        if ($request->has('gender') && $request->gender) {
+            $query->where('gender', $request->gender);
+        }
+
         // Execute the query and get the doctors collection
         $doctors = $query->get();
 

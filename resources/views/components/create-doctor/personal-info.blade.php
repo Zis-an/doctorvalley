@@ -199,7 +199,7 @@
                                     <div class="inputbox">
                                         <label for="divisions" class="inputlabel">Division <span>*</span></label>
                                         <select id="divisions" name="province_id" class="wide">
-                                            <option class="" selected disabled>Select Division</option>
+                                            <option value="" disabled>Select Division</option>
                                             @if(!empty($provinces))
                                             @foreach ($provinces as $province)
                                                 <option value="{{ $province->id }}"
@@ -388,7 +388,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12">
+                                <div class="col-md-6 col-12">
                                     <div class="inputbox">
                                         <label for="status" class="inputlabel">
                                             Status <span>*</span>
@@ -403,6 +403,22 @@
                                         @endif
                                     </div>
                                 </div>
+
+                                @if(!auth('doctor'))
+                                    <div class="col-md-6 col-12">
+                                        <div class="inputbox">
+                                            <label for="priority" class="inputlabel">
+                                                Priority
+                                            </label>
+                                            <input type="text" id="priority" name="priority"
+                                                   value="{{ !empty($doctor) ? $doctor->priority : old('priority') }}" class="form-control"
+                                                   placeholder="5" autocomplete="off">
+                                            @if ($errors->has('priority'))
+                                                <p class="error-message">{{ $errors->first('priority') }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endif
 
                                 <div class="col-12">
                                     <div class="edubtns">

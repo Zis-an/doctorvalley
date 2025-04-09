@@ -2,8 +2,7 @@
 <aside class="sidebar">
     @if(!empty(auth('chamber')->user()) || !empty(auth('admin')->user()) || !empty(auth('doctor')->user()))
         <div class="sidebar-header">
-{{--            <a href="{{ !empty(auth('doctor')->user()) ? route('doctor.profile') : '#' }}" class="userlink">--}}
-            <a href="#" class="userlink">
+            <a href="{{ auth('admin')->check() ? route('backoffice.admin.profile', auth('admin')->user()->id) : '#' }}" class="userlink">
               <span class="user-avatar">
                   @if(auth('doctor')->check())
                       <img src="{{ asset('storage/' . auth()->user()->photo) }}" alt="user-avatar">

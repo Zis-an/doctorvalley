@@ -28,19 +28,20 @@ Route::get('/notifications', [HomeController::class, 'notifications'])->name('no
 // Chamber
 //Route::get('/chamber/find-doctors', [TemplateRenderController::class, 'chamber_find_doctor'])->name('chamber.find-doctor');
 //Route::get('/chamber/my-doctors', [TemplateRenderController::class, 'chamber_my_doctors'])->name('chamber.my-doctors');
-Route::get('/chamber/feedback', [TemplateRenderController::class, 'chamber_feedback'])->name('chamber.feedback');
+//Route::get('/chamber/feedback', [TemplateRenderController::class, 'chamber_feedback'])->name('chamber.feedback');
 //Route::get('/chamber/create-schedule', [TemplateRenderController::class, 'chamber_create_schedule'])->name('chamber.schedule.create');
 //Route::get('/chamber/schedule', [TemplateRenderController::class, 'chamber_schedule'])->name('chamber.schedule');
-Route::get('/chamber/doctor-profile', [TemplateRenderController::class, 'chamber_doctor_profile'])->name('chamber.doctor.profile');
-Route::get('/chamber/notifications', [TemplateRenderController::class, 'chamber_notifications'])->name('chamber.notifications');
+//Route::get('/chamber/doctor-profile', [TemplateRenderController::class, 'chamber_doctor_profile'])->name('chamber.doctor.profile');
+//Route::get('/chamber/notifications', [TemplateRenderController::class, 'chamber_notifications'])->name('chamber.notifications');
 
 // Doctor
 
-Route::get('/doctor/add-post', [TemplateRenderController::class, 'doctor_add_post'])->name('doctor.add.post');
-Route::get('/doctor/feedback', [TemplateRenderController::class, 'doctor_feedback'])->name('doctor.feedback');
+//Route::get('/doctor/add-post', [TemplateRenderController::class, 'doctor_add_post'])->name('doctor.add.post');
+//Route::get('/doctor/feedback', [TemplateRenderController::class, 'doctor_feedback'])->name('doctor.feedback');
 
 // Backoffice
 Route::get('/backoffice/doctor-request', [TemplateRenderController::class, 'backoffice_doctor_request'])->name('backoffice.doctor.request');
+
 
 // Frontend
 Route::get('/', [FrontendController::class, 'index'])->name('index');

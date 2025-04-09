@@ -47,7 +47,7 @@
 
                                     <div class="col-lg-3 col-md-4 col-12">
                                         <figure class="thumbnail">
-                                            <img src="{{ !empty($doctor->photo) ? asset($doctor->photo) : '../assets/images/avatar/profile.svg' }}" alt="doctor-dp">
+                                            <img src="{{ !empty($doctor->photo) ? asset('storage/' . $doctor->photo) : '../assets/images/avatar/profile.svg' }}" alt="doctor-dp">
                                         </figure>
                                     </div>
 

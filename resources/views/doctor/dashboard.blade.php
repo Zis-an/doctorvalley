@@ -25,7 +25,7 @@
                         </div>
 
                         <figure class="card-thumbnail">
-                            <img src="{{ asset(auth()->user()->photo) }}" alt="card-thumbnail">
+                            <img src="{{ asset('storage/' . auth()->user()->photo) }}" alt="card-thumbnail">
                         </figure>
                     </div>
 

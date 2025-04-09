@@ -1,4 +1,3 @@
-
 @extends('backoffice.doctor.createUpdateDoctor')
 @section('tab-content')
     @if (session('success'))
@@ -50,14 +49,6 @@
                                             <div class="col-md-6">
                                                 <div class="inputbox">
                                                     <label for="" class="inputlabel">Degree Title <span>*</span></label>
-{{--                                                    <select id="" name="degree_id[{{ $i }}]" class="form-select wide">--}}
-{{--                                                        <option value="">--Select Degree--</option>--}}
-{{--                                                        @foreach ($degrees as $degree)--}}
-{{--                                                            <option class="select-dropdown__list-item" value="{{ $degree->id }}" {{ old('degree_id.' . $i, $education->degree_id ?? '') == $degree->id ? 'selected' : '' }}>--}}
-{{--                                                                {{ $degree->degree_name }}--}}
-{{--                                                            </option>--}}
-{{--                                                        @endforeach--}}
-{{--                                                    </select>--}}
 
                                                     <select id="normal-select-degree-{{ $i }}" name="degree_id[{{ $i }}]" class="form-select wide" onchange="toggleMajorCourseField(this, {{ $i }})">
                                                         <option value="" disabled>--Select Degree--</option>
@@ -67,7 +58,6 @@
                                                             </option>
                                                         @endforeach
                                                     </select>
-
 
                                                     @if ($errors->has('degree_id'))
                                                         <p class="error-message">{{ $errors->first('degree_id') }}</p>
@@ -91,16 +81,6 @@
                                                     @enderror
                                                 </div>
                                             </div>
-
-{{--                                            <div class="col-md-12">--}}
-{{--                                                <div class="inputbox">--}}
-{{--                                                    <label for="majorcourse" class="inputlabel">Major Course <span>*</span></label>--}}
-{{--                                                    <input type="text" name="major[{{ $i }}]" id="majorcourse" class="form-control" placeholder="Dental" autocomplete="off" value="{{ old('major.' . $i, $education->major ?? '') }}">--}}
-{{--                                                    @error('major.' . $i)--}}
-{{--                                                    <p class="error-message">{{ $message }}</p>--}}
-{{--                                                    @enderror--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
 
                                             <div class="col-md-12 major-course-container" id="major-course-container-{{ $i }}" style="display: none;">
                                                 <div class="inputbox">
@@ -177,331 +157,12 @@
 <!-- JavaScript for adding dynamic educational qualification forms -->
 
 @push('after-scripts')
-{{--    // previous--}}
-    {{--<script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const formContainer = document.getElementById('new-education-sections');
-            const addButton = document.getElementById('add-education-form');
-            let educationCount = {{ count(old('degree_id', isset($educations) ? $educations : [])) }};  // Set initial count based on old input or existing qualifications
-
-            /**
-             * Section 1: Add More Qualification Functionality
-             */
-            function addEducationForm() {
-                const newEducationForm = `
-        <div class="form-container">
-            <fieldset class="experience-fieldset">
-                <legend>Educational Information</legend>
-                <div class="row g-3">
-                    <input type="hidden" name="doctor_id" value="{{ $doctor_id }}">
-
-                    <div class="col-md-6">
-                        <div class="inputbox">
-                            <label for="normal-select-degree-${educationCount}" class="inputlabel">Degree Title <span>*</span></label>
-                            <select id="normal-select-degree-${educationCount}" name="degree_id[${educationCount}]" class="form-select wide">
-                                <option value="" disabled>--Select Degree--</option>
-                                @foreach ($degrees as $degree)
-                <option value="{{ $degree->id }}">{{ $degree->degree_name }}</option>
-                                @endforeach
-                </select>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="inputbox">
-                <label for="normal-select-institute-${educationCount}" class="inputlabel">Select Institute <span>*</span></label>
-                            <select id="normal-select-institute-${educationCount}" name="institute_id[${educationCount}]" class="wide">
-                                <option value="" disabled>--Select Institute--</option>
-                                @foreach ($institutes as $institute)
-                <option value="{{ $institute->id }}">{{ $institute->institute_name }}</option>
-                                @endforeach
-                </select>
-            </div>
-        </div>
-
-        <div class="col-md-12">
-            <div class="inputbox">
-                <label for="majorcourse" class="inputlabel">Major Course <span>*</span></label>
-                <input type="text" name="major[${educationCount}]" id="majorcourse" class="form-control" placeholder="Dental" autocomplete="off">
-                        </div>
-                    </div>
-
-
-                    <div class="col-md-6">
-                        <div class="inputbox">
-                            <label class="inputlabel">From Date <span>*</span></label>
-                            <input type="date" name="from[${educationCount}]" class="form-control">
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="inputbox">
-                            <label class="inputlabel">To Date</label>
-                            <input type="date" id="to-date-${educationCount}" name="to[${educationCount}]" class="form-control">
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="checkfield">
-                            <input type="hidden" name="current[${educationCount}]" value="0">
-                            <input type="checkbox" id="current-education-${educationCount}" name="current[${educationCount}]" value="1" class="checkinput" hidden>
-                            <label for="current-education-${educationCount}" class="checklabel">Currently Studying</label>
-                        </div>
-                    </div>
-                </div>
-            </fieldset>
-        </div>`;
-
-                // Append new form
-                formContainer.insertAdjacentHTML('beforeend', newEducationForm);
-
-                // Bind NiceSelect to the newly added fields
-                bindNiceSelect(`normal-select-degree-${educationCount}`);
-                bindNiceSelect(`normal-select-institute-${educationCount}`);
-
-                // Handle the relationship between "To Date" and "Currently Studying"
-                const currentCheckbox = document.getElementById(`current-education-${educationCount}`);
-                const toDateInput = document.getElementById(`to-date-${educationCount}`);
-                handleCurrentAndToDate(currentCheckbox, toDateInput);
-
-                educationCount++;
-            }
-
-            // Event listener for adding new qualifications
-            addButton.addEventListener('click', addEducationForm);
-
-            /**
-             * Section 2: Bind NiceSelect for Initial Form Elements
-             */
-            function bindNiceSelect(selector) {
-                const element = document.getElementById(selector);
-                if (element) {
-                    NiceSelect.bind(element, { searchable: true });
-                }
-            }
-
-            // Bind NiceSelect for all initial selects on the page
-            document.querySelectorAll('.wide').forEach(function(select) {
-                NiceSelect.bind(select, { searchable: true });
-            });
-
-            /**
-             * Section 3: Handle "To Date" and "Currently Studying" Validation
-             */
-            function handleCurrentAndToDate(currentCheckbox, toDateInput) {
-                currentCheckbox.addEventListener('change', function() {
-                    if (currentCheckbox.checked) {
-                        toDateInput.disabled = true;
-                        toDateInput.value = '';  // Ensure the `to` field is empty if "Currently Studying" is checked
-                    } else {
-                        toDateInput.disabled = false;
-                    }
-                });
-
-                toDateInput.addEventListener('input', function() {
-                    if (toDateInput.value) {
-                        currentCheckbox.disabled = true;
-                        currentCheckbox.checked = false;  // Uncheck "Currently Studying" if a "To Date" is provided
-                    } else {
-                        currentCheckbox.disabled = false;
-                    }
-                });
-            }
-
-            // Initialize the current/to-date relationship for existing sections
-            @foreach ($educations as $i => $education)
-            const currentCheckbox_{{ $i }} = document.getElementById('current-education-{{ $i }}');
-            const toDateInput_{{ $i }} = document.getElementById('to-date-{{ $i }}');
-            handleCurrentAndToDate(currentCheckbox_{{ $i }}, toDateInput_{{ $i }});
-            @endforeach
-        });
-
-
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Function to toggle the Major Course field based on the selected degree
-            function toggleMajorCourseField(selectElement, index) {
-                // Get the selected option
-                const selectedOption = selectElement.options[selectElement.selectedIndex];
-
-                // Check if the degree has a major course
-                const hasMajorCourse = selectedOption.getAttribute('data-has-major');
-
-                // Get the major course container by index
-                const majorCourseContainer = document.getElementById(`major-course-container-${index}`);
-
-                // Show or hide the major course field based on the has_major_course value
-                if (hasMajorCourse == "1") {
-                    majorCourseContainer.style.display = 'block';  // Show the major course field
-                } else {
-                    majorCourseContainer.style.display = 'none';   // Hide the major course field
-                }
-            }
-
-            // Section to initialize the major course field for each existing degree on page load
-            @foreach ($educations as $i => $education)
-            const degreeSelect_{{ $i }} = document.getElementById('normal-select-degree-{{ $i }}');
-            toggleMajorCourseField(degreeSelect_{{ $i }}, {{ $i }});  // Call the toggle function for each existing degree
-
-            // Attach event listener for degree select field on change
-            degreeSelect_{{ $i }}.addEventListener('change', function() {
-                toggleMajorCourseField(this, {{ $i }});
-            });
-            @endforeach
-        });
-
-    </script>--}}
-
-
-
-{{--all solutrion except to date current logic--}}
-    {{--<script>
-        // Ensure the toggleMajorCourseField is globally defined
-        function toggleMajorCourseField(selectElement, index) {
-            // Get the selected option
-            const selectedOption = selectElement.options[selectElement.selectedIndex];
-
-            // Check if the degree has a major course
-            const hasMajorCourse = selectedOption.getAttribute('data-has-major');
-
-            // Get the major course container by index
-            const majorCourseContainer = document.getElementById(`major-course-container-${index}`);
-
-            // Show or hide the major course field based on the has_major_course value
-            if (majorCourseContainer) {
-                if (hasMajorCourse == "1") {
-                    majorCourseContainer.style.display = 'block';  // Show the major course field
-                } else {
-                    majorCourseContainer.style.display = 'none';   // Hide the major course field
-                }
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            let educationCount = {{ count(old('degree_id', isset($educations) ? $educations : [])) }};  // Set initial count
-
-            // Initialize NiceSelect for the existing selects on page load
-            function initializeNiceSelect() {
-                document.querySelectorAll('.form-select.wide').forEach(function(select) {
-                    NiceSelect.bind(select, { searchable: true });
-                });
-            }
-
-            // Initialize NiceSelect on page load for existing form elements
-            initializeNiceSelect();
-
-            // Initialize the major course toggle on existing elements
-            @foreach ($educations as $i => $education)
-            const degreeSelect_{{ $i }} = document.getElementById('normal-select-degree-{{ $i }}');
-            if (degreeSelect_{{ $i }}) {
-                toggleMajorCourseField(degreeSelect_{{ $i }}, {{ $i }});  // Call the toggle function for each existing degree
-
-                // Attach event listener for degree select field on change
-                degreeSelect_{{ $i }}.addEventListener('change', function() {
-                    toggleMajorCourseField(this, {{ $i }});
-                });
-            }
-            @endforeach
-
-            // Function to add a new education form dynamically
-            function addEducationForm() {
-                const formContainer = document.getElementById('new-education-sections');
-
-                const newEducationForm = `
-            <div class="form-container">
-                <fieldset class="experience-fieldset">
-                    <legend>Educational Information</legend>
-                    <div class="row g-3">
-                        <input type="hidden" name="doctor_id" value="{{ $doctor_id }}">
-
-                        <div class="col-md-6">
-                            <div class="inputbox">
-                                <label for="normal-select-degree-${educationCount}" class="inputlabel">Degree Title <span>*</span></label>
-                                <select id="normal-select-degree-${educationCount}" name="degree_id[${educationCount}]" class="form-select wide" onchange="toggleMajorCourseField(this, ${educationCount})">
-                                    <option value="" disabled>--Select Degree--</option>
-                                    @foreach ($degrees as $degree)
-                <option value="{{ $degree->id }}" data-has-major="{{ $degree->has_major_course }}">{{ $degree->degree_name }}</option>
-                                    @endforeach
-                </select>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="inputbox">
-                <label for="normal-select-institute-${educationCount}" class="inputlabel">Select Institute <span>*</span></label>
-                                <select id="normal-select-institute-${educationCount}" name="institute_id[${educationCount}]" class="form-select wide">
-                                    <option value="" disabled>--Select Institute--</option>
-                                    @foreach ($institutes as $institute)
-                <option value="{{ $institute->id }}">{{ $institute->institute_name }}</option>
-                                    @endforeach
-                </select>
-            </div>
-        </div>
-
-        <div class="col-md-12 major-course-container" id="major-course-container-${educationCount}" style="display: none;">
-                            <div class="inputbox">
-                                <label for="majorcourse-${educationCount}" class="inputlabel">Major Course <span>*</span></label>
-                                <input type="text" name="major[${educationCount}]" id="majorcourse-${educationCount}" class="form-control" placeholder="Dental" autocomplete="off">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="inputbox">
-                                <label class="inputlabel">From Date <span>*</span></label>
-                                <input type="date" name="from[${educationCount}]" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="inputbox">
-                                <label class="inputlabel">To Date</label>
-                                <input type="date" name="to[${educationCount}]" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="col-12">
-                            <div class="checkfield">
-                                <input type="hidden" name="current[${educationCount}]" value="0">
-                                <input type="checkbox" id="current-education-${educationCount}" name="current[${educationCount}]" class="checkinput" hidden value="1">
-                                <label for="current-education-${educationCount}" class="checklabel">Currently Studying</label>
-                            </div>
-                        </div>
-                    </div>
-                </fieldset>
-            </div>`;
-
-                // Append new form
-                formContainer.insertAdjacentHTML('beforeend', newEducationForm);
-
-                // Attach event listener to the newly added degree select field
-                const newDegreeSelect = document.getElementById(`normal-select-degree-${educationCount}`);
-                newDegreeSelect.addEventListener('change', function() {
-                    toggleMajorCourseField(newDegreeSelect, educationCount);
-                });
-
-                // Re-initialize NiceSelect for the new selects
-                NiceSelect.bind(newDegreeSelect, { searchable: true });
-                const newInstituteSelect = document.getElementById(`normal-select-institute-${educationCount}`);
-                NiceSelect.bind(newInstituteSelect, { searchable: true });
-
-                // Increment the education count
-                educationCount++;
-            }
-
-            // Event listener for adding new qualifications
-            document.getElementById('add-education-form').addEventListener('click', addEducationForm);
-        });
-
-
-    </script>--}}
-
 <script>
     // Ensure the toggleMajorCourseField is globally defined
     function toggleMajorCourseField(selectElement, index) {
         // Get the selected option
         const selectedOption = selectElement.options[selectElement.selectedIndex];
+        console.log(selectedOption);
 
         // Check if the degree has a major course
         const hasMajorCourse = selectedOption.getAttribute('data-has-major');
@@ -511,7 +172,8 @@
 
         // Show or hide the major course field based on the has_major_course value
         if (majorCourseContainer) {
-            if (hasMajorCourse == "1") {
+            const degreeName = selectedOption.text.toLowerCase();
+            if (hasMajorCourse == "1" && !(degreeName.includes('mbbs') || degreeName.includes('bds'))) {
                 majorCourseContainer.style.display = 'block';  // Show the major course field
             } else {
                 majorCourseContainer.style.display = 'none';   // Hide the major course field
@@ -674,8 +336,6 @@
             });
         }
     });
-
-
 </script>
 @endpush
 

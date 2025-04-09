@@ -42,9 +42,11 @@ class FeedbackService
         if (Auth::guard('doctor')->check()) {
             $formData['feedbackable_id'] = auth()->guard('doctor')->user()->id;
             $formData['feedbackable_class'] = 'doctor';
+        } else if(Auth::guard('chamber')->check()) {
+            $formData['feedbackable_id'] = auth()->guard('chamber')->user()->id;
+            $formData['feedbackable_class'] = 'chamber';
         } else {
-            // Optionally, handle other types of feedbackable_class if needed
-            $formData['feedbackable_class'] = 'guest'; // Example for a guest user
+            $formData['feedbackable_class'] = 'guest';
         }
 
         if ($formData['type'] === 'frontend') {

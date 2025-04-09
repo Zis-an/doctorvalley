@@ -15,6 +15,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Modules\Course\Services\CourseService;
 use Modules\Degree\Services\DegreeService;
 use Modules\Doctor\Http\Requests\DoctorExperienceRequest;
 use Modules\Doctor\Http\Requests\DoctorImageRequest;
@@ -46,14 +47,14 @@ class DoctorManagementController extends Controller
         private InstituteService $instituteService,
         private SpecialityService $specialityService,
         private DoctorSpecialityService $doctorSpecialityService,
-        private DegreeService $degreeService) {
+        private DegreeService $degreeService,
+        private CourseService $courseService) {
 
     }
 
     public function index(Request $request)
     {
         try {
-            throw new Exception("dbajbsd");
             $doctors = $this->service->getDoctorList($request->all());
             $specialities = $this->specialityService->getSpecialityList($request->all());
             $provinces = $this->provinceService->getProvinceList($request->all());
@@ -91,16 +92,11 @@ class DoctorManagementController extends Controller
     public function professionalInfo()
     {
         try {
-            // Retrieve doctor_id from session
             $doctor_id = session('doctor_id');
-
-            // If doctor_id is not in the session, redirect to personal info
             if (!$doctor_id) {
                 return redirect()->route('doctor.profile.personal')
                     ->with('error', 'Please provide personal information first.');
             }
-
-            // Load the professional information form
             return view('components.create-doctor.professional-info', compact('doctor_id'));
         } catch (\Throwable $exception) {
             return $this->redirectWithExceptionLog(
@@ -115,15 +111,11 @@ class DoctorManagementController extends Controller
         try {
             $degrees = $this->degreeService->getActiveDegreeList();
             $institutes = $this->instituteService->getInstituteList($request->all());
-            // Retrieve doctor_id from session
             $doctor_id = session('doctor_id');
-
-            // If doctor_id is not in the session, redirect to personal info
             if (!$doctor_id) {
                 return redirect()->route('doctor.profile.professional')
                     ->with('error', 'Please provide professional information first.');
             }
-
             return view('components.create-doctor.educational-info', compact('degrees', 'institutes', 'doctor_id'));
         } catch (\Throwable $exception) {
             return $this->redirectWithExceptionLog(
@@ -136,17 +128,12 @@ class DoctorManagementController extends Controller
     public function profileImage(): View | Factory | Application | RedirectResponse
     {
         try {
-            // Retrieve doctor_id from session
             $doctor_id = session('doctor_id');
-
-            // If doctor_id is not in the session, redirect to personal info
             if (!$doctor_id) {
                 return redirect()->route('doctor.profile.educational')
                     ->with('error', 'Please provide educational information first.');
             }
-            // Clear doctor_id from session after final step
             session()->forget('doctor_id');
-
             return view('components.create-doctor.profile-image', compact('doctor_id'));
         } catch (\Throwable $exception) {
             return $this->redirectWithExceptionLog(
@@ -160,9 +147,7 @@ class DoctorManagementController extends Controller
     {
         try {
             $doctor = $this->service->storeDoctor($request->validated());
-            // Store doctor_id persistently in the session
             session(['doctor_id' => $doctor->id]);
-            // Redirect to the professional information page
             Alert::success('Success', 'Personal Information stored successfully');
             return redirect()->route('doctor.profile.educational')
                 ->with('success', 'Personal Information stored successfully');
@@ -176,7 +161,6 @@ class DoctorManagementController extends Controller
     {
         try {
             $experience = $this->experienceService->storeDoctorExperience($request->validated());
-            // Store doctor_id in the session for subsequent forms
             session(['doctor_id' => $experience->doctor_id]);
             Alert::success('Success', 'Professional Information stored successfully');
             return redirect()->route('doctor.profile.image')
@@ -191,7 +175,6 @@ class DoctorManagementController extends Controller
     {
         try {
             $qualification = $this->qualificationService->storeDoctorQualification($request->validated());
-            // Store doctor_id in the session for subsequent forms
             session(['doctor_id' => $qualification->doctor_id]);
             Alert::success('Success', 'Educational Information stored successfully');
             return redirect()->route('doctor.profile.professional')
@@ -206,7 +189,6 @@ class DoctorManagementController extends Controller
     {
         try {
             $this->service->storeImage($request->validated());
-
             if(auth('admin')->check()) {
                 return redirect()->route('doctor.index')
                     ->with('success', 'Doctor stored successfully');
@@ -215,7 +197,6 @@ class DoctorManagementController extends Controller
                 return redirect()->route('chamber.my-doctors')
                     ->with('success', 'Chamber Doctor stored successfully');
             }
-
         } catch (\Throwable $throwable) {
             Alert::error('Error', 'Doctor invalid data');
             return $this->redirectWithExceptionLog(

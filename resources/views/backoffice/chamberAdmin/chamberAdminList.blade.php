@@ -87,7 +87,7 @@
                                     @foreach($chamberAdmins as $key => $admin)
                                     <tr>
                                         <th scope="row">{{ ($chamberAdmins->currentPage() - 1) * $chamberAdmins->perPage() + $loop->iteration }}</th>
-                                        <td>{{ $admin->chamber->chamber_name }}</td>
+                                        <td>{{ !empty($admin->chamber)? $admin->chamber->chamber_name: '' }}</td>
                                         <td>{{ $admin->name }}</td>
                                         <td>{{ $admin->email }}</td>
                                         <td>{{ $admin->phone }}</td>

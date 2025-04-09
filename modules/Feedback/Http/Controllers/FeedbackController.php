@@ -34,6 +34,10 @@ class FeedbackController extends Controller
                 // Doctor can see only their own feedbacks
                 $doctorId = auth('doctor')->id();
                 $feedbacks = $this->service->getFeedbackListByDoctorId($doctorId);
+            } elseif (auth('chamber')->check()) {
+                // Chamber can see only their own feedbacks
+                $chamberId = auth('chamber')->id();
+                $feedbacks = $this->service->getFeedbackListByDoctorId($chamberId);
             }
             return view('backoffice.feedback', compact('feedbacks'));
         }catch (\Throwable $exception){
@@ -41,9 +45,15 @@ class FeedbackController extends Controller
         }
     }
 
-    public function create(): View|Factory|Application
+    public function create()
     {
         try {
+            if(auth('chamber')->check()){
+                return view('chamber.feedback');
+            }
+            if(auth('doctor')->check()){
+                return view('doctor.feedback');
+            }
             return view('doctor.feedback');
         } catch (\Throwable $exception){
             abort(500);

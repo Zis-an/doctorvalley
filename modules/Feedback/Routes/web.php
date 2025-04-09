@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Modules\Feedback\Http\Controllers\FeedbackController;
 
 
-Route::group(['as'=>'feedback.', 'prefix'=>'/feedback', 'middleware'=>['auth:admin,doctor']], function (){
+Route::group(['as'=>'feedback.', 'prefix'=>'/feedback', 'middleware'=>['auth:admin,doctor,chamber']], function (){
     Route::get('/', [FeedbackController::class, 'index'])->name('index');
 });
 

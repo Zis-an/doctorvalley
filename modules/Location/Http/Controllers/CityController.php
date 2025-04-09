@@ -96,8 +96,7 @@ class CityController extends Controller
         try {
             $this->service->deleteData($id);
             Alert::success('Success', 'City delete successfully');
-            return redirect()->route('backofice.city.index')
-                ->with('success', 'City delete successfully');
+            return redirect()->route('backoffice.city.index')->with('success', 'City delete successfully');
         }catch (\Throwable $throwable){
             Alert::error('Error', 'Invalid City information');
             return redirect()->back()->with('error', 'Invalid City information');

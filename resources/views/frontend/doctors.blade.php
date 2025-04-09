@@ -13,9 +13,7 @@
         <section class="doctors-section">
             <div class="container">
                 <div class="row g-4">
-
                     <div class="col-lg-3 col-md-4 d-none d-md-block filter-section">
-{{--                        <div class="stickyfilter">--}}
                         <div class="">
                             <div class="filter">
                                 <form id="filterForm" action="{{ route('doctors') }}" method="GET">
@@ -58,6 +56,20 @@
                                             @endforeach
                                         </select>
                                     </div>
+
+
+                                    <!-- Gender Filter -->
+                                    <div class="inputbox mb-3">
+                                        <label for="gender" class="inputlabel">Gender</label>
+                                        <select id="gender" name="gender" class="wide" onchange="this.form.submit()">
+                                            <option value="" selected>Select a gender</option>
+                                            <option value="MALE" {{ request('gender') == 'MALE' ? 'selected' : '' }}>Male</option>
+                                            <option value="FEMALE" {{ request('gender') == 'FEMALE' ? 'selected' : '' }}>Female</option>
+                                            <option value="OTHER" {{ request('gender') == 'OTHER' ? 'selected' : '' }}>Other</option>
+                                        </select>
+                                    </div>
+
+
                                     <!-- Day wise Filter -->
 {{--                                    <div class="inputbox mb-3">--}}
 {{--                                        <label for="days" class="inputlabel">Days</label>--}}
@@ -145,6 +157,10 @@
         NiceSelect.bind(document.getElementById("thanas"), {
             searchable: true,
             placeholder: 'Select Division'
-        });;
+        });
+        NiceSelect.bind(document.getElementById("gender"), {
+            searchable: true,
+            placeholder: 'Select Gender'
+        });
     </script>
 @endpush

@@ -18,7 +18,7 @@
                                 <div class="col-12">
                                     <div class="inputbox">
                                         <label for="username" class="inputlabel">
-                                            Username or e-mail <span>*</span>
+                                            E-mail <span>*</span>
                                         </label>
                                         <input type="text" id="username" name="username" class="form-control" placeholder="Enter username or email" autocomplete="off">
                                         @error('username')

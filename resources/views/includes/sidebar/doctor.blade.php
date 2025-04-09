@@ -1,7 +1,8 @@
 <!-- MAIN-LIST -->
 <ul class="sidelist">
     <li class="sidelist-item">
-        <a href="{{ route('doctor.dashboard') }}" class="sidelist-link active" data-bs-toggle="tooltip" data-bs-placement="right"
+        <a href="{{ route('doctor.dashboard') }}" class="sidelist-link {{ request()->routeIs('doctor.dashboard') ? 'active' : '' }}"
+           data-bs-toggle="tooltip" data-bs-placement="right"
            data-bs-title="DashBoard">
             <span class="icon">
                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
@@ -16,7 +17,8 @@
     </li>
 
     <li class="sidelist-item">
-        <a href="{{ route('doctor.schedule', auth()->user()->id) }}" class="sidelist-link" data-bs-toggle="tooltip" data-bs-placement="right"
+        <a href="{{ route('doctor.schedule', auth()->user()->id) }}" class="sidelist-link {{ request()->routeIs('doctor.schedule', auth()->user()->id) ? 'active' : '' }}"
+           data-bs-toggle="tooltip" data-bs-placement="right"
            data-bs-title="Schedule">
             <span class="icon">
                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
@@ -31,7 +33,7 @@
     </li>
 
     <li class="sidelist-item">
-        <a href="{{ route('blog.create') }}" class="sidelist-link" data-bs-toggle="tooltip" data-bs-placement="right"
+        <a href="{{ route('blog.create') }}" class="sidelist-link {{ request()->routeIs('blog.create') ? 'active' : '' }}" data-bs-toggle="tooltip" data-bs-placement="right"
            data-bs-title="Blogs">
                     <span class="icon">
                         <svg width="19" height="18" viewBox="0 0 19 18" fill="none"
@@ -46,7 +48,7 @@
     </li>
 
     <li class="sidelist-item">
-        <a href="{{ route('blog.index') }}" class="sidelist-link" data-bs-toggle="tooltip" data-bs-placement="right"
+        <a href="{{ route('blog.index') }}" class="sidelist-link {{ request()->routeIs('blog.index') ? 'active' : '' }}" data-bs-toggle="tooltip" data-bs-placement="right"
            data-bs-title="Blogs">
                     <span class="icon">
                         <svg width="19" height="18" viewBox="0 0 19 18" fill="none"
@@ -61,7 +63,7 @@
     </li>
 
     <li class="sidelist-item">
-        <a href="{{ route('feedback.index') }}" class="sidelist-link" data-bs-toggle="tooltip" data-bs-placement="right"
+        <a href="{{ route('feedback.index') }}" class="sidelist-link {{ request()->routeIs('feedback.index') ? 'active' : '' }}" data-bs-toggle="tooltip" data-bs-placement="right"
            data-bs-title="Blogs">
                     <span class="icon">
                         <svg width="19" height="18" viewBox="0 0 19 18" fill="none"
@@ -97,8 +99,8 @@
 <!-- USERINFO-LIST -->
 <ul class="userlist">
     <li class="userlist-item">
-        <a href="{{ route('feedback.create') }}" class="userlist-link" data-bs-toggle="tooltip" data-bs-placement="right"
-           data-bs-title="Your Feedback">
+        <a href="{{ route('feedback.create') }}" class="userlist-link {{ request()->routeIs('feedback.create') ? 'active' : '' }}"
+           data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Your Feedback">
                     <span class="icon">
                         <svg width="20" height="18" viewBox="0 0 20 18" fill="none"
                              xmlns="http://www.w3.org/2000/svg">

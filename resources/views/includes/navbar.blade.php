@@ -70,8 +70,12 @@
                 <a href="{{ route('doctor.dashboard') }}" class="logo">
                     <img src="{{ asset('assets/images/logo/logo.svg') }}" alt="logo">
                 </a>
+            @elseif(auth('chamber')->check())
+                <a href="{{ route('chamber.dashboard') }}" class="logo">
+                    <img src="{{ asset('assets/images/logo/logo.svg') }}" alt="logo">
+                </a>
             @else
-                <a href="{{ route('profile') }}" class="logo">
+                <a href="{{ route('backoffice.dashboard') }}" class="logo">
                     <img src="{{ asset('assets/images/logo/logo.svg') }}" alt="logo">
                 </a>
             @endif
@@ -149,51 +153,27 @@
                                     </span>
                                     <span class="text">Change Password</span>
                                 </a>
-                            @endif
-                            <a href="{{
-                                        auth('chamber')->check() ? route('chamber.profile', auth('chamber')->user()->chamber_id) :
-                                        (auth('admin')->check() ? route('profile') :
-                                        (auth('doctor')->check() ? route('doctor.profile') : '')
-                                        )
-                                    }}" class="dropdownlink">
-                                    <span class="icon">
-                                        <svg width="14" height="18" viewBox="0 0 14 18" fill="none"
-                                             xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M9.81248 4.5C9.81248 5.24592 9.51617 5.96129 8.98872 6.48874C8.46127 7.01618 7.7459 7.3125 6.99998 7.3125C6.25406 7.3125 5.53869 7.01618 5.01124 6.48874C4.4838 5.96129 4.18748 5.24592 4.18748 4.5C4.18748 3.75408 4.4838 3.03871 5.01124 2.51126C5.53869 1.98382 6.25406 1.6875 6.99998 1.6875C7.7459 1.6875 8.46127 1.98382 8.98872 2.51126C9.51617 3.03871 9.81248 3.75408 9.81248 4.5V4.5ZM1.37573 15.0885C1.39983 13.6128 2.00299 12.2056 3.05512 11.1705C4.10724 10.1354 5.52405 9.55535 6.99998 9.55535C8.47592 9.55535 9.89272 10.1354 10.9448 11.1705C11.997 12.2056 12.6001 13.6128 12.6242 15.0885C10.8598 15.8976 8.94109 16.3151 6.99998 16.3125C4.99298 16.3125 3.08798 15.8745 1.37573 15.0885Z"
-                                                stroke="white" stroke-width="1.5" stroke-linecap="round"
-                                                stroke-linejoin="round" />
+
+                            @else
+                                <a href="{{ route('doctor.profile', auth('doctor')->user()->id)   }}" class="dropdownlink">
+                                    <span class="icon text-white">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
+                                          <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5m.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1z"/>
                                         </svg>
                                     </span>
-                                <span class="text">Profile</span>
-                            </a>
-
-
-                            {{--@auth('admin')
-                                <a href="{{ route('setting') }}" class="dropdownlink">
-                                    <span class="icon">
-                                        <svg width="14" height="18" viewBox="0 0 14 18" fill="none"
-                                             xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M9.81248 4.5C9.81248 5.24592 9.51617 5.96129 8.98872 6.48874C8.46127 7.01618 7.7459 7.3125 6.99998 7.3125C6.25406 7.3125 5.53869 7.01618 5.01124 6.48874C4.4838 5.96129 4.18748 5.24592 4.18748 4.5C4.18748 3.75408 4.4838 3.03871 5.01124 2.51126C5.53869 1.98382 6.25406 1.6875 6.99998 1.6875C7.7459 1.6875 8.46127 1.98382 8.98872 2.51126C9.51617 3.03871 9.81248 3.75408 9.81248 4.5V4.5ZM1.37573 15.0885C1.39983 13.6128 2.00299 12.2056 3.05512 11.1705C4.10724 10.1354 5.52405 9.55535 6.99998 9.55535C8.47592 9.55535 9.89272 10.1354 10.9448 11.1705C11.997 12.2056 12.6001 13.6128 12.6242 15.0885C10.8598 15.8976 8.94109 16.3151 6.99998 16.3125C4.99298 16.3125 3.08798 15.8745 1.37573 15.0885Z"
-                                                stroke="white" stroke-width="1.5" stroke-linecap="round"
-                                                stroke-linejoin="round" />
-                                        </svg>
-                                    </span>
-                                    <span class="text">Setting</span>
+                                    <span class="text">Profile</span>
                                 </a>
-                            @endauth--}}
-
+                            @endif
                             <a href="{{ route('logout') }}" class="dropdownlink"
                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                <span class="icon">
-                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M12.75 6L11.6925 7.0575L12.8775 8.25H6.75V9.75H12.8775L11.6925 10.935L12.75 12L15.75 9L12.75 6ZM3.75 3.75H9V2.25H3.75C2.925 2.25 2.25 2.925 2.25 3.75V14.25C2.25 15.075 2.925 15.75 3.75 15.75H9V14.25H3.75V3.75Z"
-                                            fill="white" />
-                                    </svg>
-                                </span>
+                            <span class="icon">
+                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12.75 6L11.6925 7.0575L12.8775 8.25H6.75V9.75H12.8775L11.6925 10.935L12.75 12L15.75 9L12.75 6ZM3.75 3.75H9V2.25H3.75C2.925 2.25 2.25 2.925 2.25 3.75V14.25C2.25 15.075 2.925 15.75 3.75 15.75H9V14.25H3.75V3.75Z"
+                                        fill="white" />
+                                </svg>
+                            </span>
                                 <span class="text">Log out</span>
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;"> @csrf </form>

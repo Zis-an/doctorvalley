@@ -59,11 +59,11 @@ class DoctorHomeController extends Controller
 
     }
 
-    public function profile()
+    public function profile(int $id)
     {
         try{
             $doctor = auth('doctor')->user();
-            $id = $doctor->id;
+//            $id = $doctor->id;
             $experiences = $this->experienceService->getDoctorExperienceByDoctorId($id);
             $qualifications = $this->qualificationService->getDoctorQualificationByDoctorId($id);
             return view('doctor.profile', compact('doctor', 'experiences', 'qualifications'));

@@ -60,10 +60,13 @@
 
                                 <div class="col-12">
                                     <div class="inputbox">
-                                        <label for="password" class="inputlabel">
-                                            Password <span>*</span>
-                                        </label>
-                                        <input type="password" name="password" id="password" class="form-control" placeholder="Enter password" autocomplete="off">
+                                        <label for="password" class="inputlabel">Password <span>*</span></label>
+                                        <div class="position-relative">
+                                            <input type="password" name="password" id="password" class="form-control" placeholder="Enter password" autocomplete="off">
+                                            <span class="position-absolute top-50 translate-middle-y" style="right: 10px; cursor: pointer;">
+				                                <i class="fa fa-eye-slash toggle-password" data-target="#password" id="togglePasswordIcon"></i>
+			                                </span>
+                                        </div>
                                         @error('password')
                                         <p class="error-message">{{ $message }}</p>
                                         @enderror
@@ -73,7 +76,12 @@
                                 <div class="col-12">
                                     <div class="inputbox">
                                         <label for="pass_confirm" class="inputlabel">Confirm Password <span>*</span> </label>
-                                        <input type="password" name="password_confirmation" id="pass_confirm" value="" class="form-control" placeholder="Enter confirm password" autocomplete="off">
+                                        <div class="position-relative">
+                                            <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="Enter password" autocomplete="off">
+                                            <span class="position-absolute top-50 translate-middle-y" style="right: 10px; cursor: pointer;">
+				                                <i class="fa fa-eye-slash toggle-password" data-target="#password_confirmation" id="togglePasswordIcon"></i>
+			                                </span>
+                                        </div>
                                         @error('password_confirmation')
                                             <p class="error-message">{{ $message }}</p>
                                         @endif
@@ -103,3 +111,26 @@
         </section>
     </main>
 @endsection
+
+@push('after-scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.toggle-password').forEach(icon => {
+                icon.addEventListener('click', function () {
+                    const input = document.querySelector(this.getAttribute('data-target'));
+                    const currentIcon = this;
+
+                    if (input.getAttribute('type') === 'password') {
+                        input.setAttribute('type', 'text');
+                        currentIcon.classList.remove('fa-eye-slash');
+                        currentIcon.classList.add('fa-eye');
+                    } else {
+                        input.setAttribute('type', 'password');
+                        currentIcon.classList.remove('fa-eye');
+                        currentIcon.classList.add('fa-eye-slash');
+                    }
+                });
+            });
+        });
+    </script>
+@endpush

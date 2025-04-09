@@ -7,6 +7,7 @@
 
 namespace Modules\Feedback\Models;
 
+use Modules\ChamberAdmin\Models\ChamberAdmin;
 use Modules\Doctor\Models\Doctor;
 use Modules\Feedback\Enums\FeedbackEnum;
 use Illuminate\Database\Eloquent\Model;
@@ -21,9 +22,20 @@ class Feedback extends Model
     protected $primaryKey=FeedbackEnum::ID;
     protected $fillable=FeedbackEnum::FIELDS;
 
-    public function doctor()
+//    public function doctor()
+//    {
+//        return $this->belongsTo(Doctor::class, 'feedbackable_id');
+//    }
+
+    public function feedbackable()
     {
-        return $this->belongsTo(Doctor::class, 'feedbackable_id');
+        if ($this->feedbackable_class === 'doctor') {
+            return $this->belongsTo(Doctor::class, 'feedbackable_id');
+        } elseif ($this->feedbackable_class === 'chamber') {
+            return $this->belongsTo(ChamberAdmin::class, 'feedbackable_id');
+        }
+
+        return null; // Handle case where `feedbackable_class` is not doctor or chamber
     }
 
 }

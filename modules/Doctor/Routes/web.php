@@ -29,7 +29,7 @@ Route::group(['as' => 'doctor.', 'prefix' => 'doctors' ], function () {
     /* Admin and Chamber Routes */
 
     /* Admin Only Routes */
-    Route::group(['middleware' => ['auth:admin']], function(){
+    Route::group(['middleware' => ['auth:admin,doctor']], function(){
         // Route::get('/edit/{doctor_id}', [DoctorManagementController::class, 'edit'])->name('edit');
 
         Route::get('/edit/personal/{doctor_id}', [DoctorManagementController::class, 'personalInfoEdit'])->name('profile.personal.edit');
@@ -61,10 +61,11 @@ Route::group(['as' => 'doctor.', 'prefix' => '/doctor', 'middleware' => 'guest:d
 
 Route::group(['as' => 'doctor.', 'prefix' => '/doctor', 'middleware' => ['auth:doctor']], function () {
     Route::get('/dashboard', [DoctorHomeController::class, 'index'])->name('dashboard');
-    Route::get('/profile', [DoctorHomeController::class, 'profile'])->name('profile');
+    Route::get('/profile/{doctor_id}', [DoctorHomeController::class, 'profile'])->name('profile');
     Route::get('/notifications', [DoctorHomeController::class, 'notification'])->name('notification');
     Route::get('/blogs', [DoctorHomeController::class, 'blog'])->name('blog');
     Route::get('/schedules', [DoctorHomeController::class, 'schedule'])->name('schedule');
 
     Route::get('/{doctor_id}/schedule', [DoctorHomeController::class, 'schedule'])->name('schedule');
+    Route::get('/doctor-info/{doctor_id}', [DoctorManagementController::class, 'info'])->name('info');
 });

@@ -192,7 +192,6 @@
                                             <tr>
                                                 <th scope="row">{{ ($doctors->currentPage() - 1) * $doctors->perPage() + $loop->iteration }}</th>
                                                 <td>{{ $doctor->name }}</td>
-                                                {{-- <td>{{ $designations[$doctor->id]->designation ?? 'N/A' }}</td> --}}
                                                 <td>{{ $doctor->bmdc }}</td>
                                                 <td>{{ $doctor->email }}</td>
                                                 <td>{{ $doctor->phone }}</td>

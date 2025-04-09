@@ -66,7 +66,7 @@ class ChamberManagementController extends Controller
             Alert::success('Success', 'Chamber stored successfully');
             return redirect()->route('backoffice.chamber.index')->with('success', 'Chamber stored successfully');
         } catch (\Throwable $throwable){
-            Alert::success('Error!', 'Chamber invalid data');
+            Alert::error('Error!', 'Chamber invalid data');
             return redirect()->back()->with('error', 'Chamber invalid data')->withInput($request->all());
         }
     }
@@ -93,7 +93,7 @@ class ChamberManagementController extends Controller
             return redirect()->route('backoffice.chamber.index')
                 ->with('success', 'Chamber updated successfully');
         }catch (\Throwable $throwable){
-            Alert::success('Error!', 'Chamber invalid data');
+            Alert::error('Error!', 'Chamber invalid data');
             return redirect()->back()->with('error', 'Chamber invalid data')->withInput($request->all());
         }
     }
@@ -106,7 +106,7 @@ class ChamberManagementController extends Controller
             return redirect()->route('backoffice.chamber.index')
                 ->with('success', 'Chamber deleted successfully');
         }catch (\Throwable $throwable){
-            Alert::success('Error!', 'Invalid Chamber information');
+            Alert::error('Error!', 'Invalid Chamber information');
             return redirect()->back()->with('error', 'Invalid Chamber information');
         }
     }

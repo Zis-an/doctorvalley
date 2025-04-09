@@ -70,13 +70,16 @@
                                 <ul>
                                     @if(!auth('doctor')->check())
                                         <li>
-                                            <strong>Fullname:</strong> {{ $feedback->doctor->name ?? '' }}
+{{--                                            <strong>Fullname:</strong> {{ $feedback->doctor->name ?? '' }}--}}
+                                            <strong>Fullname:</strong> {{ $feedback->feedbackable->name ?? '' }}
                                         </li>
                                         <li>
-                                            <strong>E-mail:</strong> {{ $feedback->doctor->email ?? '' }}
+{{--                                            <strong>E-mail:</strong> {{ $feedback->doctor->email ?? '' }}--}}
+                                            <strong>E-mail:</strong> {{ $feedback->feedbackable->email ?? '' }}
                                         </li>
                                         <li>
-                                            <strong>Phone Number:</strong> {{ $feedback->doctor->phone ?? '' }}
+{{--                                            <strong>Phone Number:</strong> {{ $feedback->doctor->phone ?? '' }}--}}
+                                            <strong>Phone Number:</strong> {{ $feedback->feedbackable->phone ?? '' }}
                                         </li>
                                     @endif
                                     <details>
@@ -95,27 +98,32 @@
                     <div class="info-header">
                         <h3 class="infotitle">Chamber Feedback</h3>
                     </div>
-
-                    <div class="info-body">
-                        <ul>
-                            <li>
-                                <strong>Fullname:</strong> Abdullah Al Mamun
-                            </li>
-                            <li>
-                                <strong>E-mail:</strong> doctor.strange@gmail.com
-                            </li>
-                            <li>
-                                <strong>Phone Number:</strong> 01965088417
-                            </li>
-                            <li>
-                                <strong>Subject:</strong> Clinical Practice Guidelines
-                            </li>
-                            <li>
-                                <strong>Message:</strong> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eos autem
-                                aliquid fuga iste tempore soluta rem, labore eum repellendus quidem.
-                            </li>
-                        </ul>
-                    </div>
+                    @foreach($feedbacks as $feedback)
+                        @if($feedback->feedbackable_class == 'chamber')
+                            <div class="info-body">
+                                <ul>
+                                    @if(!auth('chamber')->check())
+                                        <li>
+                                            <strong>Full Name:</strong> {{ $feedback->feedbackable->name ?? '' }}
+                                        </li>
+                                        <li>
+                                            <strong>Chamber Name:</strong> {{ $feedback->feedbackable->chamber->chamber_name ?? '' }}
+                                        </li>
+                                        <li>
+                                            <strong>E-mail:</strong> {{ $feedback->feedbackable->email ?? '' }}
+                                        </li>
+                                        <li>
+                                            <strong>Phone Number:</strong> {{ $feedback->feedbackable->phone ?? '' }}
+                                        </li>
+                                    @endif
+                                    <details>
+                                        <summary>{{ $feedback->type ?? '' }}</summary>
+                                        <p>{{ $feedback->feedback ?? '' }}</p>
+                                    </details>
+                                </ul>
+                            </div>
+                        @endif
+                    @endforeach
                 </div>
             @endif
 
